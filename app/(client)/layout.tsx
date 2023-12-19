@@ -1,9 +1,9 @@
-import Copyright from "@components/layout/client-layout/Copyright";
-import Footer from "@components/layout/client-layout/Footer";
-import Header from "@components/layout/client-layout/Header";
-import Hotline from "@components/layout/client-layout/Hotline";
-import OnTop from "@components/layout/client-layout/OnTop";
-import React from "react";
+// import Copyright from "@components/layout/client-layout/Copyright";
+// import Footer from "@components/layout/client-layout/Footer";
+// import Header from "@components/layout/client-layout/Header";
+// import Hotline from "@components/layout/client-layout/Hotline";
+// import OnTop from "@components/layout/client-layout/OnTop";
+// import React from "react";
 
 type ClientLayoutProps = {
   children: React.ReactNode;
@@ -12,14 +12,14 @@ type ClientLayoutProps = {
 const layout: React.FC<ClientLayoutProps> = ({ children }) => {
   return (
     <div className="font-LexendDeca font-extralight">
-      <Header />
+      {/* <Header />
       <div className="mt-[78px] ">{children}</div>
       <OnTop />
       <Hotline />
       <div className="bg-gray-200">
         <Footer />
       </div>
-      <Copyright />
+      <Copyright /> */}
     </div>
   );
 };

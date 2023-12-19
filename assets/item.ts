@@ -146,6 +146,164 @@ export const SocialMediaDashboard = [
   },
 ];
 
+export const AdminPageHeaderItems = [
+  {
+    label: "Cấu Hình",
+    value: "/admin/cau-hinh",
+    children: [
+      {
+        label: "Thông Tin Website",
+        value: "thong-tin-website",
+      },
+      {
+        label: "Thương Hiệu Website",
+        value: "thuong-hieu-website",
+      },
+      {
+        label: "Liên Hệ",
+        value: "lien-he",
+      },
+      {
+        label: "Cấu Hình SEO",
+        value: "cau-hinh-seo",
+      },
+    ],
+  },
+  {
+    label: "Sản Phẩm",
+    value: "/admin/san-pham",
+    children: [
+      {
+        label: "Danh Sách Sản Phẩm",
+        value: "danh-sach-san-pham",
+      },
+      {
+        label: "Danh Mục Sản Phẩm",
+        value: "danh-muc-san-pham",
+      },
+      {
+        label: "Nhóm Sản Phẩm",
+        value: "nhom-san-pham",
+      },
+      {
+        label: "Slide giới thiệu",
+        value: "slide-gioi-thieu",
+      },
+      {
+        label: "Cấu Hình SEO",
+        value: "cau-hinh-seo",
+      },
+    ],
+  },
+  {
+    label: "Bài Viết",
+    value: "/admin/bai-viet",
+    children: [
+      {
+        label: "Danh Sách Bài Viết",
+        value: "danh-sach-bai-viet",
+      },
+      {
+        label: "Danh Mục Bài Viết",
+        value: "danh-muc-bai-viet",
+      },
+      {
+        label: "Điều Khoản Sử Dụng",
+        value: "dieu-khoan-su-dung",
+      },
+      {
+        label: "Bài giới thiệu",
+        value: "bai-gioi-thieu",
+      },
+      {
+        label: "Cấu Hình SEO",
+        value: "cau-hinh-seo",
+      },
+    ],
+  },
+  {
+    label: "Truyền Thông",
+    value: "/admin/truyen-thong",
+    children: [
+      {
+        label: "Kênh Truyền Thông",
+        value: "kenh-truyen-thong",
+      },
+      {
+        label: "Hình Ảnh",
+        value: "hinh-anh",
+      },
+      {
+        label: "Video",
+        value: "video",
+      },
+    ],
+  },
+  {
+    label: "Tài Khoản",
+    value: "/admin/tai-khoan",
+    children: [
+      {
+        label: "Thông Tin Tài Khoản",
+        value: "thong-tin-tai-khoan",
+      },
+      {
+        label: "Danh Sách Tài Khoản",
+        value: "danh-sach-tai-khoan",
+      },
+      {
+        label: "Phân Quyền",
+        value: "phan-quyen",
+      },
+      {
+        label: "Lịch Sử Hoạt Động",
+        value: "lich-su-hoat-dong",
+      },
+    ],
+  },
+  {
+    label: "Báo Cáo",
+    value: "/admin/bao-cao",
+    children: [
+      {
+        label: "Lượt Truy Cập",
+        value: "luot-truy-cap",
+      },
+      {
+        label: "Phản Hồi của Khách Hàng",
+        value: "Phan-hoi-cua-khach-hang",
+      },
+      {
+        label: "Đơn Hàng",
+        value: "don-hang",
+      },
+
+      {
+        label: "Sản Phẩm Xem Nhiều",
+        value: "san-pham-xem-nhieu",
+      },
+    ],
+  },
+  {
+    label: "Tiện Ích",
+    value: "/admin/tien-ich",
+    children: [
+      {
+        label: "Đối tác",
+        value: "doi-tac",
+      },
+      {
+        label: "Chi Nhánh",
+        value: "chi-nhanh",
+      },
+    ],
+  },
+  {
+    label: "Thoát",
+    value: "/",
+  },
+];
+
 /*<---------------------------------------------------------- Custom System ----------------------------------------------------------> */
 
 export const SocialMediaCustom = [
