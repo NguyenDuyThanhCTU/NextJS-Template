@@ -1,4 +1,4 @@
-import { SiZalo } from "react-icons/si";
+import { SiWebmoney, SiZalo } from "react-icons/si";
 import {
   BsFacebook,
   BsMessenger,
@@ -7,43 +7,72 @@ import {
   BsFillSendExclamationFill,
   BsFillSendCheckFill,
   BsFillSendXFill,
+  BsPostcard,
+  BsFileEarmarkPost,
 } from "react-icons/bs";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import {
   AiFillInstagram,
+  AiOutlineNodeCollapse,
   AiOutlineProfile,
   AiOutlineSlack,
   AiOutlineUnorderedList,
 } from "react-icons/ai";
 import {
+  FaChartLine,
   FaFirstOrderAlt,
   FaHome,
   FaRegNewspaper,
   FaTiktok,
+  FaTrademark,
 } from "react-icons/fa";
 import { AiOutlineTwitter } from "react-icons/ai";
-import { BiNetworkChart, BiSlideshow } from "react-icons/bi";
+import {
+  BiCube,
+  BiHappy,
+  BiHive,
+  BiLoader,
+  BiNetworkChart,
+  BiPencil,
+  BiSlideshow,
+  BiSolidUserAccount,
+} from "react-icons/bi";
 import {
   TbCarouselHorizontal,
+  TbCategory,
   TbCubeSend,
   TbListDetails,
+  TbReport,
+  TbSeo,
   TbSlideshow,
 } from "react-icons/tb";
 import {
   MdAirlineSeatReclineNormal,
+  MdConnectWithoutContact,
   MdManageAccounts,
   MdMiscellaneousServices,
+  MdOndemandVideo,
+  MdOutlineHistory,
   MdOutlineLocalCarWash,
   MdOutlinePostAdd,
+  MdPolicy,
 } from "react-icons/md";
 import { CgListTree, CgSize } from "react-icons/cg";
 import { IoIosConstruct, IoMdColorWand } from "react-icons/io";
-import { GiExitDoor } from "react-icons/gi";
+import { GiExitDoor, GiStarSattelites } from "react-icons/gi";
 
-import { CiViewList } from "react-icons/ci";
+import { CiBoxList, CiViewList } from "react-icons/ci";
 import { IconType } from "react-icons/lib";
-import { IoFlashOutline } from "react-icons/io5";
-
+import {
+  IoFlashOutline,
+  IoImagesOutline,
+  IoListSharp,
+  IoSettingsOutline,
+  IoShareSocialOutline,
+} from "react-icons/io5";
+import { PiCirclesThreePlusDuotone, PiShareNetworkLight } from "react-icons/pi";
+import { LuGitCompare } from "react-icons/lu";
+import { GoGitBranch } from "react-icons/go";
 interface IconMappingType {
   [key: string]: IconType;
 }
@@ -85,6 +114,35 @@ export const IconMapping: IconMappingType = {
   FaHome: FaHome,
   IoIosConstruct: IoIosConstruct,
   FaRegNewspaper: FaRegNewspaper,
+  IoSettingsOutline: IoSettingsOutline,
+  SiWebmoney: SiWebmoney,
+  FaTrademark: FaTrademark,
+  TbSeo: TbSeo,
+  TbCategory: TbCategory,
+  PiCirclesThreePlusDuotone: PiCirclesThreePlusDuotone,
+  CiBoxList: CiBoxList,
+  GiStarSattelites: GiStarSattelites,
+  BsPostcard: BsPostcard,
+  IoListSharp: IoListSharp,
+  MdPolicy: MdPolicy,
+  BsFileEarmarkPost: BsFileEarmarkPost,
+  FaChartLine: FaChartLine,
+  IoShareSocialOutline: IoShareSocialOutline,
+  PiShareNetworkLight: PiShareNetworkLight,
+  IoImagesOutline: IoImagesOutline,
+  BiSolidUserAccount: BiSolidUserAccount,
+  AiOutlineNodeCollapse: AiOutlineNodeCollapse,
+  MdOutlineHistory: MdOutlineHistory,
+  TbReport: TbReport,
+  BiLoader: BiLoader,
+  BiPencil: BiPencil,
+  BiCube: BiCube,
+  BiHappy: BiHappy,
+  BiHive: BiHive,
+  LuGitCompare: LuGitCompare,
+  GoGitBranch: GoGitBranch,
+  MdConnectWithoutContact: MdConnectWithoutContact,
+  MdOndemandVideo: MdOndemandVideo,
 };
 
 export const SocialMediaDashboard = [
@@ -150,157 +208,188 @@ export const AdminPageHeaderItems = [
   {
     label: "Cấu Hình",
     value: "/admin/cau-hinh",
+    icon: "IoSettingsOutline",
     children: [
       {
         label: "Thông Tin Website",
         value: "thong-tin-website",
+        icon: "SiWebmoney",
       },
       {
         label: "Thương Hiệu Website",
         value: "thuong-hieu-website",
+        icon: "FaTrademark",
       },
       {
         label: "Liên Hệ",
         value: "lien-he",
+        icon: "MdConnectWithoutContact",
       },
       {
         label: "Cấu Hình SEO",
         value: "cau-hinh-seo",
+        icon: "TbSeo",
       },
     ],
   },
   {
     label: "Sản Phẩm",
     value: "/admin/san-pham",
+    icon: "GiStarSattelites",
     children: [
       {
         label: "Danh Sách Sản Phẩm",
         value: "danh-sach-san-pham",
+        icon: "PiCirclesThreePlusDuotone",
       },
       {
         label: "Danh Mục Sản Phẩm",
         value: "danh-muc-san-pham",
+        icon: "CiBoxList",
       },
       {
         label: "Nhóm Sản Phẩm",
         value: "nhom-san-pham",
+        icon: "TbCategory ",
       },
       {
         label: "Slide giới thiệu",
         value: "slide-gioi-thieu",
+        icon: "BiSlideshow",
       },
       {
         label: "Cấu Hình SEO",
         value: "cau-hinh-seo",
+        icon: "TbSeo",
       },
     ],
   },
   {
     label: "Bài Viết",
     value: "/admin/bai-viet",
+    icon: "BsPostcard",
     children: [
       {
         label: "Danh Sách Bài Viết",
         value: "danh-sach-bai-viet",
+        icon: "IoListSharp",
       },
       {
         label: "Danh Mục Bài Viết",
         value: "danh-muc-bai-viet",
+        icon: "CgListTree",
       },
       {
         label: "Điều Khoản Sử Dụng",
         value: "dieu-khoan-su-dung",
+        icon: "MdPolicy",
       },
       {
         label: "Bài giới thiệu",
         value: "bai-gioi-thieu",
+        icon: "BsFileEarmarkPost",
       },
       {
         label: "Cấu Hình SEO",
         value: "cau-hinh-seo",
+        icon: "FaChartLine",
       },
     ],
   },
   {
     label: "Truyền Thông",
     value: "/admin/truyen-thong",
+    icon: "IoShareSocialOutline",
     children: [
       {
         label: "Kênh Truyền Thông",
         value: "kenh-truyen-thong",
+        icon: "PiShareNetworkLight",
       },
       {
         label: "Hình Ảnh",
         value: "hinh-anh",
+        icon: "IoImagesOutline",
       },
       {
         label: "Video",
         value: "video",
+        icon: "MdOndemandVideo",
       },
     ],
   },
   {
     label: "Tài Khoản",
     value: "/admin/tai-khoan",
+    icon: "MdManageAccounts",
     children: [
       {
         label: "Thông Tin Tài Khoản",
         value: "thong-tin-tai-khoan",
+        icon: "AiOutlineProfile",
       },
       {
         label: "Danh Sách Tài Khoản",
         value: "danh-sach-tai-khoan",
+        icon: "BiSolidUserAccount",
       },
       {
         label: "Phân Quyền",
         value: "phan-quyen",
+        icon: "AiOutlineNodeCollapse",
       },
       {
         label: "Lịch Sử Hoạt Động",
         value: "lich-su-hoat-dong",
+        icon: "MdOutlineHistory",
       },
     ],
   },
   {
     label: "Báo Cáo",
     value: "/admin/bao-cao",
+    icon: "TbReport",
     children: [
       {
         label: "Lượt Truy Cập",
         value: "luot-truy-cap",
+        icon: "BiLoader",
       },
       {
         label: "Phản Hồi của Khách Hàng",
         value: "Phan-hoi-cua-khach-hang",
+        icon: "BiPencil",
       },
       {
         label: "Đơn Hàng",
         value: "don-hang",
+        icon: "BiCube",
       },
 
       {
         label: "Sản Phẩm Xem Nhiều",
         value: "san-pham-xem-nhieu",
+        icon: "BiHappy",
       },
     ],
   },
   {
     label: "Tiện Ích",
     value: "/admin/tien-ich",
+    icon: "BiHive",
+
     children: [
       {
         label: "Đối tác",
         value: "doi-tac",
+        icon: "LuGitCompare",
       },
       {
         label: "Chi Nhánh",
         value: "chi-nhanh",
+        icon: "GoGitBranch",
       },
     ],
-  },
-  {
-    label: "Thoát",
-    value: "/",
   },
 ];
 
