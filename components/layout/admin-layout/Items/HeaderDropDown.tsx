@@ -11,7 +11,7 @@ const HeaderDropDown = ({ ChildrenItem, ParentUrl }: any) => {
             {ChildrenItem.map((items: any, idx: number) => (
               <Link
                 key={idx}
-                href={`${ParentUrl}?type=${items.value}`}
+                href={`${ParentUrl}?tab=${items.value}`}
                 className="  border-b hover:bg-adminOrange duration-300"
               >
                 <p className="py-2 px-4 w-max hover:text-maingreen duration-300 text-white">

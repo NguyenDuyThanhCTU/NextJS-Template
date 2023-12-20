@@ -6,10 +6,10 @@ import React from "react";
 import { FaCaretDown } from "react-icons/fa";
 import HeaderDropDown from "./Items/HeaderDropDown";
 import { useParams, usePathname } from "next/navigation";
+import Image from "next/image";
 
 const Header = () => {
   const pathname = usePathname();
-
   const { ContactData, TradeMarkData } = useData();
   return (
     <div className="fixed w-full z-50 top-0">
@@ -41,11 +41,14 @@ const Header = () => {
             ))}
           </div>
           <Link href={`/admin`} className="flex w-full justify-center">
-            <img
-              src="https://firebasestorage.googleapis.com/v0/b/quangcaocokhixaydung.appspot.com/o/logo_hoang_tuan_va_sologan-removebg-preview.png?alt=media&token=a3d42e24-00c2-451a-9a53-1450135c9696"
-              alt="logo"
-              className="h-[70px]"
-            />
+            <div className="relative h-[70px] w-full">
+              <Image
+                src={TradeMarkData?.websiteLogo}
+                alt="logo"
+                fill
+                style={{ objectFit: "contain" }}
+              />
+            </div>
           </Link>
           <div className="col-span-2 flex items-center gap-4  ">
             {AdminPageHeaderItems.slice(4, 8).map((item, index) => (
