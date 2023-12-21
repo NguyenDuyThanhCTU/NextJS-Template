@@ -1,10 +1,7 @@
 "use client";
 import { IconMapping } from "@assets/item";
 import { useStateProvider } from "@context/StateProvider";
-import Link from "next/link";
 import React from "react";
-import { AiOutlineProfile } from "react-icons/ai";
-import { GiExitDoor } from "react-icons/gi";
 
 const HeaderDropDown = ({ Data }: any) => {
   const { setSelected } = useStateProvider();

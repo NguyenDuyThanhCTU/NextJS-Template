@@ -91,8 +91,8 @@ const Header = () => {
     //   </div>
     // </div>
     <div>
-      <div className="border-b shadow-xl  h-[65px] grid grid-cols-4">
-        <div className="w-full ">
+      <div className="border-b shadow-xl  h-[65px] grid grid-cols-4 fixed top-0 w-full">
+        <Link href={`/admin`} className="w-full ">
           <div className="h-[60px] w-full relative ">
             <Image
               src="https://firebasestorage.googleapis.com/v0/b/adminads-11c80.appspot.com/o/RUN%20(500%20x%2084%20px).png?alt=media&token=0eab0ed0-9368-4abd-aa83-d1903049a162"
@@ -101,16 +101,15 @@ const Header = () => {
               style={{ objectFit: "contain" }}
             />
           </div>
-        </div>
-        <div className="col-span-2 flex justify-between items-center">
+        </Link>
+        <div className="col-span-2 flex justify-between items-center ">
           {AdminPageHeaderItems.map((item, index) => {
             const Icon = IconMapping[item.icon];
 
             return (
-              <div className="group relative">
+              <div className="group relative" key={index}>
                 <Link
                   href={item.value}
-                  key={index}
                   className="flex gap-2 items-center font-light hover:bg-gray-100 h-max py-2 px-5  rounded-md"
                 >
                   <Icon />
@@ -203,7 +202,6 @@ const Header = () => {
               <div className=" flex flex-col">
                 {searchRs.map((product: any, idx: number) => {
                   const Icon = IconMapping[product.icon];
-
                   return (
                     <Link
                       href={`/chi-tiet-san-pham/${product.url}`}
