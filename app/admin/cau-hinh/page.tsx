@@ -4,7 +4,7 @@ import TrademarkConfig from "@components/admin/Config/TrademarkConfig";
 import WebConfig from "@components/admin/Config/WebConfig";
 import React from "react";
 
-const page = ({
+const AdminConfigPage = ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -25,4 +25,4 @@ const page = ({
   );
 };
 
-export default page;
+export default AdminConfigPage;

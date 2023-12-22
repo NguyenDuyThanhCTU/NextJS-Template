@@ -1,11 +1,12 @@
 import React from "react";
 
-type AdminConfigPageProps = {
+type AdminConfigLayoutProps = {
   children: React.ReactNode;
 };
 
-const AdminConfigPage: React.FC<AdminConfigPageProps> = ({ children }) => {
+const AdminConfigLayout: React.FC<AdminConfigLayoutProps> = ({ children }) => {
   return <div>{children}</div>;
 };
 
-export default AdminConfigPage;
+export default AdminConfigLayout;
+

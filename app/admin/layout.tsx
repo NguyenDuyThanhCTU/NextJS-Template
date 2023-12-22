@@ -2,11 +2,11 @@
 
 import Header from "@components/layout/admin-layout/Header";
 
-type ClientLayoutProps = {
+type ClientAdminLayoutProps = {
   children: React.ReactNode;
 };
 
-const layout: React.FC<ClientLayoutProps> = ({ children }) => {
+const AdminLayout: React.FC<ClientAdminLayoutProps> = ({ children }) => {
   return (
     <div className="font-LexendDeca font-extralight">
       <Header />
@@ -15,4 +15,4 @@ const layout: React.FC<ClientLayoutProps> = ({ children }) => {
   );
 };
 
-export default layout;
+export default AdminLayout;

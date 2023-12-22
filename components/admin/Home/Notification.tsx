@@ -11,14 +11,14 @@ const Notification = () => {
     <div className="flex flex-col items-center gap-5">
       <div className="w-full ">
         <div className="flex items-center justify-between border-b border-black cursor-pointer">
-          <h2 className="border-b-2 py-2  border-mainorange font-semibold text-[18px] text-mainorange hover:border-maingreen hover:text-maingreen duration-300 ">
+          <h2 className="border-b-2 py-2  border-blue-600 font-semibold text-[18px] text-mainorange hover:border-blue-800  duration-300 ">
             Thông tin website
           </h2>
           <div className="flex items-center ">
-            <div className=" p-2 hover:bg-maingreen hover:text-white duration-300">
+            <div className=" p-2 hover:bg-adminOrange hover:text-white duration-300">
               <FaAngleLeft />
             </div>
-            <div className=" p-2 hover:bg-maingreen hover:text-white duration-300">
+            <div className=" p-2 hover:bg-adminOrange hover:text-white duration-300">
               <FaAngleRight />
             </div>
           </div>
@@ -26,9 +26,9 @@ const Notification = () => {
       </div>
       <div className="w-full bg-gray-50">
         <div>
-          <div>Thông tin hosting: </div>
-          <div>Ngày khởi tạo:</div>
-          <div>Ngày kết thúc:</div>
+          <div>Thông tin hosting: localhost:3000</div>
+          <div>Ngày khởi tạo: 22-12-2023</div>
+          <div>Ngày kết thúc: 22-12-2024</div>
         </div>
       </div>
 

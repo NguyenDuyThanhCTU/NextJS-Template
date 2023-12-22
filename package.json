@@ -25,6 +25,7 @@
     "react-facebook": "^9.0.12",
     "react-icons": "^4.11.0",
     "react-tsparticles": "^2.12.2",
+    "sharp": "^0.33.1",
     "swiper": "^10.3.1",
     "tsparticles": "^2.12.0"
   },

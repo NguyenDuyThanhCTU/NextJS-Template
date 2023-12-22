@@ -215,11 +215,7 @@ export const AdminPageHeaderItems = [
         value: "thong-tin-website",
         icon: "SiWebmoney",
       },
-      {
-        label: "Thương Hiệu Website",
-        value: "thuong-hieu-website",
-        icon: "FaTrademark",
-      },
+
       {
         label: "Liên Hệ",
         value: "lien-he",
@@ -247,20 +243,11 @@ export const AdminPageHeaderItems = [
         value: "danh-muc-san-pham",
         icon: "CiBoxList",
       },
-      {
-        label: "Nhóm Sản Phẩm",
-        value: "nhom-san-pham",
-        icon: "TbCategory",
-      },
+
       {
         label: "Slide giới thiệu",
         value: "slide-gioi-thieu",
         icon: "BiSlideshow",
-      },
-      {
-        label: "Cấu Hình SEO",
-        value: "cau-hinh-seo",
-        icon: "TbSeo",
       },
     ],
   },
