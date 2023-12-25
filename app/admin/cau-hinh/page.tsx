@@ -2,7 +2,6 @@ import ContactConfig from "@components/admin/Config/ContactConfig";
 import SeoConfig from "@components/admin/Config/SeoConfig";
 import TrademarkConfig from "@components/admin/Config/TrademarkConfig";
 import WebConfig from "@components/admin/Config/WebConfig";
-import ProductList from "@components/admin/Product/ProductList";
 import React from "react";
 
 const AdminConfigPage = ({
@@ -14,7 +13,7 @@ const AdminConfigPage = ({
   return (
     <div>
       {searchParamsValue === "thong-tin-website" ? (
-        <ProductList />
+        <WebConfig />
       ) : searchParamsValue === "thuong-hieu-website" ? (
         <TrademarkConfig />
       ) : searchParamsValue === "lien-he" ? (

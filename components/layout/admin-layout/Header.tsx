@@ -57,7 +57,7 @@ const Header = () => {
                   <p className="w-max text-[14px]">{item.label}</p>
                 </Link>
                 <div className="hidden group-hover:block absolute top-14">
-                  <HeaderDropDown Root={item.label} Data={item.children} />
+                  <HeaderDropDown Root={item.value} Data={item.children} />
                 </div>
               </div>
             );

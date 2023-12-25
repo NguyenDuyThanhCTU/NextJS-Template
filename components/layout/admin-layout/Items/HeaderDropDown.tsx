@@ -1,12 +1,9 @@
 "use client";
 import { IconMapping } from "@assets/item";
-import { useStateProvider } from "@context/StateProvider";
 import Link from "next/link";
 import React from "react";
 
 const HeaderDropDown = ({ Data, Root }: any) => {
-  const { setSelected } = useStateProvider();
-  console.log(Data, Root);
   return (
     <>
       <div className="py-3 min-w-[160px] border-gray-300  border border-solid rounded-lg bg-white relative z-30 ">
@@ -16,7 +13,7 @@ const HeaderDropDown = ({ Data, Root }: any) => {
 
             return (
               <Link
-                href={`/admin/`}
+                href={`/admin/${Root}?tab=${item.value}`}
                 key={index}
                 className="flex gap-2 items-center font-light hover:bg-gray-100 h-max py-2 px-5 text-[14px]  rounded-md cursor-pointer"
               >
