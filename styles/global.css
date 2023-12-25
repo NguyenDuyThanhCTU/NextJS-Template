@@ -73,6 +73,15 @@
   }
 }
 
+
+.admin-label {
+font-size: 17px;
+font-weight: 300;
+font-family: lexend deca;
+}
+
+
+
 /*<---------------------------------------------------------- Truncate ----------------------------------------------------------> */
 .truncate1 {
   display: -webkit-box;

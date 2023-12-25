@@ -50,14 +50,14 @@ const Header = () => {
             return (
               <div className="group relative" key={index}>
                 <Link
-                  href={item.value}
+                  href={`/admin/${item.value}?tab=${item?.children[0].value}`}
                   className="flex gap-2 items-center font-light hover:bg-gray-100 h-max py-2 px-5  rounded-md"
                 >
                   <Icon />
                   <p className="w-max text-[14px]">{item.label}</p>
                 </Link>
                 <div className="hidden group-hover:block absolute top-14">
-                  <HeaderDropDown Data={item.children} />
+                  <HeaderDropDown Root={item.label} Data={item.children} />
                 </div>
               </div>
             );

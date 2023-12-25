@@ -207,7 +207,7 @@ export const SocialMediaDashboard = [
 export const AdminPageHeaderItems = [
   {
     label: "Cấu Hình",
-    value: "/admin/cau-hinh?tab=thong-tin-website",
+    value: "cau-hinh",
     icon: "IoSettingsOutline",
     children: [
       {
@@ -230,7 +230,7 @@ export const AdminPageHeaderItems = [
   },
   {
     label: "Sản Phẩm",
-    value: "/admin/san-pham?tab=danh-sach-san-pham",
+    value: "san-pham",
     icon: "GiStarSattelites",
     children: [
       {
@@ -253,7 +253,7 @@ export const AdminPageHeaderItems = [
   },
   {
     label: "Bài Viết",
-    value: "/admin/bai-viet?tab=danh-sach-bai-viet",
+    value: "bai-viet",
     icon: "BsPostcard",
     children: [
       {
@@ -285,7 +285,7 @@ export const AdminPageHeaderItems = [
   },
   {
     label: "Truyền Thông",
-    value: "/admin/truyen-thong?tab=kenh-truyen-thong",
+    value: "truyen-thong",
     icon: "IoShareSocialOutline",
     children: [
       {
@@ -307,7 +307,7 @@ export const AdminPageHeaderItems = [
   },
   {
     label: "Tài Khoản",
-    value: "/admin/tai-khoan?tab=thong-tin-tai-khoan",
+    value: "tai-khoan",
     icon: "MdManageAccounts",
     children: [
       {
@@ -334,7 +334,7 @@ export const AdminPageHeaderItems = [
   },
   {
     label: "Báo Cáo",
-    value: "/admin/bao-cao?tab=luot-truy-cap",
+    value: "bao-cao",
     icon: "TbReport",
     children: [
       {
@@ -362,7 +362,7 @@ export const AdminPageHeaderItems = [
   },
   {
     label: "Tiện Ích",
-    value: "/admin/tien-ich?tab=thong-tin-website",
+    value: "tien-ich",
     icon: "BiHive",
 
     children: [

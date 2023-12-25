@@ -13,6 +13,7 @@ const Notification = () => {
         <div className="flex items-center justify-between border-b border-black cursor-pointer">
           <h2 className="border-b-2 py-2  border-blue-600 font-semibold text-[18px] text-mainorange hover:border-blue-800  duration-300 ">
             Thông tin website
+            
           </h2>
           <div className="flex items-center ">
             <div className=" p-2 hover:bg-adminOrange hover:text-white duration-300">
