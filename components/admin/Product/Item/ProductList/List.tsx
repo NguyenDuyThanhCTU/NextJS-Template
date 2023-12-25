@@ -1,10 +1,12 @@
 "use client";
 import InputForm from "@components/items/server-items/InputForm";
-import { Modal } from "antd";
+import { Drawer, Modal } from "antd";
 import Image from "next/image";
-import React from "react";
-import { FaFilter, FaSort } from "react-icons/fa";
+import React, { useState } from "react";
+import { CiEdit } from "react-icons/ci";
+import { FaFilter, FaPlus, FaSort } from "react-icons/fa";
 import { IoSearchSharp } from "react-icons/io5";
+import { MdDeleteForever, MdNumbers } from "react-icons/md";
 import { PiCardsLight } from "react-icons/pi";
 
 interface ProductProps {
@@ -16,36 +18,56 @@ interface ProductProps {
   view: number;
   time: string;
 }
-
 interface ButtonProps {
-  label: string;
-  onClick: (event: React.ChangeEvent<HTMLButtonElement>) => void;
+  Label: string;
+  Style: string;
+  Clicked: any;
 }
-
-export const Button = ({ label, onClick }: ButtonProps) => {
+export const Button = ({ Label, Style, Clicked }: ButtonProps) => {
   return (
-    <button
-      className="bg-blue-500 px-4 py-2 rounded-lg text-white"
-      onChange={onClick}
+    <div
+      className={`${Style} py-2 px-3  cursor-pointer duration-300  text-white rounded-full flex items-center gap-1`}
+      onClick={Clicked}
     >
-      {label}
-    </button>
+      <div className="text-[20px]">
+        {Label === "Cập Nhật Giá, Thứ Tự" ? (
+          <>
+            {" "}
+            <MdNumbers />
+          </>
+        ) : Label === "Thêm Sản Phẩm" ? (
+          <>
+            <FaPlus />
+          </>
+        ) : Label === "Chỉnh Sửa Sản Phẩm, SEO" ? (
+          <>
+            {" "}
+            <CiEdit />
+          </>
+        ) : (
+          <MdDeleteForever />
+        )}
+      </div>
+      <p> {Label}</p>
+    </div>
   );
 };
 
 const ListProduct = () => {
-  const [isOpenProductModal, setIsOpenProductModal] =
-    React.useState<boolean>(false);
-  const [SelectedProductData, setSelectedProductData] =
-    React.useState<ProductProps>({
-      stt: 0,
-      uid: "",
-      name: "",
-      image: "",
-      price: "",
-      view: 0,
-      time: "",
-    });
+  const [isOpenProductModal, setIsOpenProductModal] = useState<boolean>(false);
+  const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
+  const [isOpenAdd, setIsOpenAdd] = useState<boolean>(false);
+  const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
+  const [isOpenChangeIndex, setIsOpenChangeIndex] = useState<boolean>(false);
+  const [SelectedProductData, setSelectedProductData] = useState<ProductProps>({
+    stt: 0,
+    uid: "",
+    name: "",
+    image: "",
+    price: "",
+    view: 0,
+    time: "",
+  });
 
   const sortItem = [
     {
@@ -247,14 +269,153 @@ const ListProduct = () => {
           </div>
         </div>
       </div>
+
       <>
         <Modal
+          footer={null}
           title={`Bạn muốn thay đổi sản phẩm ${SelectedProductData?.name} ?`}
           open={isOpenProductModal}
+          width={700}
           onCancel={() => setIsOpenProductModal(false)}
         >
-          <div>{/* <Button /> */}</div>
+          <div className="border rounded-xl bg-slate-100">
+            <div className="p-5 grid grid-cols-2  justify-center gap-3">
+              <Button
+                Style="hover:bg-blue-900 bg-blue-700"
+                Label="Cập Nhật Giá, Thứ Tự"
+                Clicked={() => setIsOpenChangeIndex(true)}
+              />
+              <Button
+                Style="hover:bg-orange-900 bg-orange-700"
+                Label="Thêm Sản Phẩm"
+                Clicked={() => setIsOpenAdd(true)}
+              />
+              <Button
+                Style="hover:bg-green-900 bg-green-700"
+                Label="Chỉnh Sửa Sản Phẩm, SEO"
+                Clicked={() => setIsOpenEdit(true)}
+              />
+              <Button
+                Style="hover:bg-red-900 bg-red-700"
+                Label="Xóa Sản Phẩm"
+                Clicked={() => setIsOpenDelete(true)}
+              />
+            </div>
+          </div>
         </Modal>
+      </>
+
+      <>
+        {/* Thay đổi thứ tự sản phẩm */}
+        <Drawer
+          title={`Thay đổi thứ tự, Cập nhật giá cho sản phẩm ${SelectedProductData?.name}`}
+          footer={null}
+          open={isOpenChangeIndex}
+          width={700}
+          onClose={() => setIsOpenChangeIndex(false)}
+          style={{ backgroundColor: "white" }}
+        >
+          <div className="flex flex-col gap-2   font-LexendDeca font-light">
+            <div className="grid grid-cols-2">
+              <div className="flex flex-col gap-1 text-[16px]">
+                <div>Tên sản phẩm:{SelectedProductData?.name}</div>
+                <div className="text-blue-500">
+                  Thứ tự hiện tại: {SelectedProductData?.stt}
+                </div>
+                <div className="text-blue-500">
+                  Giá Hiện tại: {SelectedProductData?.price}
+                </div>
+              </div>
+              <div className="flex flex-col gap-1 text-[16px]">
+                <div className="text-blue-500">Sale hiện tại:</div>
+                <div className="text-blue-500">Giảm giá: %</div>
+                <div className="text-blue-500">Giá mới:</div>
+              </div>
+            </div>
+            <form className="border rounded-lg from-slate-200 to-slate-400 bg-gradient-to-tr mt-5">
+              <div className="p-4 flex flex-col ">
+                <div></div>
+                <div className=" flex flex-col gap-2  pb-5 border-b border-gray-500">
+                  <InputForm Label="Thứ tự" Type="Input" />
+                  <InputForm Label="Giá" Type="Input" />
+                  <InputForm Label="Giảm giá" Type="Checkbox" />
+                  <InputForm Label="Giảm giá (%)" Type="Input" />
+
+                  <div className="text-red-500">Giá mới:</div>
+                </div>{" "}
+                <div className=" flex flex-col gap-2 pt-5 ">
+                  <InputForm Label="Sale" Type="Checkbox" />
+                  <InputForm Label="Thay đổi thời gian Sale" Type="Checkbox" />
+                  <InputForm Label="Thời gian bắt đầu" Type="DatePicker" />
+                  <InputForm Label="Thời gian kết thúc" Type="DatePicker" />
+                  <div className="flex justify-center mt-5">
+                    <button
+                      type="submit"
+                      className="py-2 px-4 bg-blue-700 text-white rounded-lg"
+                    >
+                      Cập nhật
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </Drawer>
+        {/* chỉnh sửa sản phẩm */}
+        <Drawer
+          footer={null}
+          open={isOpenEdit}
+          width={700}
+          onClose={() => setIsOpenEdit(false)}
+        >
+          <div className="p-2 flex flex-col gap-2">
+            <InputForm Label="Tên sản phẩm" Type="Input" />
+            <InputForm Label="Giá sản phẩm" Type="Input" />
+            <InputForm Label="Số lượng sản phẩm" Type="Input" />
+            <InputForm Label="Mô tả sản phẩm" Type="TextArea" />
+            <InputForm Label="Ảnh sản phẩm" Type="Upload" />
+            <InputForm Label="Danh mục sản phẩm" Type="Select" />
+            <InputForm Label="Thương hiệu sản phẩm" Type="Select" />
+            <InputForm Label="Trạng thái sản phẩm" Type="Select" />
+          </div>
+        </Drawer>
+
+        {/* thêm sản phẩm */}
+        <Drawer
+          footer={null}
+          open={isOpenAdd}
+          width={700}
+          onClose={() => setIsOpenAdd(false)}
+        >
+          <div className="p-2 flex flex-col gap-2">
+            <InputForm Label="Tên sản phẩm" Type="Input" />
+            <InputForm Label="Giá sản phẩm" Type="Input" />
+            <InputForm Label="Số lượng sản phẩm" Type="Input" />
+            <InputForm Label="Mô tả sản phẩm" Type="TextArea" />
+            <InputForm Label="Ảnh sản phẩm" Type="Upload" />
+            <InputForm Label="Danh mục sản phẩm" Type="Select" />
+            <InputForm Label="Thương hiệu sản phẩm" Type="Select" />
+            <InputForm Label="Trạng thái sản phẩm" Type="Select" />
+          </div>
+        </Drawer>
+        {/* xóa sản phẩm */}
+        <Drawer
+          footer={null}
+          open={isOpenDelete}
+          width={700}
+          onClose={() => setIsOpenDelete(false)}
+        >
+          <div className="p-2 flex flex-col gap-2">
+            <InputForm Label="Tên sản phẩm" Type="Input" />
+            <InputForm Label="Giá sản phẩm" Type="Input" />
+            <InputForm Label="Số lượng sản phẩm" Type="Input" />
+            <InputForm Label="Mô tả sản phẩm" Type="TextArea" />
+            <InputForm Label="Ảnh sản phẩm" Type="Upload" />
+            <InputForm Label="Danh mục sản phẩm" Type="Select" />
+            <InputForm Label="Thương hiệu sản phẩm" Type="Select" />
+            <InputForm Label="Trạng thái sản phẩm" Type="Select" />
+          </div>
+        </Drawer>
       </>
     </div>
   );
