@@ -12,8 +12,7 @@ import UpdateIndex from "./Update/UpdateIndex";
 import { useStateProvider } from "@context/StateProvider";
 
 interface ProductProps {
-  stt: number;
-  pid: string;
+  pid: number;
   name: string;
   image: string;
   price: string;
@@ -71,8 +70,7 @@ const ListProduct = () => {
   const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
   const [isOpenChangeIndex, setIsOpenChangeIndex] = useState<boolean>(false);
   const [SelectedProductData, setSelectedProductData] = useState<ProductProps>({
-    stt: 0,
-    pid: "",
+    pid: 0,
     name: "",
     image: "",
     price: "",
@@ -114,7 +112,6 @@ const ListProduct = () => {
   ];
   const productItem = [
     {
-      stt: 1,
       pid: "1215",
       name: "Áo thun nam",
       image:
@@ -124,7 +121,6 @@ const ListProduct = () => {
       time: "10/10/2021",
     },
     {
-      stt: 2,
       pid: "1216",
       name: "Áo thun nữ",
       image:
@@ -134,7 +130,6 @@ const ListProduct = () => {
       time: "10/10/2021",
     },
     {
-      stt: 3,
       pid: "1217",
       name: "Áo thun trẻ em",
       image:
@@ -144,7 +139,6 @@ const ListProduct = () => {
       time: "10/10/2021",
     },
     {
-      stt: 4,
       pid: "1218",
       name: "Áo thun nam",
       image:
@@ -154,7 +148,6 @@ const ListProduct = () => {
       time: "10/10/2021",
     },
     {
-      stt: 5,
       pid: "1219",
       name: "Áo thun nam",
       image:
@@ -225,7 +218,6 @@ const ListProduct = () => {
               "STT",
               "Sản phẩm",
               "Hình Ảnh",
-
               "Lượt Xem",
               "Đơn Giá",
               "Thời gian",
@@ -251,9 +243,7 @@ const ListProduct = () => {
                 key={idx}
                 onClick={() => HandleSelectProduct(item.pid)}
               >
-                <div className="flex justify-center items-center">
-                  {item.stt}
-                </div>
+                <div className="flex justify-center items-center">{idx}</div>
                 <div className="col-span-3">
                   <div className="text-[#16757c]">{item.name}</div>
                   <div className="flex items-center gap-2 mt-2">
@@ -332,7 +322,10 @@ const ListProduct = () => {
           onClose={() => setIsOpenChangeIndex(false)}
           style={{ backgroundColor: "white" }}
         >
-          <UpdateIndex Data={productItem} HandleForm={HandleUpdateIndexForm} />
+          <UpdateIndex
+            Data={SelectedProductData}
+            HandleForm={HandleUpdateIndexForm}
+          />
         </Drawer>
         {/* chỉnh sửa sản phẩm */}
         <Drawer

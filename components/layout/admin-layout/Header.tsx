@@ -95,8 +95,9 @@ const Header = () => {
             </div>
           </div>
           <div>
-            <div className="relative h-10 w-10 ">
+            <div className="relative w-10 h-10 ">
               <Image
+                sizes="(min-width: 808px) 50vw, 100vw"
                 src="https://firebasestorage.googleapis.com/v0/b/adminads-11c80.appspot.com/o/Truth.png?alt=media&token=63945692-a35c-4419-9f56-a1c3292558ed"
                 alt="avt"
                 fill

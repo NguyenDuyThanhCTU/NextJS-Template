@@ -15,6 +15,7 @@ interface InputFormProps {
     | "DatePicker"
     | "TimePicker"
     | "ColorPicker";
+  setState?: any;
   setUpload?: any;
   FormData?: any;
   setFormData?: any;
@@ -24,6 +25,7 @@ interface InputFormProps {
 const InputForm = ({
   Label,
   Type,
+  setState,
   setUpload,
   FormData,
   setFormData,
@@ -45,6 +47,7 @@ const InputForm = ({
               <input
                 type="text"
                 className=" outline-none"
+                value={field ? FormData[field] : FormData}
                 onChange={(e) =>
                   setFormData({ ...FormData, [field]: e.target.value })
                 }
@@ -58,11 +61,27 @@ const InputForm = ({
             <div className="grid grid-cols-8  items-center  w-full justify-between  ">
               <div className="col-span-2">{Label}:</div>
               <div className="col-span-6">
-                <input
-                  type="checkbox"
-                  className=" outline-none"
-                  onChange={setUpload}
-                />
+                {field ? (
+                  <>
+                    <input
+                      type="checkbox"
+                      checked={FormData[field]}
+                      className=" outline-none"
+                      onChange={(e) =>
+                        setFormData({ ...FormData, [field]: e.target.checked })
+                      }
+                    />
+                  </>
+                ) : (
+                  <>
+                    {" "}
+                    <input
+                      type="checkbox"
+                      className=" outline-none"
+                      onChange={(e) => setState(e.target.checked)}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </>
@@ -80,7 +99,9 @@ const InputForm = ({
                 <input
                   type="date"
                   className=" outline-none"
-                  onChange={setUpload}
+                  onChange={(e) =>
+                    setFormData({ ...FormData, [field]: e.target.value })
+                  }
                 />
               </div>
             </div>
