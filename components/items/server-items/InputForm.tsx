@@ -16,9 +16,19 @@ interface InputFormProps {
     | "TimePicker"
     | "ColorPicker";
   setUpload?: any;
+  FormData?: any;
+  setFormData?: any;
+  field?: any;
 }
 
-const InputForm = ({ Label, Type, setUpload }: InputFormProps) => {
+const InputForm = ({
+  Label,
+  Type,
+  setUpload,
+  FormData,
+  setFormData,
+  field,
+}: InputFormProps) => {
   return (
     <>
       <div>
@@ -29,13 +39,15 @@ const InputForm = ({ Label, Type, setUpload }: InputFormProps) => {
         ) : Type === "Select" ? (
           <></>
         ) : Type === "Input" ? (
-          <div className="grid grid-cols-5  items-center  w-full justify-between  ">
-            <div className="">{Label}:</div>
-            <div className="px-4 py-1 bg-white rounded-lg w-full col-span-4">
+          <div className="grid grid-cols-8  items-center  w-full justify-between  ">
+            <div className="col-span-2">{Label}:</div>
+            <div className="px-4 py-1 bg-white rounded-lg w-full col-span-6">
               <input
                 type="text"
                 className=" outline-none"
-                onChange={setUpload}
+                onChange={(e) =>
+                  setFormData({ ...FormData, [field]: e.target.value })
+                }
               />
             </div>
           </div>
@@ -43,13 +55,15 @@ const InputForm = ({ Label, Type, setUpload }: InputFormProps) => {
           <></>
         ) : Type === "Checkbox" ? (
           <>
-            <div className="flex gap-3 ">
-              <div className="">{Label}:</div>
-              <input
-                type="checkbox"
-                className=" outline-none"
-                onChange={setUpload}
-              />
+            <div className="grid grid-cols-8  items-center  w-full justify-between  ">
+              <div className="col-span-2">{Label}:</div>
+              <div className="col-span-6">
+                <input
+                  type="checkbox"
+                  className=" outline-none"
+                  onChange={setUpload}
+                />
+              </div>
             </div>
           </>
         ) : Type === "Radio" ? (
@@ -60,9 +74,9 @@ const InputForm = ({ Label, Type, setUpload }: InputFormProps) => {
           <></>
         ) : Type === "DatePicker" ? (
           <>
-            <div className="grid grid-cols-5  items-center  w-full justify-between  ">
-              <div className="">{Label}:</div>
-              <div className="px-4 py-1 bg-white rounded-lg w-max col-span-4">
+            <div className="grid grid-cols-8 gap-3  items-center  w-full justify-between  ">
+              <div className="col-span-2">{Label}:</div>
+              <div className="px-4 py-1 bg-white rounded-lg w-max col-span-6">
                 <input
                   type="date"
                   className=" outline-none"

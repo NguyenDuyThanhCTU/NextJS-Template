@@ -1,6 +1,8 @@
 import React from "react";
-import ListProduct from "./List";
+
 import ListProductReport from "./Report";
+import ListProductHistory from "./History/History";
+import ListProduct from "./List/List";
 
 const ListProductContent = () => {
   return (
@@ -9,7 +11,7 @@ const ListProductContent = () => {
         <ListProduct />
       </div>
       <div className="col-span-2">
-        <ListProductReport />
+        <ListProductHistory />
       </div>
     </div>
   );

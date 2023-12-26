@@ -8,10 +8,12 @@ import { FaFilter, FaPlus, FaSort } from "react-icons/fa";
 import { IoSearchSharp } from "react-icons/io5";
 import { MdDeleteForever, MdNumbers } from "react-icons/md";
 import { PiCardsLight } from "react-icons/pi";
+import UpdateIndex from "./Update/UpdateIndex";
+import { useStateProvider } from "@context/StateProvider";
 
 interface ProductProps {
   stt: number;
-  uid: string;
+  pid: string;
   name: string;
   image: string;
   price: string;
@@ -23,6 +25,15 @@ interface ButtonProps {
   Style: string;
   Clicked: any;
 }
+
+interface UpdateIndexProps {
+  pid: string;
+  price: number;
+  discount: number;
+  newprice: number;
+  sale: boolean;
+}
+
 export const Button = ({ Label, Style, Clicked }: ButtonProps) => {
   return (
     <div
@@ -61,13 +72,15 @@ const ListProduct = () => {
   const [isOpenChangeIndex, setIsOpenChangeIndex] = useState<boolean>(false);
   const [SelectedProductData, setSelectedProductData] = useState<ProductProps>({
     stt: 0,
-    uid: "",
+    pid: "",
     name: "",
     image: "",
     price: "",
     view: 0,
     time: "",
   });
+
+  const { FormData } = useStateProvider();
 
   const sortItem = [
     {
@@ -102,7 +115,7 @@ const ListProduct = () => {
   const productItem = [
     {
       stt: 1,
-      uid: "1215",
+      pid: "1215",
       name: "Áo thun nam",
       image:
         "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
@@ -112,7 +125,7 @@ const ListProduct = () => {
     },
     {
       stt: 2,
-      uid: "1216",
+      pid: "1216",
       name: "Áo thun nữ",
       image:
         "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
@@ -122,7 +135,7 @@ const ListProduct = () => {
     },
     {
       stt: 3,
-      uid: "1217",
+      pid: "1217",
       name: "Áo thun trẻ em",
       image:
         "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
@@ -132,7 +145,7 @@ const ListProduct = () => {
     },
     {
       stt: 4,
-      uid: "1218",
+      pid: "1218",
       name: "Áo thun nam",
       image:
         "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
@@ -142,7 +155,7 @@ const ListProduct = () => {
     },
     {
       stt: 5,
-      uid: "1219",
+      pid: "1219",
       name: "Áo thun nam",
       image:
         "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
@@ -153,9 +166,13 @@ const ListProduct = () => {
   ];
 
   const HandleSelectProduct = (id: string) => {
-    const sort = productItem?.filter((item) => item.uid === id);
+    const sort = productItem?.filter((item) => item.pid === id);
     setSelectedProductData(sort[0]);
     setIsOpenProductModal(true);
+  };
+  const HandleUpdateIndexForm = (e: any) => {
+    e.preventDefault();
+    console.log(FormData);
   };
 
   return (
@@ -232,7 +249,7 @@ const ListProduct = () => {
               <div
                 className="grid grid-cols-8 border-b py-3 cursor-pointer hover:bg-slate-100"
                 key={idx}
-                onClick={() => HandleSelectProduct(item.uid)}
+                onClick={() => HandleSelectProduct(item.pid)}
               >
                 <div className="flex justify-center items-center">
                   {item.stt}
@@ -242,7 +259,7 @@ const ListProduct = () => {
                   <div className="flex items-center gap-2 mt-2">
                     <span>Mã SP:</span>
                     <div className="rounded-md px-3 py-1 bg-gray-200">
-                      #{item.uid}
+                      #{item.pid}
                     </div>
                   </div>
                 </div>
@@ -315,51 +332,7 @@ const ListProduct = () => {
           onClose={() => setIsOpenChangeIndex(false)}
           style={{ backgroundColor: "white" }}
         >
-          <div className="flex flex-col gap-2   font-LexendDeca font-light">
-            <div className="grid grid-cols-2">
-              <div className="flex flex-col gap-1 text-[16px]">
-                <div>Tên sản phẩm:{SelectedProductData?.name}</div>
-                <div className="text-blue-500">
-                  Thứ tự hiện tại: {SelectedProductData?.stt}
-                </div>
-                <div className="text-blue-500">
-                  Giá Hiện tại: {SelectedProductData?.price}
-                </div>
-              </div>
-              <div className="flex flex-col gap-1 text-[16px]">
-                <div className="text-blue-500">Sale hiện tại:</div>
-                <div className="text-blue-500">Giảm giá: %</div>
-                <div className="text-blue-500">Giá mới:</div>
-              </div>
-            </div>
-            <form className="border rounded-lg from-slate-200 to-slate-400 bg-gradient-to-tr mt-5">
-              <div className="p-4 flex flex-col ">
-                <div></div>
-                <div className=" flex flex-col gap-2  pb-5 border-b border-gray-500">
-                  <InputForm Label="Thứ tự" Type="Input" />
-                  <InputForm Label="Giá" Type="Input" />
-                  <InputForm Label="Giảm giá" Type="Checkbox" />
-                  <InputForm Label="Giảm giá (%)" Type="Input" />
-
-                  <div className="text-red-500">Giá mới:</div>
-                </div>{" "}
-                <div className=" flex flex-col gap-2 pt-5 ">
-                  <InputForm Label="Sale" Type="Checkbox" />
-                  <InputForm Label="Thay đổi thời gian Sale" Type="Checkbox" />
-                  <InputForm Label="Thời gian bắt đầu" Type="DatePicker" />
-                  <InputForm Label="Thời gian kết thúc" Type="DatePicker" />
-                  <div className="flex justify-center mt-5">
-                    <button
-                      type="submit"
-                      className="py-2 px-4 bg-blue-700 text-white rounded-lg"
-                    >
-                      Cập nhật
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
+          <UpdateIndex Data={productItem} HandleForm={HandleUpdateIndexForm} />
         </Drawer>
         {/* chỉnh sửa sản phẩm */}
         <Drawer
