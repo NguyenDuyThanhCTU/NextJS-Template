@@ -10,7 +10,6 @@ const EditButton = ({ onClick }: any) => {
       onClick(true);
     } else {
       setFormNotification(true);
-      onClick(true);
     }
   };
   return (

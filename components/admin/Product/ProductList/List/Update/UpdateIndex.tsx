@@ -1,6 +1,7 @@
 import EditButton from "@components/items/server-items/EditButton";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
+import { Modal } from "antd";
 import React from "react";
 
 interface UpdateIndexProps {
@@ -10,6 +11,7 @@ interface UpdateIndexProps {
 
 const UpdateIndex = ({ Data, HandleForm }: UpdateIndexProps) => {
   const [isOpenForm, setIsOpenForm] = React.useState(false);
+  const [isOpenSale, setIsOpenSale] = React.useState(false);
   const [isOpenDiscount, setIsOpenDiscount] = React.useState(false);
 
   const { FormData, setFormData } = useStateProvider();
@@ -18,6 +20,16 @@ const UpdateIndex = ({ Data, HandleForm }: UpdateIndexProps) => {
     e.preventDefault();
     console.log(FormData);
     // const From: startpoint, endpoint
+  };
+
+  const HandleCloseForm = (type: string) => {
+    if (type === "Update") {
+      setFormData({});
+      setIsOpenForm(false);
+    } else {
+      setIsOpenSale(false);
+      setFormData({});
+    }
   };
 
   return (
@@ -55,72 +67,9 @@ const UpdateIndex = ({ Data, HandleForm }: UpdateIndexProps) => {
             </div>
           </div>
         </div>
-        {isOpenForm && (
-          <>
-            {" "}
-            <form
-              className="border rounded-lg from-slate-200 to-slate-400 bg-gradient-to-tr mt-5"
-              onSubmit={HandleForm}
-            >
-              <div className="p-4 flex flex-col ">
-                <div className=" flex flex-col gap-2  pb-5 border-b border-gray-500">
-                  <InputForm
-                    Label="Thứ tự"
-                    Type="Input"
-                    FormData={FormData}
-                    setFormData={setFormData}
-                    field="pid"
-                  />
-                  <InputForm
-                    Label="Giá"
-                    Type="Input"
-                    FormData={FormData}
-                    setFormData={setFormData}
-                    field="price"
-                  />
-                  <InputForm
-                    Label="Giảm giá"
-                    Type="Checkbox"
-                    setState={setIsOpenDiscount}
-                  />
-                  {isOpenDiscount && (
-                    <InputForm
-                      Label="Giảm giá (%)"
-                      Type="Input"
-                      FormData={FormData}
-                      setFormData={setFormData}
-                      field="discount"
-                    />
-                  )}
-
-                  {FormData?.discount && (
-                    <div className="text-red-500">Giá mới:</div>
-                  )}
-                  <InputForm
-                    Label="Sale"
-                    Type="Checkbox"
-                    FormData={FormData}
-                    setFormData={setFormData}
-                    field="sale"
-                  />
-                </div>{" "}
-                <div className=" flex flex-col gap-2 pt-5 ">
-                  <div className="flex justify-center mt-2">
-                    <button
-                      type="submit"
-                      className="py-2 px-4 bg-blue-700 text-white rounded-lg"
-                    >
-                      Cập nhật
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </>
-        )}
       </div>
       <div className="pt-5">
-        <div className="border-x-2 rounded-lg   border-red-500">
+        <div className="border rounded-lg border-slate-500">
           <div className="p-6">
             <div className="flex justify-between">
               <h2 className="font-normal text-[20px]">
@@ -144,45 +93,112 @@ const UpdateIndex = ({ Data, HandleForm }: UpdateIndexProps) => {
             </div>
           </div>
         </div>
+      </div>
+      <>
+        <Modal
+          title="Cập nhật sản phẩm"
+          open={isOpenForm}
+          onCancel={() => setIsOpenForm(false)}
+          destroyOnClose={true}
+          
+          footer={null}
+        >
+          <form className="bg-gray-100 mt-5" onSubmit={HandleForm}>
+            <div className="p-4 flex flex-col ">
+              <div className=" flex flex-col gap-2  pb-5 border-b border-gray-500">
+                <InputForm
+                  Label="Thứ tự"
+                  Type="InputNumber"
+                  FormData={FormData}
+                  setFormData={setFormData}
+                  field="pid"
+                />
+                <InputForm
+                  Label="Giá"
+                  Type="InputNumber"
+                  FormData={FormData}
+                  setFormData={setFormData}
+                  field="price"
+                />
+                <InputForm
+                  Label="Giảm giá"
+                  Type="Checkbox"
+                  setState={setIsOpenDiscount}
+                />
+                {isOpenDiscount && (
+                  <InputForm
+                    Label="Giảm giá (%)"
+                    Type="InputNumber"
+                    FormData={FormData}
+                    setFormData={setFormData}
+                    field="discount"
+                  />
+                )}
 
-        {!isOpenForm && (
-          <>
-            <form
-              className="border rounded-lg from-slate-200 to-slate-400 bg-gradient-to-tr mt-5"
-              onSubmit={HandleSaleForm}
-            >
-              <div className="p-4 flex flex-col ">
-                <div className=" flex flex-col gap-2  pb-5 border-b border-gray-500">
-                  <InputForm
-                    Label="Thời gian bắt đầu"
-                    Type="DatePicker"
-                    field="startpoint"
-                    FormData={FormData}
-                    setFormData={setFormData}
-                  />
-                  <InputForm
-                    Label="Thời gian kết thúc"
-                    Type="DatePicker"
-                    field="endpoint"
-                    FormData={FormData}
-                    setFormData={setFormData}
-                  />
-                </div>
-                <div className=" flex flex-col gap-2 pt-5 ">
-                  <div className="flex justify-center mt-2">
-                    <button
-                      type="submit"
-                      className="py-2 px-4 bg-blue-700 text-white rounded-lg"
-                    >
-                      Cập nhật
-                    </button>
-                  </div>
+                {FormData?.discount && (
+                  <div className="text-red-500">Giá mới:</div>
+                )}
+                <InputForm
+                  Label="Sale"
+                  Type="Checkbox"
+                  FormData={FormData}
+                  setFormData={setFormData}
+                  field="sale"
+                />
+              </div>{" "}
+              <div className=" flex flex-col gap-2 pt-5 ">
+                <div className="flex justify-center mt-2">
+                  <button
+                    type="submit"
+                    className="py-2 px-4 bg-blue-700 text-white rounded-lg"
+                  >
+                    Cập nhật
+                  </button>
                 </div>
               </div>
-            </form>
-          </>
-        )}
-      </div>
+            </div>
+          </form>
+        </Modal>
+      </>
+      <>
+        <Modal
+          title="Cập nhật thời gian sale"
+          open={isOpenSale}
+          onCancel={() => HandleCloseForm("Sale")}
+          footer={null}
+        >
+          <form className="bg-gray-100 mt-5" onSubmit={HandleSaleForm}>
+            <div className="p-4 flex flex-col ">
+              <div className=" flex flex-col gap-2  pb-5 border-b border-gray-500">
+                <InputForm
+                  Label="Thời gian bắt đầu"
+                  Type="DatePicker"
+                  field="startpoint"
+                  FormData={FormData}
+                  setFormData={setFormData}
+                />
+                <InputForm
+                  Label="Thời gian kết thúc"
+                  Type="DatePicker"
+                  field="endpoint"
+                  FormData={FormData}
+                  setFormData={setFormData}
+                />
+              </div>
+              <div className=" flex flex-col gap-2 pt-5 ">
+                <div className="flex justify-center mt-2">
+                  <button
+                    type="submit"
+                    className="py-2 px-4 bg-blue-700 text-white rounded-lg"
+                  >
+                    Cập nhật
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </Modal>
+      </>
     </div>
   );
 };

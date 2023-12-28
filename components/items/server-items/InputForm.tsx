@@ -14,7 +14,8 @@ interface InputFormProps {
     | "Slider"
     | "DatePicker"
     | "TimePicker"
-    | "ColorPicker";
+    | "ColorPicker"
+    | "InputNumber";
   setState?: any;
   setUpload?: any;
   FormData?: any;
@@ -46,7 +47,21 @@ const InputForm = ({
             <div className="px-4 py-1 bg-white rounded-lg w-full col-span-6">
               <input
                 type="text"
-                className=" outline-none"
+                className=" outline-none w-full"
+                value={field ? FormData[field] : FormData}
+                onChange={(e) =>
+                  setFormData({ ...FormData, [field]: e.target.value })
+                }
+              />
+            </div>
+          </div>
+        ) : Type === "InputNumber" ? (
+          <div className="grid grid-cols-8  items-center  w-full justify-between  ">
+            <div className="col-span-2">{Label}:</div>
+            <div className="px-4 py-1 bg-white rounded-lg w-full col-span-6">
+              <input
+                type="number"
+                className=" outline-none w-full"
                 value={field ? FormData[field] : FormData}
                 onChange={(e) =>
                   setFormData({ ...FormData, [field]: e.target.value })

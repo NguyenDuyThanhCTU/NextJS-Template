@@ -6,6 +6,50 @@ import { GiNewspaper } from "react-icons/gi";
 import { IoIosNotifications } from "react-icons/io";
 import { TbAccessPoint } from "react-icons/tb";
 
+interface ReportCardProps {
+  Label: string;
+  Value?: number;
+}
+
+export const ReportCard = ({ Label, Value }: ReportCardProps) => {
+  return (
+    <div
+      className={`${
+        Label === "Tổng Số Sản Phẩm"
+          ? "bg-[#FF9F1C]"
+          : Label === "Tổng Số Tin Tức"
+          ? "bg-[#4360F0]"
+          : Label === "Tổng Số Truy Cập"
+          ? "bg-[#FF6A6B]"
+          : "bg-[#4DCDC4]"
+      }  text-white rounded-md`}
+    >
+      <div className="p-3 grid grid-cols-5 gap-2 items-center">
+        <div className="col-span-4 font-semibold">
+          <h3 className="text-[40px] ">{Value}</h3>
+          <p className="text-[20px]">{Label}</p>
+        </div>
+        <div className="flex">
+          <div
+            className="bg-[rgba(255,255,255,0.35)] p-2 text-[30px] rounded-full h-max
+                "
+          >
+            {Label === "Tổng Số Sản Phẩm" ? (
+              <CiBoxList />
+            ) : Label === "Tổng Số Tin Tức" ? (
+              <GiNewspaper />
+            ) : Label === "Tổng Số Truy Cập" ? (
+              <TbAccessPoint />
+            ) : (
+              <IoIosNotifications />
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const AdminHomePage = () => {
   const FunctionItem = [
     {
@@ -103,70 +147,10 @@ const AdminHomePage = () => {
     <div>
       <div className="w-[1200px] mx-auto flex flex-col gap-5">
         <div className="grid grid-cols-4 gap-3">
-          <div className="bg-[#FF9F1C] text-white rounded-md">
-            <div className="p-3 grid grid-cols-5 gap-2 items-center">
-              <div className="col-span-4 font-semibold">
-                <h3 className="text-[40px] ">251</h3>
-                <p className="text-[20px]">Tổng Số Sản Phẩm</p>
-              </div>
-              <div className="flex">
-                <div
-                  className="bg-[rgba(255,255,255,0.35)] p-2 text-[30px] rounded-full h-max
-                "
-                >
-                  <CiBoxList />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="bg-[#4360F0] text-white rounded-md">
-            <div className="p-3 grid grid-cols-5 gap-2 items-center">
-              <div className="col-span-4 font-semibold">
-                <h3 className="text-[40px] ">251</h3>
-                <p className="text-[20px]">Tổng Số Tin Tức</p>
-              </div>
-              <div className="flex">
-                <div
-                  className="bg-[rgba(255,255,255,0.35)] p-2 text-[30px] rounded-full h-max
-                "
-                >
-                  <GiNewspaper />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="bg-[#FF6A6B] text-white rounded-md">
-            <div className="p-3 grid grid-cols-5 gap-2 items-center">
-              <div className="col-span-4 font-semibold">
-                <h3 className="text-[40px] ">251</h3>
-                <p className="text-[20px]">Tổng Số Truy Cập </p>
-              </div>
-              <div className="flex">
-                <div
-                  className="bg-[rgba(255,255,255,0.35)] p-2 text-[30px] rounded-full h-max
-                "
-                >
-                  <TbAccessPoint />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="bg-[#4DCDC4] text-white rounded-md">
-            <div className="p-3 grid grid-cols-5 gap-2 items-center">
-              <div className="col-span-4 font-semibold">
-                <h3 className="text-[40px] ">251</h3>
-                <p className="text-[18px]">Thông báo</p>
-              </div>
-              <div className="flex">
-                <div
-                  className="bg-[rgba(255,255,255,0.35)] p-2 text-[30px] rounded-full h-max
-                "
-                >
-                  <IoIosNotifications />
-                </div>
-              </div>
-            </div>
-          </div>
+          <ReportCard Label="Tổng Số Sản Phẩm" Value={255} />
+          <ReportCard Label="Tổng Số Tin Tức" />
+          <ReportCard Label="Tổng Số Truy Cập" />
+          <ReportCard Label="Tổng Số Thông Báo" />
         </div>
         <div className="py-5 grid grid-cols-8 gap-10 ">
           <div className="col-span-2">
