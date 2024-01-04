@@ -76,7 +76,7 @@ const UpdateIndex = ({ Data, HandleForm }: UpdateIndexProps) => {
                 Thay đổi thời gian sale
               </h2>
               <div>
-                <EditButton onClick={() => setIsOpenForm(false)} />
+                <EditButton onClick={() => setIsOpenSale(true)} />
               </div>
             </div>
             <div className="grid grid-cols-2 text-[16px] mt-5">
@@ -100,7 +100,7 @@ const UpdateIndex = ({ Data, HandleForm }: UpdateIndexProps) => {
           open={isOpenForm}
           onCancel={() => setIsOpenForm(false)}
           destroyOnClose={true}
-          
+          afterClose={() => setFormData({})}
           footer={null}
         >
           <form className="bg-gray-100 mt-5" onSubmit={HandleForm}>
@@ -164,7 +164,9 @@ const UpdateIndex = ({ Data, HandleForm }: UpdateIndexProps) => {
         <Modal
           title="Cập nhật thời gian sale"
           open={isOpenSale}
-          onCancel={() => HandleCloseForm("Sale")}
+          onCancel={() => setIsOpenSale(false)}
+          destroyOnClose={true}
+          afterClose={() => setFormData({})}
           footer={null}
         >
           <form className="bg-gray-100 mt-5" onSubmit={HandleSaleForm}>

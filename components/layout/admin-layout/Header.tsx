@@ -31,7 +31,7 @@ const Header = () => {
   }, [search]);
 
   return (
-    <div>
+    <div className="z-50 relative">
       <div className="border-b shadow-xl  h-[65px] grid grid-cols-4 fixed top-0 w-full bg-white">
         <Link href={`/admin`} className="w-full ">
           <div className="h-[60px] w-full relative ">
@@ -56,7 +56,7 @@ const Header = () => {
                   <Icon />
                   <p className="w-max text-[14px]">{item.label}</p>
                 </Link>
-                <div className="hidden group-hover:block absolute top-14">
+                <div className="hidden group-hover:block absolute top-14 z-50 ">
                   <HeaderDropDown Root={item.value} Data={item.children} />
                 </div>
               </div>

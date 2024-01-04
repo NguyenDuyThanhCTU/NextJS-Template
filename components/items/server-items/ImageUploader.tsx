@@ -1,20 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { useDropzone } from "react-dropzone";
+import { uploadImage } from "./Handle";
 
-const ImageUploader = (onChange: any) => {
+interface ImageUploaderProps {
+  setForm: (value: string) => void;
+  Form?: any;
+  Field?: any;
+}
+
+const ImageUploader = ({ setForm, Field, Form }: ImageUploaderProps) => {
   const [uploadedFile, setUploadedFile] = useState(null);
 
   const onDrop = (acceptedFiles: any) => {
-    // Handle the dropped file here (e.g., upload to server, update state, etc.)
     const file = acceptedFiles[0];
-    setUploadedFile(file);
+
+    uploadImage(file, "avatar").then((url) => {
+      setForm({ ...Form, [Field]: url });
+      setUploadedFile(file);
+    });
   };
+  useEffect(() => {
+    if (Form[Field] === undefined) {
+      setUploadedFile(null);
+    }
+  }, [Form[Field]]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-    <div className="w-full max-w-xs mx-auto">
+    <div className="w-full max-w-xs mx-auto cursor-pointer">
       <div
         {...getRootProps()}
         className={`bg-gray-200 border-2 border-dashed border-gray-400 rounded-lg p-6 text-center ${

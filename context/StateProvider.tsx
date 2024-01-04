@@ -22,8 +22,6 @@ export type StateContextType = {
   setRefetch: (refetch: any) => void;
   FormData: any;
   setFormData: (formData: any) => void;
-  FormNotification: boolean;
-  setFormNotification: (formNotification: boolean) => void;
 };
 
 export const StateContext = createContext<StateContextType>({
@@ -43,8 +41,6 @@ export const StateContext = createContext<StateContextType>({
   setRefetch: () => {},
   FormData: {},
   setFormData: () => {},
-  FormNotification: false,
-  setFormNotification: () => {},
 });
 
 export const StateProvider = ({ children }: Props) => {
@@ -65,8 +61,6 @@ export const StateProvider = ({ children }: Props) => {
   return (
     <StateContext.Provider
       value={{
-        FormNotification,
-        setFormNotification,
         FormData,
         setFormData,
         Refetch,

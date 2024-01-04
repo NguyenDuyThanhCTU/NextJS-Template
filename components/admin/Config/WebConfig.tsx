@@ -1,27 +1,31 @@
 "use client";
+import { HeaderItems } from "@assets/item";
 import EditButton from "@components/items/server-items/EditButton";
 import ImageUploader from "@components/items/server-items/ImageUploader";
 import InputForm from "@components/items/server-items/InputForm";
+import { updateDocument } from "@config/Services/Firebase/FireStoreDB";
+import { useData } from "@context/DataProviders";
+import { useStateProvider } from "@context/StateProvider";
+import { UpdateDataProps } from "@lib/get-data";
 import { Modal, Tooltip } from "antd";
 import Image from "next/image";
 import React from "react";
 import { FaRegCircleQuestion } from "react-icons/fa6";
 
-const WebConfig = () => {
+const WebConfig = ({ Data }: any) => {
   const [isOpen404Modal, setIsOpen404Modal] = React.useState(false);
-  const [is404FormData, setIs404FormData] = React.useState({
-    image: "",
-    defaultRedirect: "",
-    optionalRedirection: "",
-  });
-  const Handle404Submit = (e: any) => {
+  const { FormData, setFormData } = useStateProvider();
+  const Handle404Submit = async (e: any) => {
     e.preventDefault();
+    await UpdateDataProps("Config", "information", FormData);
+    setIsOpen404Modal(false);
   };
+
   return (
     <div className="">
       <div className="w-full grid grid-cols-4 px-10 font-light">
         <div className="col-span-2">
-          <h1 className="text-[30px] font-semibold">Trang Cấu Hình Website</h1>
+          <h1 className="text-[30px] font-semibold">Trang Cấu Hình Website </h1>
           <p className=" text-gray-500">
             Đây là những gì khách hàng đang nhìn thấy từ website của bạn
           </p>
@@ -48,7 +52,7 @@ const WebConfig = () => {
               <h3>Ảnh hiển thị:</h3>
               <div className="relative mt-2  h-[150px]">
                 <Image
-                  src="https://firebasestorage.googleapis.com/v0/b/adminads-11c80.appspot.com/o/config%2F404.jpg?alt=media&token=c1b66f3b-b6f1-49ad-9b27-5ffaef8a2f23"
+                  src={Data?.image}
                   alt="404 Not Found"
                   fill
                   sizes="(min-width: 808px) 50vw, 100vw"
@@ -59,8 +63,7 @@ const WebConfig = () => {
               </div>
             </div>
             <div className="mt-2">
-              <div> Chuyển hướng mặc định:</div>
-              <div className="mt-2">Chuyển hướng tự chọn:</div>
+              <div> Chuyển hướng: {Data?.default}</div>
             </div>
           </div>
         </div>
@@ -70,17 +73,31 @@ const WebConfig = () => {
       <>
         <Modal
           title="404 Not Found Editing"
+          footer={null}
           open={isOpen404Modal}
           onCancel={() => setIsOpen404Modal(false)}
+          afterClose={() => setFormData({})}
         >
           <form onSubmit={Handle404Submit} className="p-2 flex flex-col gap-2">
-            <InputForm
-              Label="Tải lên"
-              Type="Upload"
-              setUpload={is404FormData.image}
-            />
+            <div className="">
+              <InputForm
+                Label="Chuyển hướng"
+                Type="Radio"
+                Option={HeaderItems}
+                field={"default"}
+              />
+            </div>
 
-            <InputForm Label="Chuyển hướng mặc định" Type="Select" />
+            <InputForm Label="Tải lên" Type="Upload" field="image" />
+
+            <div className="flex w-full justify-end">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 duration-300 text-white p-2 rounded-md"
+                type="submit"
+              >
+                Cập nhật
+              </button>
+            </div>
           </form>
         </Modal>
       </>

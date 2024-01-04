@@ -4,12 +4,13 @@ import { Drawer, Modal } from "antd";
 import Image from "next/image";
 import React, { useState } from "react";
 import { CiEdit } from "react-icons/ci";
-import { FaFilter, FaPlus, FaSort } from "react-icons/fa";
+import { FaPlus, FaSort } from "react-icons/fa";
 import { IoSearchSharp } from "react-icons/io5";
 import { MdDeleteForever, MdNumbers } from "react-icons/md";
 import { PiCardsLight } from "react-icons/pi";
 import UpdateIndex from "./Update/UpdateIndex";
 import { useStateProvider } from "@context/StateProvider";
+import CreateProduct from "./Create/Create";
 
 interface ProductProps {
   stt: number;
@@ -80,7 +81,7 @@ const ListProduct = () => {
     time: "",
   });
 
-  const { FormData, setFormNotification } = useStateProvider();
+  const { FormData } = useStateProvider();
 
   const sortItem = [
     {
@@ -164,16 +165,6 @@ const ListProduct = () => {
       time: "10/10/2021",
     },
   ];
-
-  const HandleCloseDraw = (type: string) => {
-    if (Object.keys(FormData).length === 0) {
-      if (type === "changeIndex") {
-        setIsOpenChangeIndex(false);
-      }
-    } else {
-      setFormNotification(true);
-    }
-  };
 
   const HandleSelectProduct = (id: string) => {
     const sort = productItem?.filter((item) => item.pid === id);
@@ -340,7 +331,7 @@ const ListProduct = () => {
           footer={null}
           open={isOpenChangeIndex}
           width={700}
-          onClose={() => HandleCloseDraw("changeIndex")}
+          onClose={() => setIsOpenChangeIndex(false)}
           style={{ backgroundColor: "white" }}
         >
           <UpdateIndex
@@ -349,6 +340,7 @@ const ListProduct = () => {
           />
         </Drawer>
         {/* chỉnh sửa sản phẩm */}
+
         <Drawer
           footer={null}
           open={isOpenEdit}
@@ -369,21 +361,13 @@ const ListProduct = () => {
 
         {/* thêm sản phẩm */}
         <Drawer
+          title="Thêm mới sản phẩm"
           footer={null}
           open={isOpenAdd}
           width={700}
           onClose={() => setIsOpenAdd(false)}
         >
-          <div className="p-2 flex flex-col gap-2">
-            <InputForm Label="Tên sản phẩm" Type="Input" />
-            <InputForm Label="Giá sản phẩm" Type="Input" />
-            <InputForm Label="Số lượng sản phẩm" Type="Input" />
-            <InputForm Label="Mô tả sản phẩm" Type="TextArea" />
-            <InputForm Label="Ảnh sản phẩm" Type="Upload" />
-            <InputForm Label="Danh mục sản phẩm" Type="Select" />
-            <InputForm Label="Thương hiệu sản phẩm" Type="Select" />
-            <InputForm Label="Trạng thái sản phẩm" Type="Select" />
-          </div>
+          <CreateProduct />
         </Drawer>
         {/* xóa sản phẩm */}
         <Drawer

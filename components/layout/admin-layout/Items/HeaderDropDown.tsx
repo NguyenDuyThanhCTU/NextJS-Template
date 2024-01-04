@@ -6,7 +6,7 @@ import React from "react";
 const HeaderDropDown = ({ Data, Root }: any) => {
   return (
     <>
-      <div className="py-3 min-w-[160px] border-gray-300  border border-solid rounded-lg bg-white relative z-30 ">
+      <div className="py-3 min-w-[160px] border-gray-300  border border-solid rounded-lg bg-white relative  ">
         <div className="">
           {Data?.map((item: any, index: any) => {
             const Icon = IconMapping[item.icon];
