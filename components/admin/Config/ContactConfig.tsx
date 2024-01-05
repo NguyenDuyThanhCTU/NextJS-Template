@@ -1,7 +1,7 @@
 import React from "react";
 
 const ContactConfig = () => {
-  return <div>ContactConfig</div>;
+  return <div id="contact-config">ContactConfig</div>;
 };
 
 export default ContactConfig;

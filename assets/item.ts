@@ -210,22 +210,21 @@ export const AdminPageHeaderItems = [
     value: "cau-hinh",
     icon: "IoSettingsOutline",
     children: [
-      {
-        label: "Thông Tin Website",
-        value: "thong-tin-website",
-        icon: "SiWebmoney",
-      },
-
-      {
-        label: "Liên Hệ",
-        value: "lien-he",
-        icon: "MdConnectWithoutContact",
-      },
-      {
-        label: "Cấu Hình SEO",
-        value: "cau-hinh-seo",
-        icon: "TbSeo",
-      },
+      // {
+      //   label: "Thông Tin Website",
+      //   value: "thong-tin-website",
+      //   icon: "SiWebmoney",
+      // },
+      // {
+      //   label: "Liên Hệ",
+      //   value: "lien-he",
+      //   icon: "MdConnectWithoutContact",
+      // },
+      // {
+      //   label: "Cấu Hình SEO",
+      //   value: "cau-hinh-seo",
+      //   icon: "TbSeo",
+      // },
     ],
   },
   {
