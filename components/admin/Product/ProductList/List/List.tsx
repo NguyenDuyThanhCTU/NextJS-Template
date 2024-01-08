@@ -348,14 +348,14 @@ const ListProduct = () => {
           onClose={() => setIsOpenEdit(false)}
         >
           <div className="p-2 flex flex-col gap-2">
-            <InputForm Label="Tên sản phẩm" Type="Input" />
+            {/* <InputForm Label="Tên sản phẩm" Type="Input" />
             <InputForm Label="Giá sản phẩm" Type="Input" />
             <InputForm Label="Số lượng sản phẩm" Type="Input" />
             <InputForm Label="Mô tả sản phẩm" Type="TextArea" />
             <InputForm Label="Ảnh sản phẩm" Type="Upload" />
             <InputForm Label="Danh mục sản phẩm" Type="Select" />
             <InputForm Label="Thương hiệu sản phẩm" Type="Select" />
-            <InputForm Label="Trạng thái sản phẩm" Type="Select" />
+            <InputForm Label="Trạng thái sản phẩm" Type="Select" /> */}
           </div>
         </Drawer>
 
@@ -377,14 +377,14 @@ const ListProduct = () => {
           onClose={() => setIsOpenDelete(false)}
         >
           <div className="p-2 flex flex-col gap-2">
-            <InputForm Label="Tên sản phẩm" Type="Input" />
+            {/* <InputForm Label="Tên sản phẩm" Type="Input" />
             <InputForm Label="Giá sản phẩm" Type="Input" />
             <InputForm Label="Số lượng sản phẩm" Type="Input" />
             <InputForm Label="Mô tả sản phẩm" Type="TextArea" />
             <InputForm Label="Ảnh sản phẩm" Type="Upload" />
             <InputForm Label="Danh mục sản phẩm" Type="Select" />
             <InputForm Label="Thương hiệu sản phẩm" Type="Select" />
-            <InputForm Label="Trạng thái sản phẩm" Type="Select" />
+            <InputForm Label="Trạng thái sản phẩm" Type="Select" /> */}
           </div>
         </Drawer>
       </>

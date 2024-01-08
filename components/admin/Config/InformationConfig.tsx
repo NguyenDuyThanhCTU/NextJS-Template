@@ -48,15 +48,17 @@ const InformationConfig = ({ Data }: any) => {
     await UpdateDataProps("Config", "information", FormData).then(() => {
       if (type === "404") setIsOpen404Modal(false);
       if (type === "LogoSnippet") setIsHandleLogo(false);
+      router.refresh();
     });
+
     router.refresh();
   };
 
   return (
-    <div id="information-config" className="">
+    <div className="pb-5 ">
       <div className="w-full grid grid-cols-2 px-10 font-light">
         <div className="">
-          <h1 className="text-[30px] font-semibold">Trang Cấu Hình Website </h1>
+          <h1 className="text-[30px] font-semibold"> Cấu Hình Website </h1>
           <p className=" text-gray-500">
             Đây là những gì khách hàng đang nhìn thấy từ website của bạn
           </p>
@@ -119,7 +121,15 @@ const InformationConfig = ({ Data }: any) => {
                   </div>
                 </div>
                 <div className="mt-2">
-                  <div> Chuyển hướng: {Data?.NotFoundNavigate}</div>
+                  <div>
+                    {" "}
+                    Chuyển hướng: Trang{" "}
+                    {
+                      HeaderItems.find(
+                        (item: any) => item.value === Data?.NotFoundNavigate
+                      )?.label
+                    }
+                  </div>
                 </div>
               </div>
             </div>

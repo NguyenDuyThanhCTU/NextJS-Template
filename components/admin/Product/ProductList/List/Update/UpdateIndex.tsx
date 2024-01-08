@@ -120,11 +120,11 @@ const UpdateIndex = ({ Data, HandleForm }: UpdateIndexProps) => {
                   setFormData={setFormData}
                   field="price"
                 />
-                <InputForm
+                {/* <InputForm
                   Label="Giảm giá"
                   Type="Checkbox"
                   setState={setIsOpenDiscount}
-                />
+                /> */}
                 {isOpenDiscount && (
                   <InputForm
                     Label="Giảm giá (%)"

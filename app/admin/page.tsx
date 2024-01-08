@@ -1,4 +1,5 @@
 import Notification from "@components/admin/Home/Notification";
+import { Metadata } from "next";
 import Image from "next/image";
 import React from "react";
 import { CiBoxList } from "react-icons/ci";
@@ -6,12 +7,17 @@ import { GiNewspaper } from "react-icons/gi";
 import { IoIosNotifications } from "react-icons/io";
 import { TbAccessPoint } from "react-icons/tb";
 
+export const metadata: Metadata = {
+  title: "...",
+  description: "...",
+};
+
 interface ReportCardProps {
   Label: string;
   Value?: number;
 }
 
-export const ReportCard = ({ Label, Value }: ReportCardProps) => {
+const ReportCard = ({ Label, Value }: ReportCardProps) => {
   return (
     <div
       className={`${

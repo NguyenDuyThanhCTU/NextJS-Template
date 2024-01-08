@@ -1,7 +1,7 @@
 import ContactConfig from "@components/admin/Config/ContactConfig";
 import SeoConfig from "@components/admin/Config/SeoConfig";
 import AdminProductList from "@components/admin/Product/ProductList";
-import { getAllDataProps } from "@lib/get-data";
+import { getData } from "@lib/get-data";
 import React from "react";
 
 const AdminProductPage = async ({
@@ -10,7 +10,7 @@ const AdminProductPage = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const searchParamsValue: any = searchParams.tab;
-  let Data = await getAllDataProps("Config");
+  let Data = await getData("Config");
   let informationData: any = [];
   let contactData: any = [];
   let SEOconfigData: any = [];
