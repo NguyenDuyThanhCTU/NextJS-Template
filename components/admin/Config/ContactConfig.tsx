@@ -97,6 +97,9 @@ const ContactConfig = ({ Data }: any) => {
           <h1 className="text-[30px] font-semibold">
             Các Thông Tin Liên Hệ Website{" "}
           </h1>
+          <p className=" text-gray-500">
+            Đây là những gì khách hàng đang nhìn thấy từ website của bạn
+          </p>
           <div className=" mt-3 border border-black shadow-sm bg-white rounded-md  ">
             <div className="p-4 flex flex-col gap-1">
               <div className="flex justify-between items-center">

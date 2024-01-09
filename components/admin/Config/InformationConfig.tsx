@@ -68,7 +68,7 @@ const InformationConfig = ({ Data }: any) => {
             <div className="p-4 flex flex-col gap-1">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2 font-bold text-[18px]">
-                  <p>Thông tin website </p>
+                  <p>Chia sẻ website </p>
                   <Tooltip
                     title={`Trang "404 Not Found" xuất hiện khi URL không chính xác, trang web đã bị xóa hoặc máy chủ không thể tìm thấy URL mà bạn đang cố truy cập`}
                   >
@@ -83,8 +83,54 @@ const InformationConfig = ({ Data }: any) => {
                 </div>
               </div>
 
-              <div className="mt-2">
-                <div> Tên website: {Data?.default}</div>
+              <div className="mt-2 grid grid-cols-2 gap-2">
+                <div className=" ">
+                  <div className="py-2 pr-3 flex items-start gap-2 col-span-2 w-full justify-start">
+                    Zalo:
+                  </div>
+                  <div className="col-span-5 pl-2 py-2 flex gap-2 border rounded-lg  mt-2 bg-blue-100">
+                    <div className="p-2 w-full">
+                      <Image
+                        src="https://firebasestorage.googleapis.com/v0/b/ads-company-285a6.appspot.com/o/avatar%2F368441144_643292161353452_5814920262973361704_n.jpg?alt=media&token=fbbe7ecd-4ff0-494c-a050-89a4d8c21f74"
+                        alt="og"
+                        width={200}
+                        className="w-full rounded-2xl"
+                        height={200}
+                      />
+                      <div className="mt-2">
+                        <div className="font-normal text-[17px]">
+                          Hỏi dân it
+                        </div>
+                        <div className="text-gray-500">Description</div>
+                        <div className="text-blue-500 text-[14px] font-normal">
+                          www.www
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className=" ">
+                  <div className="py-2 pr-3 flex items-start gap-2 col-span-2 w-full justify-start mt-2 ">
+                    Facebook:
+                  </div>
+                  <div className="col-span-5  flex gap-2   bg-blue-100">
+                    <div className=" w-full">
+                      <Image
+                        src="https://firebasestorage.googleapis.com/v0/b/ads-company-285a6.appspot.com/o/avatar%2F368441144_643292161353452_5814920262973361704_n.jpg?alt=media&token=fbbe7ecd-4ff0-494c-a050-89a4d8c21f74"
+                        alt="og"
+                        width={200}
+                        className="w-full "
+                        height={200}
+                      />
+                      <div className=" p-2">
+                        <div className="font-normal text-[17px]">
+                          Hỏi dân it
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
