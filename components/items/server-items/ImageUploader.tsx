@@ -7,9 +7,15 @@ interface ImageUploaderProps {
   setForm: (value: string) => void;
   Form?: any;
   Field?: any;
+  PlaceHolder?: any;
 }
 
-const ImageUploader = ({ setForm, Field, Form }: ImageUploaderProps) => {
+const ImageUploader = ({
+  setForm,
+  Field,
+  Form,
+  PlaceHolder,
+}: ImageUploaderProps) => {
   const [uploadedFile, setUploadedFile] = useState(null);
 
   const onDrop = (acceptedFiles: any) => {
@@ -44,10 +50,21 @@ const ImageUploader = ({ setForm, Field, Form }: ImageUploaderProps) => {
             className="w-full h-auto mb-4 rounded-lg"
           />
         ) : (
-          <div>
-            <FaCloudUploadAlt className="mx-auto text-4xl mb-2 text-gray-600" />
-            <p>Drag & Drop or Click to Upload</p>
-          </div>
+          <>
+            {" "}
+            {PlaceHolder ? (
+              <img
+                src={PlaceHolder}
+                alt="Uploaded"
+                className="w-full h-auto mb-4 rounded-lg"
+              />
+            ) : (
+              <div>
+                <FaCloudUploadAlt className="mx-auto text-4xl mb-2 text-gray-600" />
+                <p>Drag & Drop or Click to Upload</p>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

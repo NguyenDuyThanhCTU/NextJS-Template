@@ -1,12 +1,14 @@
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 
 interface SearchProps {
   Data: any;
+  Select: (item: any) => void;
 }
 
-const Search = ({ Data }: SearchProps) => {
+const Search = ({ Data, Select }: SearchProps) => {
   const [search, setSearch] = useState("");
   const [searchRs, setSearchRs] = useState([]);
 
@@ -44,11 +46,31 @@ const Search = ({ Data }: SearchProps) => {
         </div>
       </div>
       {search && (
-        <div className="absolute w-full bg-gray-50 top-full flex flex-col shadow-inner z-50 mt-2">
+        <div className="absolute w-full bg-white top-full flex flex-col shadow-inner z-50 mt-2 border border-solid  ">
           <div className=" flex flex-col">
-            {searchRs.map((product: any, idx: number) => (
-              <div key={idx} className="cursor-pointer p-2 hover:bg-gray-100">
-                {product.title}
+            {searchRs.slice(0, 5).map((searchItems: any, idx: number) => (
+              <div
+                key={idx}
+                className="cursor-pointer p-2 hover:bg-gray-100"
+                onClick={() => Select(searchItems.pid)}
+              >
+                <div className="p-1 flex gap-2">
+                  <Image
+                    src={searchItems.image}
+                    alt={`Search Result #${idx}`}
+                    width={70}
+                    height={70}
+                  />
+                  <div>
+                    {" "}
+                    <div className="text-[#16757c] ">{searchItems.title}</div>
+                    <div className="flex items-center gap-2 ">
+                      <div className="rounded-md px-3 py-1 bg-gray-200">
+                        #{searchItems.pid}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

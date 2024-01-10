@@ -17,7 +17,6 @@ import HeaderDropDown from "./Items/HeaderDropDown";
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const pathname = usePathname();
-  const { ContactData, TradeMarkData } = useData();
 
   const [search, setSearch] = useState("");
   const [searchRs, setSearchRs] = useState([]);

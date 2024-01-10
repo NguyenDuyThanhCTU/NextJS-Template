@@ -159,30 +159,6 @@ const ContactConfig = ({ Data }: any) => {
                   </div>
                 ))}
               </div>
-              {/* <div className="mt-2 flex flex-col gap-2">
-                <div> Địa chỉ website: </div>
-                <div className="flex items-center gap-2">
-                  {" "}
-                  <p> Số điện thoại</p>{" "}
-                  <Tooltip
-                    title={`Số điện thoại chính của website, Số điện thoại này sẽ được ưu tiên hiển thị trên website và nút gọi điện thoại`}
-                  >
-                    {" "}
-                    <div className="">
-                      <FaRegCircleQuestion />
-                    </div>
-                  </Tooltip>
-                  :{" "}
-                </div>
-                <div> Số điện thoại (phụ): </div>
-                <div> Email: </div>
-                <div>Thời gian hoạt động website: </div>
-                <div>Thời gian hoạt động của công ty: </div>
-                <div>Địa chỉ (chi nhánh chính):</div>
-                <div>Vị trí (chi nhánh chính): </div>
-                <div>Logo website (ảnh đại diện):</div>
-                <div>Banner website (ảnh bìa):</div>
-              </div> */}
             </div>
           </div>
         </div>

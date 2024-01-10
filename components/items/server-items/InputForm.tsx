@@ -29,6 +29,7 @@ interface InputFormProps {
   field: any;
   Tips?: string;
   Option?: any;
+  PlaceHolder?: string;
 }
 
 const InputForm = ({
@@ -38,6 +39,7 @@ const InputForm = ({
   field,
   Tips,
   Option,
+  PlaceHolder,
 }: InputFormProps) => {
   const { FormData, setFormData } = useStateProvider();
   return (
@@ -56,6 +58,7 @@ const InputForm = ({
               </div>
               <div className="px-4 py-1   bg-white rounded-lg w-full col-span-6">
                 <ImageUploader
+                  PlaceHolder={PlaceHolder}
                   setForm={setFormData}
                   Form={FormData}
                   Field={field}
@@ -126,6 +129,7 @@ const InputForm = ({
             <div className="px-4 py-1 border  bg-white rounded-lg w-full col-span-6">
               <input
                 type="text"
+                placeholder={PlaceHolder ? PlaceHolder : ""}
                 className=" outline-none w-full"
                 value={FormData[field] === undefined ? "" : FormData[field]}
                 onChange={(e) =>
