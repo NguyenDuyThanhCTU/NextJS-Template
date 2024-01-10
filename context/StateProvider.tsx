@@ -6,73 +6,44 @@ interface Props {
 }
 
 export type StateContextType = {
-  isDropDown: any;
-  setDropDown: (dropdown: any) => void;
-  isRefetch: any;
-  setIsRefetch: (refetch: any) => void;
-  isLoading: any;
+  isLoading: number;
   setIsLoading: (loading: any) => void;
-  isSelected: any;
-  setSelected: (selected: any) => void;
   Search: string;
   setSearch: (search: string) => void;
   OpenCart: boolean;
   setOpenCart: (openCart: boolean) => void;
-  Refetch: any;
-  setRefetch: (refetch: any) => void;
+
   FormData: any;
   setFormData: (formData: any) => void;
 };
 
 export const StateContext = createContext<StateContextType>({
-  isDropDown: "",
-  setDropDown: () => {},
-  isRefetch: "",
-  setIsRefetch: () => {},
-  isLoading: [],
+  isLoading: 0,
   setIsLoading: () => {},
-  isSelected: 0,
-  setSelected: () => {},
+
   Search: "",
   setSearch: () => {},
   OpenCart: false,
   setOpenCart: () => {},
-  Refetch: "",
-  setRefetch: () => {},
+
   FormData: {},
   setFormData: () => {},
 });
 
 export const StateProvider = ({ children }: Props) => {
-  const [isDropDown, setDropDown] = useState("");
-
-  const [isRefetch, setIsRefetch] = useState("");
-  //Refetch large data like products, posts
-  const [Refetch, setRefetch] = useState("");
-
-  const [isSelected, setSelected] = useState(0);
   const [Search, setSearch] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(0);
   const [OpenCart, setOpenCart] = useState(false);
 
   //
   const [FormData, setFormData] = useState<any>({});
-  const [FormNotification, setFormNotification] = useState<boolean>(false);
   return (
     <StateContext.Provider
       value={{
         FormData,
         setFormData,
-        Refetch,
-        setRefetch,
         OpenCart,
         setOpenCart,
-        isSelected,
-        setSelected,
-        isDropDown,
-        setDropDown,
-        isRefetch,
-        setIsRefetch,
         isLoading,
         setIsLoading,
         Search,
