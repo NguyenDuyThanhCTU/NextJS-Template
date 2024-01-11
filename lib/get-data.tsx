@@ -43,15 +43,7 @@ export async function getData(CollectionName: string, Document?: string) {
 
     const data = await response.json();
     if (Document) {
-      const formattedData: any = {};
-
-      for (const field in data.fields) {
-        if (Object.prototype.hasOwnProperty.call(data.fields, field)) {
-          formattedData[field] = data.fields[field].stringValue || null;
-        }
-      }
-
-      return formattedData;
+      return convertDocumentData(data.fields);
     } else {
       const documents = data.documents.map((doc: any) => {
         const formattedDoc: any = {
@@ -60,7 +52,7 @@ export async function getData(CollectionName: string, Document?: string) {
 
         for (const field in doc.fields) {
           if (Object.prototype.hasOwnProperty.call(doc.fields, field)) {
-            formattedDoc[field] = doc.fields[field].stringValue || null;
+            formattedDoc[field] = convertFieldValue(doc.fields[field]);
           }
         }
 
@@ -72,5 +64,44 @@ export async function getData(CollectionName: string, Document?: string) {
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
     throw new Error("Failed to fetch data.");
+  }
+}
+
+function convertDocumentData(fields: any): any {
+  const convertedData: any = {};
+
+  for (const field in fields) {
+    if (Object.prototype.hasOwnProperty.call(fields, field)) {
+      convertedData[field] = convertFieldValue(fields[field]);
+    }
+  }
+
+  return convertedData;
+}
+
+function convertFieldValue(field: any): any {
+  if (field.stringValue !== undefined) {
+    return field.stringValue;
+  } else if (field.integerValue !== undefined) {
+    return parseInt(field.integerValue, 10);
+  } else if (field.timestampValue !== undefined) {
+    return new Date(field.timestampValue);
+  } else if (field.booleanValue !== undefined) {
+    return field.booleanValue;
+  } else if (field.arrayValue !== undefined) {
+    return field.arrayValue.values.map((value: any) =>
+      convertFieldValue(value)
+    );
+  } else if (field.mapValue !== undefined) {
+    const mapData: any = {};
+    for (const key in field.mapValue.fields) {
+      if (Object.prototype.hasOwnProperty.call(field.mapValue.fields, key)) {
+        mapData[key] = convertFieldValue(field.mapValue.fields[key]);
+      }
+    }
+    return mapData;
+  } else {
+    // Handle other field types as needed
+    return null;
   }
 }

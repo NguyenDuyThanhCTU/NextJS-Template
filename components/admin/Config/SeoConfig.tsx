@@ -1,30 +1,63 @@
 "use client";
 import EditButton from "@components/items/server-items/EditButton";
-import { Tooltip } from "antd";
+import InputForm from "@components/items/server-items/InputForm";
+import { useStateProvider } from "@context/StateProvider";
+import { UpdateDataProps } from "@lib/get-data";
+import { Modal, Tooltip } from "antd";
 import Image from "next/image";
-import React from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { FaRegCircleQuestion } from "react-icons/fa6";
+import { MdUpload } from "react-icons/md";
+import { RxCross2 } from "react-icons/rx";
 
-const SeoConfig = () => {
+const SeoConfig = ({ Data }: any) => {
+  const [isOpenBasicSEO, setIsOpenBasicSEO] = useState(false);
+  const [isOpenAdvanceSEO, setIsOpenAdvanceSEO] = useState(false);
+  const { setFormData, FormData } = useStateProvider();
+  const [Keyword, setKeyword] = useState<any>([]);
   const BasicSEOItems = [
     {
       label: "Tiêu đề trang ",
-      value: "",
+      value: Data?.Title,
       tooltip: "",
     },
 
     {
       label: "Thẻ mô tả",
-      value: "",
+      value: Data?.Description,
       tooltip: "",
     },
 
     {
       label: "Favicon",
-      value: "",
+      value: Data?.Favicon,
       tooltip: "",
     },
   ];
+
+  const router = useRouter();
+  const HandleSubmit = async (e: any, type: string) => {
+    e.preventDefault();
+
+    await UpdateDataProps("Config", "SEOconfig", FormData).then(() => {
+      if (type === "Basic") setIsOpenBasicSEO(false);
+      if (type === "Advance") setIsOpenAdvanceSEO(false);
+      router.refresh();
+    });
+
+    router.refresh();
+  };
+
+  const HandleChangeKeyword = (item: number) => {
+    let newKeyword = FormData?.Keyword?.filter((i: any) => i !== item);
+    setFormData({ ...FormData, Keyword: newKeyword });
+  };
+
+  useEffect(() => {
+    setFormData({ Keyword: Data?.Keyword });
+  }, [isOpenBasicSEO]);
 
   return (
     <>
@@ -37,24 +70,30 @@ const SeoConfig = () => {
               thấy trên các công cụ tìm kiếm
             </p>
           </div>
-          <div className="border rounded-md border-black hover:shadow-2xl duration-300 mt-3 cursor-pointer">
-            <div className="flex p-5 gap-3 flex-col">
-              <div className="">Kết quả tìm kiếm:</div>
-              <div className=" flex flex-col ml-10">
-                <h2 className="text-[#1a0dab] text-[22px]">
-                  Sơn lót epoxy rainbow 1073
-                </h2>
-                <p className="text-[#006621] ">
-                  http://sikadalat.vn/son-lot-epoxy-rainbow-1073
-                </p>
-                <p>
-                  SIKA,SIKA ĐÀ LẠT, BESTMIX, CHỐNG THẤM ĐÀ LẠT, CHỐNG THẤM GIÁ
-                  RẺ, SIKA GIÁ RẺ, CHỐNG THẤM NỨT, CHỐNG RÊU MỐC, Sơn lót epoxy
-                  rainbow 1073{" "}
-                </p>
+          <Link href="https://www.google.com/search?q=congtyads.com">
+            <div className="border rounded-md border-black hover:shadow-2xl duration-300 mt-3 cursor-pointer">
+              <div className="flex p-5 gap-3 flex-col">
+                <div className="">Kết quả tìm kiếm:</div>
+                <div className=" flex flex-col ml-10">
+                  <h2 className="text-[#1a0dab]  flex items-center gap-3">
+                    <Image
+                      src={Data?.Favicon}
+                      alt="Logo"
+                      width={30}
+                      height={30}
+                      className="rounded-full"
+                    />{" "}
+                    <div>
+                      <p className="text-[22px] font-normal">{Data?.Title}</p>
+                      <p className="text-[#006621] ">https://congtyads.com</p>
+                    </div>
+                  </h2>
+
+                  <p className="mt-3">{Data?.Description}</p>
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
       <div className="py-5 ">
@@ -74,7 +113,7 @@ const SeoConfig = () => {
                   </Tooltip>
                 </div>
                 <div>
-                  <EditButton />
+                  <EditButton onClick={setIsOpenBasicSEO} />
                 </div>
               </div>
 
@@ -103,7 +142,7 @@ const SeoConfig = () => {
                     </div>
                     {item.label === "Vị trí (Google map)" ? (
                       <></>
-                    ) : item.label === "Logo website" ? (
+                    ) : item.label === "Favicon" ? (
                       <div className="py-2 flex items-center  ml-2">
                         <Image
                           src={item.value}
@@ -124,18 +163,8 @@ const SeoConfig = () => {
                 <div className="py-2 pr-3 flex items-center gap-2 col-span-1 w-full justify-end">
                   Từ khóa SEO:
                 </div>
-                <div className="col-span-6 pl-2 py-2 flex gap-2 overflow-auto scrollbar-thin ">
-                  {[
-                    "sika",
-                    "sika đà lạt",
-                    "bestmix",
-                    "chống thấm đà lạt",
-                    "chống thấm giá rẻ",
-                    "sika giá rẻ",
-                    "chống thấm nứt",
-                    "chống rêu mốc",
-                    "sơn lót epoxy rainbow 1073",
-                  ].map((item: any, idx: number) => (
+                <div className="col-span-6 pl-2 py-2 flex flex-wrap gap-2">
+                  {Data?.Keyword.map((item: any, idx: number) => (
                     <div key={idx} className="border bg-slate-200 rounded-full">
                       <div className="w-max py-1 px-3">{item}</div>
                     </div>
@@ -159,47 +188,11 @@ const SeoConfig = () => {
                   </Tooltip>
                 </div>
                 <div>
-                  <EditButton />
+                  <EditButton onClick={setIsOpenAdvanceSEO} />
                 </div>
               </div>
 
-              <div className="mt-4">
-                {/* {AdvanceSEOItems.map((item: any, idx: number) => (
-                  <div
-                    key={idx}
-                    className={`${
-                      idx === AdvanceSEOItems.length - 1
-                        ? "border-y"
-                        : "border-t "
-                    } grid grid-cols-6  border-x `}
-                  >
-                    <div className="py-2 pr-3  flex items-end gap-2 col-span-2 w-full justify-end flex-col">
-                      <div>
-                        <p> {item.title}</p>
-                      </div>
-                      <div>
-                        {" "}
-                        <p> {item.label}</p>{" "}
-                        {item.tooltip && (
-                          <Tooltip title={item.tooltip}>
-                            {" "}
-                            <div className="">
-                              <FaRegCircleQuestion />:
-                            </div>
-                          </Tooltip>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col col-span-4 px-2 ">
-                      <div className="text-[#006621]  py-2">{item.value}</div>
-                      <div className="border ">
-                        <div className="p-2 min-h-[20px] ">{item.content}</div>
-                      </div>
-                    </div>
-                  </div>
-                ))} */}
-              </div>
+              <div className="mt-4"></div>
               <div className="mt-2 flex flex-col gap-2">
                 <div className="grid grid-cols-7 ">
                   <div className="py-2 pr-3 flex items-center gap-2 col-span-2 w-full justify-end">
@@ -256,6 +249,108 @@ const SeoConfig = () => {
             </div>
           </div>
         </div>
+        <>
+          <Modal
+            title="Cấu hình SEO cơ bản"
+            footer={null}
+            open={isOpenBasicSEO}
+            onCancel={() => setIsOpenBasicSEO(false)}
+            afterClose={() => setFormData({})}
+          >
+            <form
+              onSubmit={(e) => HandleSubmit(e, "Basic")}
+              className="p-2 flex flex-col gap-2"
+            >
+              <InputForm
+                Label="Tiêu đề trang"
+                Type="Input"
+                field="Title"
+                PlaceHolder={Data?.Title}
+              />
+              <InputForm
+                Label="Thẻ mô tả"
+                Type="Input"
+                field="Description"
+                PlaceHolder={Data?.Description}
+              />
+              <InputForm
+                Label="Favicon"
+                Type="Upload"
+                field="Favicon"
+                PlaceHolder={Data?.Favicon}
+              />
+
+              <div className="border rounded-xl">
+                <div className="p-2 flex flex-col">
+                  <div className="grid grid-cols-7 mt-2">
+                    <div className="py-2 pr-3 flex items-start gap-2 col-span-1 w-full justify-end">
+                      Từ khóa SEO:
+                    </div>
+                    <div className="col-span-6">
+                      <div className=" pl-2 py-2 flex flex-wrap gap-2">
+                        {FormData?.Keyword?.length > 0 && (
+                          <>
+                            {FormData?.Keyword?.map(
+                              (item: any, idx: number) => (
+                                <div
+                                  key={idx}
+                                  className="border bg-slate-200 rounded-full relative"
+                                >
+                                  <div className="w-max py-1 px-3">{item}</div>
+                                  <div
+                                    className="bg-white p-1 absolute rounded-full w-max -top-2 -right-2 cursor-pointer"
+                                    onClick={() => HandleChangeKeyword(item)}
+                                  >
+                                    <RxCross2 />
+                                  </div>
+                                </div>
+                              )
+                            )}
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-2">
+                    <div className="grid grid-cols-8  items-center  w-full justify-between  ">
+                      <div className="col-span-2 flex items-center gap-2 ">
+                        <p>Thêm từ khóa</p>
+                      </div>
+                      <div className="px-4 py-1 border flex justify-between items-center   bg-white rounded-lg w-full col-span-6">
+                        <input
+                          type="text"
+                          className=" outline-none w-full"
+                          value={Keyword}
+                          onChange={(e) => setKeyword(e.target.value)}
+                        />
+                        <div
+                          className="text-[20px]  cursor-pointer duration-300 hover:text-blue-500"
+                          onClick={() => {
+                            setFormData({
+                              ...FormData,
+                              Keyword: [...FormData?.Keyword, Keyword],
+                            });
+                            setKeyword("");
+                          }}
+                        >
+                          <MdUpload />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex w-full justify-end">
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 duration-300 text-white p-2 rounded-md"
+                  type="submit"
+                >
+                  Cập nhật
+                </button>
+              </div>
+            </form>
+          </Modal>
+        </>
       </div>
     </>
   );

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { useDropzone } from "react-dropzone";
 import { uploadImage } from "./Handle";
+import { useStateProvider } from "@context/StateProvider";
+import { notification } from "antd";
 
 interface ImageUploaderProps {
   setForm: (value: string) => void;
@@ -19,13 +21,21 @@ const ImageUploader = ({
   const [uploadedFile, setUploadedFile] = useState(null);
 
   const onDrop = (acceptedFiles: any) => {
+    notification.info({
+      message: "Đang tải lên",
+      description: "Vui lòng chờ trong giây lát",
+    });
     const file = acceptedFiles[0];
-
     uploadImage(file, "avatar").then((url) => {
       setForm({ ...Form, [Field]: url });
       setUploadedFile(file);
+      notification.success({
+        message: "Tải lên thành công",
+        description: "Ảnh đã được tải lên thành công",
+      });
     });
   };
+
   useEffect(() => {
     if (Form[Field] === undefined) {
       setUploadedFile(null);

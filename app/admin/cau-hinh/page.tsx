@@ -19,11 +19,12 @@ const AdminConfigPage = async ({
 
   let contactData: any = Data?.filter((item: any) => item.id === "contact");
   let SEOconfigData: any = Data?.filter((item: any) => item.id === "SEOconfig");
+
   return (
     <div>
       <InformationConfig Data={informationData ? informationData[0] : []} />
       <ContactConfig Data={contactData ? contactData[0] : []} />
-      <SeoConfig />
+      <SeoConfig Data={SEOconfigData ? SEOconfigData[0] : []} />
     </div>
   );
 };

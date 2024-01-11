@@ -11,11 +11,12 @@ import { PiCardsLight } from "react-icons/pi";
 import UpdateIndex from "./Update/UpdateIndex";
 import { useStateProvider } from "@context/StateProvider";
 import CreateProduct from "./Create/Create";
+import { IoMdStar } from "react-icons/io";
 
 interface ProductProps {
   stt: number;
   pid: string;
-  name: string;
+  title: string;
   image: string;
   price: string;
   view: number;
@@ -42,19 +43,14 @@ export const Button = ({ Label, Style, Clicked }: ButtonProps) => {
       onClick={Clicked}
     >
       <div className="text-[20px]">
-        {Label === "Cập Nhật Giá, Thứ Tự" ? (
+        {Label === "Cập Nhật Sản phẩm" ? (
           <>
             {" "}
-            <MdNumbers />
+            <CiEdit />
           </>
         ) : Label === "Thêm Sản Phẩm" ? (
           <>
             <FaPlus />
-          </>
-        ) : Label === "Chỉnh Sửa Sản Phẩm, SEO" ? (
-          <>
-            {" "}
-            <CiEdit />
           </>
         ) : (
           <MdDeleteForever />
@@ -74,7 +70,7 @@ const ListProduct = () => {
   const [SelectedProductData, setSelectedProductData] = useState<ProductProps>({
     stt: 0,
     pid: "",
-    name: "",
+    title: "",
     image: "",
     price: "",
     view: 0,
@@ -117,7 +113,7 @@ const ListProduct = () => {
     {
       stt: 1,
       pid: "1215",
-      name: "Áo thun nam",
+      title: "Áo thun nam",
       image:
         "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
       price: "200.000",
@@ -127,7 +123,7 @@ const ListProduct = () => {
     {
       stt: 2,
       pid: "1216",
-      name: "Áo thun nữ",
+      title: "Áo thun nữ",
       image:
         "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
       price: "200.000",
@@ -137,7 +133,7 @@ const ListProduct = () => {
     {
       stt: 3,
       pid: "1217",
-      name: "Áo thun trẻ em",
+      title: "Áo thun trẻ em",
       image:
         "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
       price: "200.000",
@@ -147,7 +143,7 @@ const ListProduct = () => {
     {
       stt: 4,
       pid: "1218",
-      name: "Áo thun nam",
+      title: "Áo thun nam",
       image:
         "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
       price: "200.000",
@@ -157,7 +153,7 @@ const ListProduct = () => {
     {
       stt: 5,
       pid: "1219",
-      name: "Áo thun nam",
+      title: "Áo thun nam",
       image:
         "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
       price: "200.000",
@@ -182,9 +178,18 @@ const ListProduct = () => {
     <div className="border rounded-lg bg-white">
       <div className="p-4 font-normal text-gray-700">
         <div className="flex justify-between">
-          <div>
-            <h3 className="text-[30px] font-bold">Danh sách sản phẩm</h3>
-            <p className="font-light">Tóm tắc ngắn gọn tất cả sản phẩm</p>
+          <div className="flex items-center gap-5">
+            <div>
+              <h3 className="text-[30px] font-bold">Danh sách sản phẩm</h3>
+              <p className="font-light">Tóm tắc ngắn gọn tất cả sản phẩm</p>
+            </div>
+            <div>
+              <Button
+                Style="hover:bg-emerald-900 bg-emerald-700"
+                Label="Thêm Sản Phẩm"
+                Clicked={() => setIsOpenAdd(true)}
+              />
+            </div>
           </div>
           <div className="flex items-center gap-4 text-[14px]">
             <div className="border rounded-lg ">
@@ -257,7 +262,7 @@ const ListProduct = () => {
                   {item.stt}
                 </div>
                 <div className="col-span-3">
-                  <div className="text-[#16757c]">{item.name}</div>
+                  <div className="text-[#16757c]">{item.title}</div>
                   <div className="flex items-center gap-2 mt-2">
                     <span>Mã SP:</span>
                     <div className="rounded-md px-3 py-1 bg-gray-200">
@@ -292,33 +297,121 @@ const ListProduct = () => {
       <>
         <Modal
           footer={null}
-          title={`Bạn muốn thay đổi sản phẩm ${SelectedProductData?.name} ?`}
+          title={`Bạn muốn thay đổi sản phẩm ${SelectedProductData?.title} ?`}
           open={isOpenProductModal}
-          width={700}
+          width={1000}
           onCancel={() => setIsOpenProductModal(false)}
         >
-          <div className="border rounded-xl bg-slate-100">
-            <div className="p-5 grid grid-cols-2  justify-center gap-3">
-              <Button
-                Style="hover:bg-blue-900 bg-blue-700"
-                Label="Cập Nhật Giá, Thứ Tự"
-                Clicked={() => setIsOpenChangeIndex(true)}
-              />
-              <Button
-                Style="hover:bg-orange-900 bg-orange-700"
-                Label="Thêm Sản Phẩm"
-                Clicked={() => setIsOpenAdd(true)}
-              />
-              <Button
-                Style="hover:bg-green-900 bg-green-700"
-                Label="Chỉnh Sửa Sản Phẩm, SEO"
-                Clicked={() => setIsOpenEdit(true)}
-              />
-              <Button
-                Style="hover:bg-red-900 bg-red-700"
-                Label="Xóa Sản Phẩm"
-                Clicked={() => setIsOpenDelete(true)}
-              />
+          <div className="flex flex-col gap-4 font-LexendDeca font-light">
+            <div className="p-4 grid grid-cols-6 gap-5 text-[20px]">
+              <div className="col-span-2">
+                <div className="p-3  bg-slate-100 ">
+                  <div className="flex flex-col items-center">
+                    <div className="flex flex-col items-center">
+                      <Image
+                        src={SelectedProductData?.image}
+                        alt="Product"
+                        width={100}
+                        height={100}
+                        className="rounded-full"
+                      />
+                      <p className="text-[20px] font-normal">
+                        {SelectedProductData.title}
+                      </p>
+                    </div>
+                    <div className="mt-5">
+                      <p className="text-center font-light ">123 Đánh giá</p>
+                      <div className="text-yellow-400 flex items-center text-[20px] gap-1">
+                        <IoMdStar />
+                        <IoMdStar />
+                        <IoMdStar />
+                        <IoMdStar />
+                        <IoMdStar />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-span-4 text-gray-600 flex flex-col gap-5">
+                <div className="">
+                  <h3 className="font-bold">Thông tin sản phẩm</h3>
+
+                  <div className="border rounded-xl border-black mt-3">
+                    <div className="text-[18px] ml-2 mt-3 grid grid-cols-2 w-full gap-2 p-2 overflow-y-auto">
+                      <li className="">
+                        Tên sản phẩm:{" "}
+                        <span className="underline">
+                          {SelectedProductData.title}
+                        </span>
+                      </li>
+
+                      <div className="flex items-center gap-2">
+                        <p> Mã sản phẩm:</p>
+                        <div className="rounded-md px-3 py-1 bg-gray-200">
+                          #{SelectedProductData.pid}
+                        </div>
+                      </div>
+                      <li>
+                        Giá sản phẩm:{" "}
+                        <strong className="text-red-500">
+                          {SelectedProductData.price} VNĐ
+                        </strong>
+                      </li>
+
+                      <li>
+                        Trạng thái:{" "}
+                        <span className="text-green-500">Còn Hàng</span>
+                      </li>
+                      <li>
+                        Ngày tạo: <strong> {SelectedProductData.time}</strong>
+                      </li>
+                      <li>
+                        Lượt xem: <strong> {SelectedProductData.view}</strong>
+                      </li>
+
+                      <div className="border rounded-md bg-slate-100">
+                        <div className="p-2">
+                          {" "}
+                          <li>Danh mục: abc</li>
+                          <li>Danh mục con: abc</li>
+                          <li>Topic: abc</li>
+                        </div>
+                      </div>
+                      <li>
+                        lượt đánh giá: <strong>123 Đánh giá</strong>
+                      </li>
+                    </div>
+                  </div>
+                </div>
+                <div className="">
+                  <h3 className="font-bold">Thông tin Sale</h3>
+                  <div>chuyển hướng đến sale</div>
+                </div>
+                <div className="">
+                  <h3 className="font-bold">Mô tả sản phẩm</h3>
+                  <div>abced</div>
+                </div>
+                <div className="">
+                  <h3 className="font-bold">Chi tiết sản phẩm</h3>
+                  <div>abced</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="border rounded-xl bg-slate-100">
+              <div className="p-5 grid grid-cols-2  justify-center gap-3">
+                <Button
+                  Style="hover:bg-blue-900 bg-blue-700"
+                  Label="Cập Nhật Sản phẩm"
+                  Clicked={() => setIsOpenChangeIndex(true)}
+                />
+
+                <Button
+                  Style="hover:bg-red-900 bg-red-700"
+                  Label="Xóa Sản Phẩm"
+                  Clicked={() => setIsOpenDelete(true)}
+                />
+              </div>
             </div>
           </div>
         </Modal>
@@ -327,7 +420,7 @@ const ListProduct = () => {
       <>
         {/* Thay đổi thứ tự sản phẩm */}
         <Drawer
-          title={`Thay đổi thứ tự, Cập nhật giá cho sản phẩm ${SelectedProductData?.name}`}
+          title={`Thay đổi thứ tự, Cập nhật giá cho sản phẩm ${SelectedProductData?.title}`}
           footer={null}
           open={isOpenChangeIndex}
           width={700}
