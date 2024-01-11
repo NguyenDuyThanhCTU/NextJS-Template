@@ -1,5 +1,6 @@
 import ContactConfig from "@components/admin/Config/ContactConfig";
 import SeoConfig from "@components/admin/Config/SeoConfig";
+import ProductCategory from "@components/admin/Product/ProductCategory";
 import AdminProductList from "@components/admin/Product/ProductList";
 import { getData } from "@lib/get-data";
 import React from "react";
@@ -10,25 +11,20 @@ const AdminProductPage = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const searchParamsValue: any = searchParams.tab;
-  let Data = await getData("Config");
-  let informationData: any = [];
-  let contactData: any = [];
-  let SEOconfigData: any = [];
-  if (searchParamsValue === "thong-tin-website") {
-    informationData = Data.filter((item: any) => item.id === "information");
-  }
-  if (searchParamsValue === "lien-he") {
-    contactData = Data.filter((item: any) => item.id === "contact");
-  }
-  if (searchParamsValue === "cau-hinh-seo") {
-    SEOconfigData = Data.filter((item: any) => item.id === "SEOconfig");
-  }
+  let ProductTypes = await getData("ProductTypes");
+
+  let Type = ProductTypes?.filter((item: any) => item.type === "Type");
+  let TopicType = ProductTypes?.filter((item: any) => item.type === "Topic");
+
   return (
     <div>
       {searchParamsValue === "danh-sach-san-pham" ? (
         <AdminProductList />
-      ) : searchParamsValue === "lien-he" ? (
-        <ContactConfig />
+      ) : searchParamsValue === "danh-muc-san-pham" ? (
+        <ProductCategory
+          Type={Type ? Type : []}
+          Topic={TopicType ? TopicType : []}
+        />
       ) : searchParamsValue === "cau-hinh-seo" ? (
         <SeoConfig />
       ) : null}

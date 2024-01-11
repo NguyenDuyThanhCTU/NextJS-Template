@@ -30,11 +30,6 @@ export const uploadImage = async (fileOrEvent: any, locate: any) => {
   }
 };
 
-export const convertToCodeFormat = (text: string) => {
-  const textWithoutDiacritics = diacritic.clean(text);
-  return textWithoutDiacritics.replace(/\s+/g, "-").toLowerCase();
-};
-
 export const convertListIdToProduct = (
   listId: string[],
   listProduct: any[]
@@ -47,4 +42,14 @@ export const convertListIdToProduct = (
     }
   });
   return result;
+};
+
+export const convertDate = (date: Date) => {
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  } as const;
+  return date.toLocaleDateString("vi-VN", options);
 };

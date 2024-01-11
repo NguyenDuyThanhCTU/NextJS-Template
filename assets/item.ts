@@ -481,22 +481,30 @@ export const ToolsTipsSocialMediaItems = [
 
 /*<-------------------------------------------------------------------------------------------------------------------- CUSTOM --------------------------------------------------------------------------------------------------------------------> */
 
-export const TypeProductItems2 = [
+export const ProductTypeItems = [
   {
-    label: "Sản phẩm khuyến mãi",
-    value: "san-pham-khuyen-mai",
+    label: "First Parent",
+    value: "first-parent",
   },
   {
-    label: "Sản phẩm bán chạy",
-    value: "san-pham-ban-chay",
+    label: "Second Parent",
+    value: "second-parent",
   },
   {
-    label: "Sản phẩm mới",
-    value: "san-pham-moi",
+    label: "Third Parent",
+    value: "third-parent",
   },
   {
-    label: "Sản phẩm nổi bật",
-    value: "san-pham-noi-bat",
+    label: "Fourth Parent",
+    value: "fourth-parent",
+  },
+  {
+    label: "Fifth Parent",
+    value: "fifth-parent",
+  },
+  {
+    label: "Sixth Parent",
+    value: "sixth-parent",
   },
 ];
 

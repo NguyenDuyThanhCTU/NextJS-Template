@@ -6,7 +6,7 @@ type ClientAdminLayoutProps = {
 
 const AdminLayout: React.FC<ClientAdminLayoutProps> = ({ children }) => {
   return (
-    <div className="font-LexendDeca font-extralight">
+    <div className="font-LexendDeca font-extralight ">
       <Header />
       <div className="mt-[64px] bg-slate-100 py-5 ">{children}</div>
     </div>
