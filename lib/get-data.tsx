@@ -1,10 +1,28 @@
 import {
+  addDocument,
   getAllDocuments,
   getDocumentsByField,
   getProducts,
   updateDocument,
 } from "@config/Services/Firebase/FireStoreDB";
 import { notification } from "antd";
+
+// add new document to collection
+export async function AddDataProps(Collection: string, data: any) {
+  addDocument(Collection, data)
+    .then(() => {
+      notification.success({
+        message: "Thành công!",
+        description: `Thêm thành công!`,
+      });
+    })
+    .catch((err) => {
+      notification.error({
+        message: "Thất bại!",
+        description: `Mã lỗi: ${err}`,
+      });
+    });
+}
 
 export async function UpdateDataProps(
   Collection: string,

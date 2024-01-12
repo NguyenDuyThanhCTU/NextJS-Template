@@ -242,12 +242,6 @@ export const AdminPageHeaderItems = [
         value: "danh-muc-san-pham",
         icon: "CiBoxList",
       },
-
-      {
-        label: "Slide giới thiệu",
-        value: "slide-gioi-thieu",
-        icon: "BiSlideshow",
-      },
     ],
   },
   {
@@ -275,11 +269,6 @@ export const AdminPageHeaderItems = [
         value: "bai-gioi-thieu",
         icon: "BsFileEarmarkPost",
       },
-      {
-        label: "Cấu Hình SEO",
-        value: "cau-hinh-seo",
-        icon: "FaChartLine",
-      },
     ],
   },
   {
@@ -291,6 +280,11 @@ export const AdminPageHeaderItems = [
         label: "Kênh Truyền Thông",
         value: "kenh-truyen-thong",
         icon: "PiShareNetworkLight",
+      },
+      {
+        label: "Slide giới thiệu",
+        value: "slide-gioi-thieu",
+        icon: "BiSlideshow",
       },
       {
         label: "Hình Ảnh",
@@ -508,22 +502,22 @@ export const ProductTypeItems = [
   },
 ];
 
-export const PolicyItems = [
+export const PostsTypeItems = [
   {
-    label: "Giao nhận hàng",
-    value: "giao-nhan-hang",
+    label: "Về Nha Khoa",
+    value: "Về Nha Khoa",
   },
   {
-    label: "Chính sách đổi trả",
-    value: "chinh-sach-doi-tra",
+    label: "Dịch Vụ",
+    value: "Dịch Vụ",
   },
   {
-    label: "Chính sách đặt hàng",
-    value: "chinh-sach-dat-hang",
+    label: "Tin tức",
+    value: "Tin tức",
   },
   {
-    label: "Chính sách bảo mật",
-    value: "chinh-sach-bao-mat",
+    label: "Thắc Mắc",
+    value: "Thắc Mắc",
   },
 ];
 

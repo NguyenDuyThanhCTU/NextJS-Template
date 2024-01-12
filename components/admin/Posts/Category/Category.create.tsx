@@ -1,5 +1,5 @@
 "use client";
-import { ProductTypeItems } from "@assets/item";
+import { PostsTypeItems, ProductTypeItems } from "@assets/item";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
 import { AddDataProps } from "@lib/get-data";
@@ -7,25 +7,29 @@ import { notification } from "antd";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const Create = ({ setIsOpen }: any) => {
+interface CategoryCreateProps {
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+const CategoryCreate = ({ setIsOpen }: CategoryCreateProps) => {
   const router = useRouter();
-  const { FormData, setFormData } = useStateProvider();
+  const { FormData } = useStateProvider();
 
   const HandleSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (FormData?.level0 === undefined) {
+    if (FormData?.level0 === undefined || FormData?.level1 === "") {
       notification.error({
-        message: "Vui lòng chọn loại sản phẩm",
+        message: "Vui lòng bổ sung đầy đủ thông tin",
       });
-    }
+    } else {
+      await AddDataProps("PostCategory", FormData).then(() => {
+        setIsOpen(false);
+        router.refresh();
+      });
 
-    await AddDataProps("ProductTypes", FormData).then(() => {
-      setIsOpen(false);
       router.refresh();
-    });
-
-    router.refresh();
+    }
   };
 
   const OptionItems = [
@@ -38,7 +42,7 @@ const Create = ({ setIsOpen }: any) => {
       value: "topic",
     },
   ];
-  console.log(FormData);
+
   return (
     <div>
       <form
@@ -50,38 +54,21 @@ const Create = ({ setIsOpen }: any) => {
             <InputForm
               Label="Mục cần thêm"
               Type="Radio"
-              field="Type"
-              Option={OptionItems}
+              field="level0"
+              Option={PostsTypeItems}
             />
           </div>
         </div>
-        {FormData?.Type === "type" ? (
-          <>
-            <InputForm
-              Label="Loại sản phẩm"
-              Type="Select"
-              field="level0"
-              Option={ProductTypeItems}
-            />
-            <InputForm Label="Mục sản phẩm" Type="Input" field="level1" />
-          </>
-        ) : (
-          <>
-            {" "}
-            <InputForm
-              Label="Tiêu đề Topic"
-              Type="Input"
-              field="title"
-              Option={OptionItems}
-            />
-            <InputForm
-              Label="Ảnh đại diện"
-              Type="Upload"
-              field="image"
-              Option={OptionItems}
-            />
-          </>
-        )}
+
+        <>
+          {" "}
+          <InputForm
+            Label="Tiêu đề cho mục bài viết"
+            Type="Input"
+            field="level1"
+            Option={OptionItems}
+          />
+        </>
 
         <div className="flex w-full justify-end">
           <button
@@ -96,4 +83,4 @@ const Create = ({ setIsOpen }: any) => {
   );
 };
 
-export default Create;
+export default CategoryCreate;

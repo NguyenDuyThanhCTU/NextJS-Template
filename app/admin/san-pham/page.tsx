@@ -13,8 +13,8 @@ const AdminProductPage = async ({
   const searchParamsValue: any = searchParams.tab;
   let ProductTypes = await getData("ProductTypes");
 
-  let Type = ProductTypes?.filter((item: any) => item.type === "Type");
-  let TopicType = ProductTypes?.filter((item: any) => item.type === "Topic");
+  let Type = ProductTypes?.filter((item: any) => item.type === "type");
+  let TopicType = ProductTypes?.filter((item: any) => item.type === "topic");
 
   return (
     <div>

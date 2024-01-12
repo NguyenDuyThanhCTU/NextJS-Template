@@ -51,5 +51,5 @@ export const convertDate = (date: Date) => {
     month: "numeric",
     day: "numeric",
   } as const;
-  return date.toLocaleDateString("vi-VN", options);
+  return date?.toLocaleDateString("vi-VN", options);
 };

@@ -14,7 +14,7 @@ const Search = ({ Data, Select }: SearchProps) => {
 
   useEffect(() => {
     const sort = Data?.filter((SearchRS: any) =>
-      SearchRS.title.toLowerCase().includes(search.toLowerCase())
+      SearchRS?.title?.toLowerCase().includes(search.toLowerCase())
     );
     setSearchRs(sort);
   }, [Data, search]);
@@ -48,7 +48,7 @@ const Search = ({ Data, Select }: SearchProps) => {
       {search && (
         <div className="absolute w-full bg-white top-full flex flex-col shadow-inner z-50 mt-2 border border-solid  ">
           <div className=" flex flex-col">
-            {searchRs.slice(0, 5).map((searchItems: any, idx: number) => (
+            {searchRs?.slice(0, 5).map((searchItems: any, idx: number) => (
               <div
                 key={idx}
                 className="cursor-pointer p-2 hover:bg-gray-100"
