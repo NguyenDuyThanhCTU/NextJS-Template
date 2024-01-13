@@ -10,15 +10,16 @@ import { useStateProvider } from "@context/StateProvider";
 import { PiCardsLight } from "react-icons/pi";
 import { FaSort } from "react-icons/fa";
 import Search from "@components/items/server-items/Search";
-import CategoryCreate from "./Category/Category.create";
-import CategoryUpdate from "./Category/Category.update";
+import CategoryCreate from "./Category/Create";
+import CategoryUpdate from "./Category/Update";
 
 interface ProductCategoryProps {
   Data: Array<any>;
 }
 
 interface PostCategoryProps {
-  level0: string;
+  id: string;
+  title: string;
   level1: string;
   createdAt: any;
 }
@@ -26,43 +27,23 @@ const PostCategory = ({ Data }: ProductCategoryProps) => {
   const [isOpenAddTypeModal, setIsOpenAddTypeModal] = useState(false);
   const [DataFilter, setDataFilter] = useState<any>([]);
   const [isOpenCategoryModel, setIsOpenCategoryModel] = useState(false);
-  const [isUpdateType, setIsUpdateType] = useState(false);
   const { setFormData } = useStateProvider();
   const [SelectedProductData, setSelectedProductData] =
     useState<PostCategoryProps>({
-      level0: "",
+      id: "",
+      title: "",
       level1: "",
       createdAt: "",
     });
-  const HandleSelectProduct = (level0: string) => {
-    const sort = Data?.filter((item) => item.level0 === level0);
-    console.log(level0, Data);
+  const HandleSelectProduct = (id: string) => {
+    const sort = Data?.filter((item) => item.id === id);
+
     setSelectedProductData(sort[0]);
     setIsOpenCategoryModel(true);
   };
 
-  const filter = (criteria: string) => {
-    let sortedData = [...Data];
-
-    switch (criteria) {
-      case "newest":
-        sortedData = Data;
-        break;
-      case "oldest":
-        sortedData.reverse();
-        break;
-      case "nameaz":
-        sortedData.sort((a, b) => a.title.localeCompare(b.title));
-        break;
-      case "nameza":
-        sortedData.sort((a, b) => b.title.localeCompare(a.title));
-        break;
-      default:
-        console.log("Default");
-
-      // sortedData.sort((a, b) => new Date(b.time) - new Date(a.time));
-    }
-
+  const HandleFilter = (criteria: string) => {
+    let sortedData = Data.filter((item) => item.title === criteria);
     setDataFilter(sortedData);
   };
 
@@ -72,8 +53,13 @@ const PostCategory = ({ Data }: ProductCategoryProps) => {
         <div className="flex justify-between ">
           <div className="flex items-center gap-5">
             <div>
-              <h3 className="text-[30px] font-bold">Đối tác</h3>
-              <p className="font-light">Danh sách đối tác</p>
+              <h3 className="text-[30px] font-bold">Danh sách loại bài viết</h3>
+              {DataFilter.length > 0 && (
+                <p className="font-light">
+                  Danh mục bài viết loại:{" "}
+                  <strong> {DataFilter[0]?.title} </strong>
+                </p>
+              )}
             </div>
             <div>
               <CRUDButton
@@ -94,7 +80,7 @@ const PostCategory = ({ Data }: ProductCategoryProps) => {
               <FaSort />
               <select
                 className="outline-none pr-10 border-b py-1  bg-gray-100  border-blue-500   "
-                onChange={(e: any) => filter(e.target.value)}
+                onChange={(e: any) => HandleFilter(e.target.value)}
               >
                 {PostsTypeItems.map((item, idx) => (
                   <option
@@ -131,27 +117,30 @@ const PostCategory = ({ Data }: ProductCategoryProps) => {
               )}
             </div>
             <div>
-              {Data?.map((item: PostCategoryProps, idx: number) => {
-                const value = convertDate(item.createdAt);
-                return (
-                  <div
-                    className="grid grid-cols-8 text-center border-b py-3 cursor-pointer hover:bg-slate-200 items-center "
-                    key={idx}
-                    onClick={() => HandleSelectProduct(item.level0)}
-                  >
-                    <div className="">{idx + 1}</div>
-                    <div className="text-[#7c1616] font-bold text-[20px]">
-                      {item.level0}
-                    </div>
+              {(DataFilter.length > 0 ? DataFilter : Data)?.map(
+                (item: PostCategoryProps, idx: number) => {
+                  const value = convertDate(item.createdAt);
+                  console.log(value);
+                  return (
+                    <div
+                      className="grid grid-cols-8 text-center border-b py-3 cursor-pointer hover:bg-slate-200 items-center "
+                      key={idx}
+                      onClick={() => HandleSelectProduct(item.id)}
+                    >
+                      <div className="">{idx + 1}</div>
+                      <div className="text-[#7c1616] font-bold text-[20px]">
+                        {item.title}
+                      </div>
 
-                    <div className="font-normal text-blue-500">
-                      {item.level1}
-                    </div>
+                      <div className="font-normal text-blue-500 col-span-4 text-start">
+                        {item.level1}
+                      </div>
 
-                    <div className="w-max">{value}</div>
-                  </div>
-                );
-              })}
+                      <div className="">{value}</div>
+                    </div>
+                  );
+                }
+              )}
             </div>
           </div>
         </div>
@@ -171,12 +160,15 @@ const PostCategory = ({ Data }: ProductCategoryProps) => {
       <>
         <Modal
           footer={null}
-          title={`Bạn muốn thay đổi mục ${SelectedProductData?.level0} ?`}
+          title={`Bạn muốn thay đổi mục ${SelectedProductData?.title} ?`}
           open={isOpenCategoryModel}
           width={1000}
           onCancel={() => setIsOpenCategoryModel(false)}
         >
-          <CategoryUpdate Data={SelectedProductData} />
+          <CategoryUpdate
+            Data={SelectedProductData}
+            setIsOpen={setIsOpenCategoryModel}
+          />
         </Modal>
       </>
     </div>

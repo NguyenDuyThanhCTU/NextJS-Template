@@ -77,6 +77,8 @@ interface IconMappingType {
   [key: string]: IconType;
 }
 
+export const WebsiteUrl = "https://congtyads.com";
+
 export const IconMapping: IconMappingType = {
   IoFlashOutline: IoFlashOutline,
   MdManageAccounts: MdManageAccounts,

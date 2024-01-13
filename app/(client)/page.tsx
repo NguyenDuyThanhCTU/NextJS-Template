@@ -1,7 +1,7 @@
-import { getData } from "@lib/get-data";
 import React from "react";
 
 import type { Metadata, ResolvingMetadata } from "next";
+import { getData } from "@lib/Get";
 
 // export async function generateMetadata(
 //   parent: ResolvingMetadata

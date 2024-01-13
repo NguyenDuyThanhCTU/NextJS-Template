@@ -2,7 +2,7 @@
 import { PostsTypeItems, ProductTypeItems } from "@assets/item";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
-import { AddDataProps } from "@lib/get-data";
+import { AddDataProps } from "@lib/Create";
 import { notification } from "antd";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -18,7 +18,7 @@ const CategoryCreate = ({ setIsOpen }: CategoryCreateProps) => {
   const HandleSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (FormData?.level0 === undefined || FormData?.level1 === "") {
+    if (FormData?.title === undefined || FormData?.level1 === "") {
       notification.error({
         message: "Vui lòng bổ sung đầy đủ thông tin",
       });
@@ -54,7 +54,7 @@ const CategoryCreate = ({ setIsOpen }: CategoryCreateProps) => {
             <InputForm
               Label="Mục cần thêm"
               Type="Radio"
-              field="level0"
+              field="title"
               Option={PostsTypeItems}
             />
           </div>

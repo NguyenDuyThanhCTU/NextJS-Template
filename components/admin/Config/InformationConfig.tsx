@@ -6,7 +6,7 @@ import InputForm from "@components/items/server-items/InputForm";
 import { updateDocument } from "@config/Services/Firebase/FireStoreDB";
 import { useData } from "@context/DataProviders";
 import { useStateProvider } from "@context/StateProvider";
-import { UpdateDataProps } from "@lib/get-data";
+import { UpdateDataProps } from "@lib/Update";
 import { Modal, Tooltip } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

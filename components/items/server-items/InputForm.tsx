@@ -158,7 +158,26 @@ const InputForm = ({
             </div>
           </div>
         ) : Type === "TextArea" ? (
-          <></>
+          <div className="grid grid-cols-8  items-center  w-full justify-between  ">
+            <div className="col-span-2 flex items-center gap-2 ">
+              <p> {Label}:</p>
+              {Tips && (
+                <Tooltip title={Tips}>
+                  <FaRegCircleQuestion className="text-[18px] cursor-pointer" />
+                </Tooltip>
+              )}
+            </div>
+            <div className="p-2 border  bg-white rounded-lg w-full col-span-6">
+              <textarea
+                placeholder={PlaceHolder ? PlaceHolder : ""}
+                className=" outline-none w-full"
+                value={FormData[field] === undefined ? "" : FormData[field]}
+                onChange={(e) =>
+                  setFormData({ ...FormData, [field]: e.target.value })
+                }
+              />
+            </div>
+          </div>
         ) : Type === "Checkbox" ? (
           <>
             <div className="flex  gap-5 ">

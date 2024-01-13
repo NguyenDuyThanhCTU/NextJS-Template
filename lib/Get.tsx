@@ -1,48 +1,4 @@
-import {
-  addDocument,
-  getAllDocuments,
-  getDocumentsByField,
-  getProducts,
-  updateDocument,
-} from "@config/Services/Firebase/FireStoreDB";
-import { notification } from "antd";
-
 // add new document to collection
-export async function AddDataProps(Collection: string, data: any) {
-  addDocument(Collection, data)
-    .then(() => {
-      notification.success({
-        message: "Thành công!",
-        description: `Thêm thành công!`,
-      });
-    })
-    .catch((err) => {
-      notification.error({
-        message: "Thất bại!",
-        description: `Mã lỗi: ${err}`,
-      });
-    });
-}
-
-export async function UpdateDataProps(
-  Collection: string,
-  id: string,
-  data: any
-) {
-  updateDocument(Collection, id, data)
-    .then(() => {
-      notification.success({
-        message: "Thành công!",
-        description: `Cập nhật thành công!`,
-      });
-    })
-    .catch((err) => {
-      notification.error({
-        message: "Thất bại!",
-        description: `Mã lỗi: ${err}`,
-      });
-    });
-}
 
 export async function getData(CollectionName: string, Document?: string) {
   let firebaseEndpoint: string;
@@ -81,7 +37,7 @@ export async function getData(CollectionName: string, Document?: string) {
     }
   } catch (error) {
     console.error("Lỗi khi lấy dữ liệu:", error);
-    throw new Error("Failed to fetch data.");
+    // throw new Error("Failed to fetch data.");
   }
 }
 

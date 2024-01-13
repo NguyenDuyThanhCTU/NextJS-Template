@@ -1,7 +1,7 @@
 import ContactConfig from "@components/admin/Config/ContactConfig";
 import InformationConfig from "@components/admin/Config/InformationConfig";
 import SeoConfig from "@components/admin/Config/SeoConfig";
-import { getData } from "@lib/get-data";
+import { getData } from "@lib/Get";
 
 import React from "react";
 

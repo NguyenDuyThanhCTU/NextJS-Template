@@ -1,8 +1,9 @@
+import PostCategory from "@components/admin/Posts/Category";
 import Posts from "@components/admin/Posts/Posts";
 import PostPolicy from "@components/admin/Posts/Posts.Policy";
-import PostCategory from "@components/admin/Posts/Posts.category";
 import PostIntroductory from "@components/admin/Posts/Posts.introductory";
-import { getData } from "@lib/get-data";
+import { getData } from "@lib/Get";
+
 import React from "react";
 
 const PostPage = async ({
@@ -12,11 +13,14 @@ const PostPage = async ({
 }) => {
   const searchParamsValue: any = searchParams.tab;
   const CategoryData = await getData("PostCategory");
-
+  const PostData = await getData("Posts");
   return (
     <div className="">
       {searchParamsValue === "danh-sach-bai-viet" ? (
-        <Posts />
+        <Posts
+          Data={PostData ? PostData : []}
+          Category={CategoryData ? CategoryData : []}
+        />
       ) : searchParamsValue === "danh-muc-bai-viet" ? (
         <PostCategory Data={CategoryData ? CategoryData : []} />
       ) : searchParamsValue === "dieu-khoan-su-dung" ? (

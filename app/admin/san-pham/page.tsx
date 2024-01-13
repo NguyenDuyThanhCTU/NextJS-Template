@@ -2,7 +2,7 @@ import ContactConfig from "@components/admin/Config/ContactConfig";
 import SeoConfig from "@components/admin/Config/SeoConfig";
 import ProductCategory from "@components/admin/Product/ProductCategory";
 import AdminProductList from "@components/admin/Product/ProductList";
-import { getData } from "@lib/get-data";
+import { getData } from "@lib/Get";
 import React from "react";
 
 const AdminProductPage = async ({

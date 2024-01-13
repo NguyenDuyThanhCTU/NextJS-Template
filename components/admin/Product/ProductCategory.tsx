@@ -1,7 +1,5 @@
 "use client";
-import { ProductTypeItems } from "@assets/item";
-import EditButton from "@components/items/server-items/EditButton";
-import ReportCard from "@components/items/server-items/ReportCard";
+
 import { Modal } from "antd";
 import React, { useState } from "react";
 import CRUDButton from "@components/items/server-items/CRUDButton";
