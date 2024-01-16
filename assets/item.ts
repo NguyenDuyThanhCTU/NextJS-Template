@@ -78,6 +78,7 @@ interface IconMappingType {
 }
 
 export const WebsiteUrl = "https://congtyads.com";
+export const DB_URL = "ads-company-285a6";
 
 export const IconMapping: IconMappingType = {
   IoFlashOutline: IoFlashOutline,
@@ -231,7 +232,7 @@ export const AdminPageHeaderItems = [
   },
   {
     label: "Sản Phẩm",
-    value: "san-pham",
+    value: "danh-sach-san-pham",
     icon: "GiStarSattelites",
     children: [
       {
@@ -248,7 +249,7 @@ export const AdminPageHeaderItems = [
   },
   {
     label: "Bài Viết",
-    value: "bai-viet",
+    value: "danh-sach-bai-viet",
     icon: "BsPostcard",
     children: [
       {
@@ -273,106 +274,106 @@ export const AdminPageHeaderItems = [
       },
     ],
   },
-  {
-    label: "Truyền Thông",
-    value: "truyen-thong",
-    icon: "IoShareSocialOutline",
-    children: [
-      {
-        label: "Kênh Truyền Thông",
-        value: "kenh-truyen-thong",
-        icon: "PiShareNetworkLight",
-      },
-      {
-        label: "Slide giới thiệu",
-        value: "slide-gioi-thieu",
-        icon: "BiSlideshow",
-      },
-      {
-        label: "Hình Ảnh",
-        value: "hinh-anh",
-        icon: "IoImagesOutline",
-      },
-      {
-        label: "Video",
-        value: "video",
-        icon: "MdOndemandVideo",
-      },
-    ],
-  },
-  {
-    label: "Tài Khoản",
-    value: "tai-khoan",
-    icon: "MdManageAccounts",
-    children: [
-      {
-        label: "Thông Tin Tài Khoản",
-        value: "thong-tin-tai-khoan",
-        icon: "AiOutlineProfile",
-      },
-      {
-        label: "Danh Sách Tài Khoản",
-        value: "danh-sach-tai-khoan",
-        icon: "BiSolidUserAccount",
-      },
-      {
-        label: "Phân Quyền",
-        value: "phan-quyen",
-        icon: "AiOutlineNodeCollapse",
-      },
-      {
-        label: "Lịch Sử Hoạt Động",
-        value: "lich-su-hoat-dong",
-        icon: "MdOutlineHistory",
-      },
-    ],
-  },
-  {
-    label: "Báo Cáo",
-    value: "bao-cao",
-    icon: "TbReport",
-    children: [
-      {
-        label: "Lượt Truy Cập",
-        value: "luot-truy-cap",
-        icon: "BiLoader",
-      },
-      {
-        label: "Phản Hồi của Khách Hàng",
-        value: "Phan-hoi-cua-khach-hang",
-        icon: "BiPencil",
-      },
-      {
-        label: "Đơn Hàng",
-        value: "don-hang",
-        icon: "BiCube",
-      },
+  // {
+  //   label: "Truyền Thông",
+  //   value: "kenh-truyen-thong",
+  //   icon: "IoShareSocialOutline",
+  //   children: [
+  //     {
+  //       label: "Kênh Truyền Thông",
+  //       value: "kenh-truyen-thong",
+  //       icon: "PiShareNetworkLight",
+  //     },
+  //     {
+  //       label: "Slide giới thiệu",
+  //       value: "slide-gioi-thieu",
+  //       icon: "BiSlideshow",
+  //     },
+  //     {
+  //       label: "Hình Ảnh",
+  //       value: "hinh-anh",
+  //       icon: "IoImagesOutline",
+  //     },
+  //     {
+  //       label: "Video",
+  //       value: "video",
+  //       icon: "MdOndemandVideo",
+  //     },
+  //   ],
+  // },
+  // {
+  //   label: "Tài Khoản",
+  //   value: "Thông Tin Tài Khoản",
+  //   icon: "MdManageAccounts",
+  //   children: [
+  //     {
+  //       label: "Thông Tin Tài Khoản",
+  //       value: "thong-tin-tai-khoan",
+  //       icon: "AiOutlineProfile",
+  //     },
+  //     {
+  //       label: "Danh Sách Tài Khoản",
+  //       value: "danh-sach-tai-khoan",
+  //       icon: "BiSolidUserAccount",
+  //     },
+  //     {
+  //       label: "Phân Quyền",
+  //       value: "phan-quyen",
+  //       icon: "AiOutlineNodeCollapse",
+  //     },
+  //     {
+  //       label: "Lịch Sử Hoạt Động",
+  //       value: "lich-su-hoat-dong",
+  //       icon: "MdOutlineHistory",
+  //     },
+  //   ],
+  // },
+  // {
+  //   label: "Báo Cáo",
+  //   value: "luot-truy-cap",
+  //   icon: "TbReport",
+  //   children: [
+  //     {
+  //       label: "Lượt Truy Cập",
+  //       value: "luot-truy-cap",
+  //       icon: "BiLoader",
+  //     },
+  //     {
+  //       label: "Phản Hồi của Khách Hàng",
+  //       value: "Phan-hoi-cua-khach-hang",
+  //       icon: "BiPencil",
+  //     },
+  //     {
+  //       label: "Đơn Hàng",
+  //       value: "don-hang",
+  //       icon: "BiCube",
+  //     },
 
-      {
-        label: "Sản Phẩm Xem Nhiều",
-        value: "san-pham-xem-nhieu",
-        icon: "BiHappy",
-      },
-    ],
-  },
-  {
-    label: "Tiện Ích",
-    value: "tien-ich",
-    icon: "BiHive",
+  //     {
+  //       label: "Sản Phẩm Xem Nhiều",
+  //       value: "san-pham-xem-nhieu",
+  //       icon: "BiHappy",
+  //     },
+  //   ],
+  // },
+  // {
+  //   label: "Tiện Ích",
+  //   value: "doi-tac",
+  //   icon: "BiHive",
 
-    children: [
-      {
-        label: "Đối tác",
-        value: "doi-tac",
-        icon: "LuGitCompare",
-      },
-      {
-        label: "Chi Nhánh",
-        value: "chi-nhanh",
-        icon: "GoGitBranch",
-      },
-    ],
-  },
+  //   children: [
+  //     {
+  //       label: "Đối tác",
+  //       value: "doi-tac",
+  //       icon: "LuGitCompare",
+  //     },
+  //     {
+  //       label: "Chi Nhánh",
+  //       value: "chi-nhanh",
+  //       icon: "GoGitBranch",
+  //     },
+  //   ],
+  // },
 ];
 
 /*<---------------------------------------------------------- Custom System ----------------------------------------------------------> */

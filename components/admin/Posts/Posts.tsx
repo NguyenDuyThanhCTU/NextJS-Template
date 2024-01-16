@@ -140,7 +140,7 @@ const Post = ({ Data, Category }: ProductCategoryProps) => {
               {(DataFilter.length > 0 ? DataFilter : Data)?.map(
                 (item: PostProps, idx: number) => {
                   const value = convertDate(item.createdAt);
-                  console.log(value);
+
                   return (
                     <div
                       className="grid grid-cols-8 text-center border-b py-3 cursor-pointer hover:bg-slate-200 items-center "
@@ -164,7 +164,7 @@ const Post = ({ Data, Category }: ProductCategoryProps) => {
                         </p>
                         <p className="border-l border-black ml-3 w-max pl-3">
                           {" "}
-                          {item.level1} <sup>(Cấp 2)</sup>
+                          {item.level1} <sup>(Cấp 2 )</sup>
                         </p>
                       </div>
                       <div>{value}</div>

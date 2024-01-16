@@ -42,18 +42,14 @@ const Header = () => {
             />
           </div>
         </Link>
-        <div className="col-span-2 flex justify-between items-center ">
+        <div className="col-span-2 flex justify-center items-center ">
           {AdminPageHeaderItems.map((item, index) => {
             const Icon = IconMapping[item.icon];
 
             return (
               <div className="group relative" key={index}>
                 <Link
-                  href={
-                    item.children.length > 0
-                      ? `/admin/${item.value}?tab=${item.children[0]?.value}`
-                      : `/admin/${item.value}`
-                  }
+                  href={`/admin?tab=${item.value}`}
                   className="flex gap-2 items-center font-light hover:bg-gray-100 h-max py-2 px-5  rounded-md"
                 >
                   <Icon />
@@ -61,7 +57,7 @@ const Header = () => {
                 </Link>
                 {item.children.length > 0 && (
                   <div className="hidden group-hover:block absolute top-14 z-50 ">
-                    <HeaderDropDown Root={item.value} Data={item.children} />
+                    <HeaderDropDown Data={item.children} />
                   </div>
                 )}
               </div>

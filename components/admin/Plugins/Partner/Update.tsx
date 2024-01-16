@@ -1,7 +1,6 @@
 "use client";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
-import { UpdateDataProps } from "@lib/get-data";
 import { useRouter } from "next/navigation";
 import React from "react";
 

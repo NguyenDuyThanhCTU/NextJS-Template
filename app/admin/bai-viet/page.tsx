@@ -2,7 +2,7 @@ import PostCategory from "@components/admin/Posts/Category";
 import Posts from "@components/admin/Posts/Posts";
 import PostPolicy from "@components/admin/Posts/Posts.Policy";
 import PostIntroductory from "@components/admin/Posts/Posts.introductory";
-import { getData } from "@lib/Get";
+import { getDataProps } from "@lib/ApiLib";
 
 import React from "react";
 
@@ -12,8 +12,8 @@ const PostPage = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const searchParamsValue: any = searchParams.tab;
-  const CategoryData = await getData("PostCategory");
-  const PostData = await getData("Posts");
+  const CategoryData = await getDataProps("PostCategory");
+  const PostData = await getDataProps("Posts");
   return (
     <div className="">
       {searchParamsValue === "danh-sach-bai-viet" ? (

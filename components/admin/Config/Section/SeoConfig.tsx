@@ -2,7 +2,7 @@
 import EditButton from "@components/items/server-items/EditButton";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
-import { UpdateDataProps } from "@lib/Update";
+import { updateOne } from "@lib/api";
 import { Modal, Tooltip } from "antd";
 import Image from "next/image";
 import Link from "next/link";
@@ -41,7 +41,7 @@ const SeoConfig = ({ Data }: any) => {
   const HandleSubmit = async (e: any, type: string) => {
     e.preventDefault();
 
-    await UpdateDataProps("Config", "SEOconfig", FormData).then(() => {
+    await updateOne("Config", "SEOconfig", FormData).then(() => {
       if (type === "Basic") setIsOpenBasicSEO(false);
       if (type === "Advance") setIsOpenAdvanceSEO(false);
       router.refresh();

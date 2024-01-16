@@ -2,7 +2,7 @@
 import { PostsTypeItems, ProductTypeItems, WebsiteUrl } from "@assets/item";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
-import { AddDataProps } from "@lib/Create";
+import { AddDataProps } from "@lib/ApiLib";
 import { Tabs, notification } from "antd";
 import Image from "next/image";
 import Link from "next/link";

@@ -2,7 +2,7 @@
 import { ProductTypeItems } from "@assets/item";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
-import { AddDataProps } from "@lib/Create";
+import { AddDataProps } from "@lib/ApiLib";
 import { notification } from "antd";
 import { useRouter } from "next/navigation";
 import React from "react";

@@ -2,7 +2,7 @@
 import EditButton from "@components/items/server-items/EditButton";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
-import { UpdateDataProps } from "@lib/Update";
+import { updateOne } from "@lib/api";
 import { Modal, Tooltip } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -60,7 +60,7 @@ const ContactConfig = ({ Data }: any) => {
   const router = useRouter();
   const HandleSubmit = async (e: any) => {
     e.preventDefault();
-    await UpdateDataProps("Config", "contact", FormData).then(() => {
+    await updateOne("Config", "contact", FormData).then(() => {
       setIsOpenContactModal(false);
       router.refresh();
     });

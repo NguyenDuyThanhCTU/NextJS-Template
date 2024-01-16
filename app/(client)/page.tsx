@@ -1,34 +1,12 @@
+import Temp from "@components/client/Temp";
 import React from "react";
 
-import type { Metadata, ResolvingMetadata } from "next";
-import { getData } from "@lib/Get";
-
-// export async function generateMetadata(
-//   parent: ResolvingMetadata
-// ): Promise<Metadata> {
-
-//   const product = await fetch(`https://.../${id}`).then((res) => res.json());
-
-//   // optionally access and extend (rather than replace) parent metadata
-//   const previousImages = (await parent).openGraph?.images || [];
-
-//   return {
-//     title: product.title,
-//     openGraph: {
-//       images: ["/some-specific-page-image.jpg", ...previousImages],
-//     },
-//   };
-// }
-
-const HomePage = async () => {
-  const Data1 = await getData("Config", "information");
-  console.log(Data1);
+const page = () => {
   return (
     <div>
-      <h1>HomePage</h1>
-      <p>{Data1?.NotFoundNavigate}</p>
+      <Temp />
     </div>
   );
 };
 
-export default HomePage;
+export default page;

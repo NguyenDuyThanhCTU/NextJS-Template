@@ -1,8 +1,8 @@
 import CRUDButton from "@components/items/server-items/CRUDButton";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
-import { DeleteDataProps } from "@lib/Delete";
-import { UpdateDataProps } from "@lib/Update";
+import { deleteOne, updateOne } from "@lib/api";
+
 import { Modal } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -18,7 +18,7 @@ const Update = ({ Data, setIsOpen }: CategoryUpdateProps) => {
   const { FormData } = useStateProvider();
   const router = useRouter();
   const HandleDelete = (id: string) => {
-    DeleteDataProps("PostCategory", id).then(() => {
+    deleteOne("PostCategory", id).then(() => {
       setIsOpen(false);
       router.refresh();
     });
@@ -28,7 +28,7 @@ const Update = ({ Data, setIsOpen }: CategoryUpdateProps) => {
   const HandleSubmit = (e: any, id: string) => {
     e.preventDefault();
     console.log(id, FormData);
-    UpdateDataProps("PostCategory", id, FormData).then(() => {
+    updateOne("PostCategory", id, FormData).then(() => {
       setIsOpen(false);
       setIsOpenUpdateCategoryModal(false);
       router.refresh();

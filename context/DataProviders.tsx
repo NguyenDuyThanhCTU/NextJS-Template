@@ -6,23 +6,23 @@ interface Props {
 }
 
 export type DataContextType = {
-  currentUser: any;
-  setCurrentUser: (user: any) => void;
+  ConfigData: Array<any>;
+  setConfigData: (configData: Array<any>) => void;
 };
 
 export const DataContext = createContext<DataContextType>({
-  currentUser: null,
-  setCurrentUser: () => {},
+  ConfigData: [],
+  setConfigData: () => {},
 });
 
 export const DataProviders: React.FC<Props> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [ConfigData, setConfigData] = useState<any>([]);
 
   return (
     <DataContext.Provider
       value={{
-        currentUser,
-        setCurrentUser,
+        ConfigData,
+        setConfigData,
       }}
     >
       {children}
