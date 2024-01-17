@@ -1,5 +1,4 @@
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import diacritic from "diacritic";
 import { getStorage } from "firebase/storage";
 
 export const uploadImage = async (fileOrEvent: any, locate: any) => {
@@ -52,4 +51,8 @@ export const convertDate = (date: Date) => {
     day: "numeric",
   } as const;
   return date?.toLocaleDateString("vi-VN", options);
+};
+
+export const convertToChartArray = (items: any) => {
+  return items.map((item: any) => item.label);
 };

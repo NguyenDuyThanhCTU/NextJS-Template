@@ -1,7 +1,6 @@
 import {
   addDoc,
   collection,
-  getDoc,
   getDocs,
   query,
   where,
@@ -11,17 +10,13 @@ import {
   orderBy,
   Timestamp,
   deleteDoc,
-  setDoc,
-  limit,
-  startAfter,
-  getCountFromServer,
-  endAt,
-  startAt,
   limitToLast,
+  setDoc,
 } from "firebase/firestore";
 import { db } from "@config/Firebase";
 import { convertDocumentData, convertFieldValue } from "./Handle";
 import { DB_URL } from "@assets/item";
+import { notification } from "antd";
 
 export const insertOne = async (Collection: string, data: any) => {
   data.createdAt = serverTimestamp();
@@ -30,10 +25,40 @@ export const insertOne = async (Collection: string, data: any) => {
     const collectionRef = collection(db, Collection);
 
     const newDocument = await addDoc(collectionRef, data);
-
+    notification.success({
+      message: "Thêm thành công",
+    });
     return newDocument.id;
   } catch (error) {
-    console.error("Error adding document: ", error);
+    notification.error({
+      message: "Thêm thất bại",
+      description: `Mã lỗi: ${error}`,
+    });
+  }
+};
+
+export const insertAndCustomizeId = async (
+  Collection: string,
+  data: any,
+  customDocumentId: string
+) => {
+  const documentRef = customDocumentId
+    ? doc(db, Collection, customDocumentId)
+    : doc(collection(db, Collection));
+
+  data.createdAt = serverTimestamp();
+
+  try {
+    await setDoc(documentRef, data);
+    notification.success({
+      message: "Thêm thành công",
+    });
+    return customDocumentId || documentRef.id;
+  } catch (error) {
+    notification.error({
+      message: "Thêm thất bại",
+      description: `Mã lỗi: ${error}`,
+    });
   }
 };
 
@@ -141,13 +166,31 @@ export const updateOne = async (
   newData: any
 ) => {
   newData.createdAt = serverTimestamp();
-  await updateDoc(doc(db, collectionName, id), newData);
+  await updateDoc(doc(db, collectionName, id), newData)
+    .then(() => {
+      notification.success({
+        message: "Cập nhật thành công",
+      });
+    })
+    .catch((error) => {
+      notification.error({
+        message: "Cập nhật thất bại",
+        description: `Mã lỗi: ${error}`,
+      });
+    });
 };
 
 export const deleteOne = async (CollectionName: string, id: string) => {
   try {
-    await deleteDoc(doc(db, CollectionName, id));
+    await deleteDoc(doc(db, CollectionName, id)).then(() => {
+      notification.success({
+        message: "Xóa thành công",
+      });
+    });
   } catch (error) {
-    console.log(error);
+    notification.error({
+      message: "Xóa thất bại",
+      description: `Mã lỗi: ${error}`,
+    });
   }
 };

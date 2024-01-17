@@ -1,14 +1,12 @@
 import ConfigPage from "@components/admin/Config/ConfigPage";
-import Notification from "@components/admin/Home/Notification";
-import ReportCard from "@components/items/server-items/ReportCard";
+import PostCategory from "@components/admin/Posts/Category";
+import Posts from "@components/admin/Posts/Posts";
+import PostPolicy from "@components/admin/Posts/Policy";
+import PostIntroductory from "@components/admin/Posts/Introductory";
+import ProductCategory from "@components/admin/Product/ProductCategory";
+import AdminProductList from "@components/admin/Product/ProductList";
 import { find, findById, findOne } from "@lib/api";
 import { Metadata } from "next";
-import Image from "next/image";
-import React from "react";
-import { CiBoxList } from "react-icons/ci";
-import { GiNewspaper } from "react-icons/gi";
-import { IoIosNotifications } from "react-icons/io";
-import { TbAccessPoint } from "react-icons/tb";
 
 export const metadata: Metadata = {
   title: "...",
@@ -27,17 +25,47 @@ const AdminHomePage = async ({
   switch (searchValue) {
     case "cau-hinh":
       const ConfigData = await find("Config");
-
       componentToRender = <ConfigPage Data={ConfigData} />;
       break;
     case "danh-sach-san-pham":
-      // const Data = await findById("Config", "contact");
-
-      // componentToRender = <ReportCard />;
+      componentToRender = <AdminProductList />;
       break;
-    // additional cases as needed
+    case "danh-muc-san-pham":
+      const Type = await find("ProductCategory");
+      componentToRender = <ProductCategory Data={Type} />;
+      break;
+    case "danh-sach-bai-viet":
+      const CategoryData = await find("PostCategory");
+      const PostData = await find("Posts");
+      componentToRender = (
+        <Posts
+          Data={PostData ? PostData : []}
+          Category={CategoryData ? CategoryData : []}
+        />
+      );
+      break;
+    case "danh-muc-bai-viet":
+      const Category = await find("PostCategory");
+      componentToRender = <PostCategory Data={Category ? Category : []} />;
+      break;
+    case "dieu-khoan-su-dung":
+      const Policy: any = await find("Posts");
+
+      componentToRender = <PostPolicy Data={Policy ? Policy : {}} />;
+      break;
+    case "bai-gioi-thieu":
+      const Introductory: any = await findById("Posts", "introductory");
+      componentToRender = (
+        <PostIntroductory
+          Data={
+            Introductory !== undefined ? Introductory : { createdAt: undefined }
+          }
+        />
+      );
+      break;
+
     default:
-      componentToRender = null; // or a default component
+      componentToRender = null;
   }
 
   return <>{componentToRender}</>;

@@ -8,8 +8,7 @@ import { convertDate } from "@components/items/server-items/Handle";
 import { useStateProvider } from "@context/StateProvider";
 
 interface ProductCategoryProps {
-  Type: any;
-  Topic: any;
+  Data: any;
 }
 
 interface ListProps {
@@ -18,7 +17,7 @@ interface ListProps {
   level2: any;
   createdAt: Date;
 }
-const ProductCategory = ({ Type, Topic }: ProductCategoryProps) => {
+const ProductCategory = ({ Data }: ProductCategoryProps) => {
   const [isOpenAddTypeModal, setIsOpenAddTypeModal] = useState(false);
   const [isUpdateType, setIsUpdateType] = useState(false);
   const { setFormData } = useStateProvider();
@@ -64,7 +63,7 @@ const ProductCategory = ({ Type, Topic }: ProductCategoryProps) => {
               ))}
             </div>
             <div>
-              {Type?.map((item: ListProps, idx: number) => {
+              {Data?.map((item: ListProps, idx: number) => {
                 const value = convertDate(item.createdAt);
                 return (
                   <div

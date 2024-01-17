@@ -33,7 +33,7 @@ interface PostProps {
   level1: string;
   createdAt: any;
 }
-const Post = ({ Data, Category }: ProductCategoryProps) => {
+const Posts = ({ Data, Category }: ProductCategoryProps) => {
   const [isOpenAddTypeModal, setIsOpenAddTypeModal] = useState(false);
   const [DataFilter, setDataFilter] = useState<any>([]);
   const [isOpenCategoryModel, setIsOpenCategoryModel] = useState(false);
@@ -58,8 +58,9 @@ const Post = ({ Data, Category }: ProductCategoryProps) => {
   };
 
   const HandleFilter = (criteria: string) => {
-    let sortedData = Data.filter((item) => item.title === criteria);
+    let sortedData = Data.filter((item) => item.level0 === criteria);
     setDataFilter(sortedData);
+    console.log(sortedData);
   };
 
   return (
@@ -68,7 +69,7 @@ const Post = ({ Data, Category }: ProductCategoryProps) => {
         <div className="flex justify-between ">
           <div className="flex items-center gap-5">
             <div>
-              <h3 className="text-[30px] font-bold">Danh sách loại bài viết</h3>
+              <h3 className="text-[30px] font-bold">Danh sách bài viết</h3>
               {DataFilter.length > 0 && (
                 <p className="font-light">
                   Danh mục bài viết loại:{" "}
@@ -210,4 +211,4 @@ const Post = ({ Data, Category }: ProductCategoryProps) => {
   );
 };
 
-export default Post;
+export default Posts;

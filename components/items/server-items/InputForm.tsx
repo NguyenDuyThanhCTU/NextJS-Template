@@ -24,8 +24,7 @@ interface InputFormProps {
     | "Editor";
   setState?: any;
   setUpload?: any;
-  FormData?: any;
-  setFormData?: any;
+
   field: any;
   Tips?: string;
   Option?: any;

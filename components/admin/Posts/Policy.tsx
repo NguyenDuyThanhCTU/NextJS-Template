@@ -16,18 +16,20 @@ import Search from "@components/items/server-items/Search";
 import CategoryCreate from "./Category/Create";
 import CategoryUpdate from "./Category/Update";
 import Barchart from "@components/items/Chart/Barchart";
+import LineChart from "@components/items/Chart/Linechart";
+import TimelineChart from "@components/items/Chart/Timeline";
 
 interface ProductCategoryProps {
   Data: Array<any>;
 }
 
-interface PostCategoryProps {
+interface PostPolicyProps {
   id: string;
   title: string;
   level1: string;
   createdAt: any;
 }
-const PostCategory = ({ Data }: ProductCategoryProps) => {
+const PostPolicy = ({ Data }: ProductCategoryProps) => {
   const [isOpenAddTypeModal, setIsOpenAddTypeModal] = useState(false);
   const [DataFilter, setDataFilter] = useState<any>([]);
   const [LabelDataChart, setLabelDataChart] = useState<any>([]);
@@ -35,7 +37,7 @@ const PostCategory = ({ Data }: ProductCategoryProps) => {
   const [isOpenCategoryModel, setIsOpenCategoryModel] = useState(false);
   const { setFormData } = useStateProvider();
   const [SelectedProductData, setSelectedProductData] =
-    useState<PostCategoryProps>({
+    useState<PostPolicyProps>({
       id: "",
       title: "",
       level1: "",
@@ -63,7 +65,13 @@ const PostCategory = ({ Data }: ProductCategoryProps) => {
     });
     setValueDataChart(arr);
   }, [Data]);
-
+  const timelineLabels = [
+    "2022-01-01",
+    "2022-02-01",
+    "2022-03-01",
+    "2022-04-01",
+  ];
+  const timelineData = [10, 25, 15, 30];
   return (
     <div className="w-full  px-10 font-light gap-10 h-screen  bg-white py-10">
       <div className="">
@@ -135,7 +143,7 @@ const PostCategory = ({ Data }: ProductCategoryProps) => {
                 </div>
                 <div>
                   {(DataFilter.length > 0 ? DataFilter : Data)?.map(
-                    (item: PostCategoryProps, idx: number) => {
+                    (item: PostPolicyProps, idx: number) => {
                       const value = convertDate(item.createdAt);
 
                       return (
@@ -168,10 +176,9 @@ const PostCategory = ({ Data }: ProductCategoryProps) => {
             <div className="col-span-2 border  rounded-lg">
               <div className="p-2 ">
                 {LabelDataChart.length > 0 && ValueDataChart.length > 0 && (
-                  <Barchart
-                    Label={LabelDataChart}
-                    Value={ValueDataChart}
-                    Title="Loại bài viết"
+                  <TimelineChart
+                    timeLabels={timelineLabels}
+                    data={timelineData}
                   />
                 )}
               </div>
@@ -209,4 +216,4 @@ const PostCategory = ({ Data }: ProductCategoryProps) => {
   );
 };
 
-export default PostCategory;
+export default PostPolicy;

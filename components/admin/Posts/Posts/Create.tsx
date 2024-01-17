@@ -2,7 +2,7 @@
 import { PostsTypeItems, ProductTypeItems, WebsiteUrl } from "@assets/item";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
-import { AddDataProps } from "@lib/ApiLib";
+import { insertOne } from "@lib/api";
 import { Tabs, notification } from "antd";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,6 +21,7 @@ interface CreateProps {
 
 const Create = ({ setIsOpen, Data, pid }: CreateProps) => {
   const [DataFilter, setDataFilter] = useState<any>([]);
+  const [level0Slug, setLevel0Slug] = useState<any>("");
   const { FormData, setFormData } = useStateProvider();
   const [Keyword, setKeyword] = useState<any>([]);
 
@@ -29,7 +30,10 @@ const Create = ({ setIsOpen, Data, pid }: CreateProps) => {
 
     let formattedArray = sortedData.map((item) => ({
       label: item.level1,
-      value: item.level1,
+      value: slugify(item.level1, {
+        lower: true,
+        locale: "vi",
+      }),
     }));
 
     setDataFilter(formattedArray);
@@ -45,15 +49,27 @@ const Create = ({ setIsOpen, Data, pid }: CreateProps) => {
       }),
     });
   }, [FormData?.title]);
+
+  useEffect(() => {
+    setLevel0Slug(
+      slugify(`${FormData?.level0}`, {
+        lower: true,
+        locale: "vi",
+      })
+    );
+  }, [FormData?.level0]);
+  console.log(FormData, level0Slug);
   const HandleChangeKeyword = (item: number) => {
     let newKeyword = FormData?.keyword?.filter((i: any) => i !== item);
     setFormData({ ...FormData, keyword: newKeyword });
   };
   const router = useRouter();
   const HandleSubmit = async () => {
-    console.log(FormData);
-
-    await AddDataProps("Posts", FormData).then(() => {
+    setFormData({
+      ...FormData,
+      level0: level0Slug,
+    });
+    await insertOne("Posts", FormData).then(() => {
       setIsOpen(false);
       router.refresh();
     });

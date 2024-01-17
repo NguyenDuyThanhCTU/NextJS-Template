@@ -522,6 +522,10 @@ export const PostsTypeItems = [
     label: "Thắc Mắc",
     value: "Thắc Mắc",
   },
+  {
+    label: "Chính sách",
+    value: "Chính sách",
+  },
 ];
 
 export {};

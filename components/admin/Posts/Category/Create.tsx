@@ -2,7 +2,7 @@
 import { PostsTypeItems, ProductTypeItems } from "@assets/item";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
-import { AddDataProps } from "@lib/ApiLib";
+import { insertOne } from "@lib/api";
 import { notification } from "antd";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -23,7 +23,7 @@ const CategoryCreate = ({ setIsOpen }: CategoryCreateProps) => {
         message: "Vui lòng bổ sung đầy đủ thông tin",
       });
     } else {
-      await AddDataProps("PostCategory", FormData).then(() => {
+      await insertOne("PostCategory", FormData).then(() => {
         setIsOpen(false);
         router.refresh();
       });
