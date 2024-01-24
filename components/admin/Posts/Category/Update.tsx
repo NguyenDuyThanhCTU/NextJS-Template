@@ -1,40 +1,33 @@
 import CRUDButton from "@components/items/server-items/CRUDButton";
-import InputForm from "@components/items/server-items/InputForm";
-import { useStateProvider } from "@context/StateProvider";
-import { deleteOne, updateOne } from "@lib/api";
+
+import { deleteOne } from "@lib/api";
 
 import { Modal } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import Create from "../Posts/Create";
+import { useStateProvider } from "@context/StateProvider";
 
 interface CategoryUpdateProps {
   Data: any;
   setIsOpen: (isOpen: boolean) => void;
+  Category: any;
+  pid: number;
 }
 
-const Update = ({ Data, setIsOpen }: CategoryUpdateProps) => {
+const Update = ({ Data, setIsOpen, Category, pid }: CategoryUpdateProps) => {
   const [isOpenUpdateCategoryModal, setIsOpenUpdateCategoryModal] =
     useState(false);
-  const { FormData } = useStateProvider();
+  const { setFormData } = useStateProvider();
   const router = useRouter();
   const HandleDelete = (id: string) => {
-    deleteOne("PostCategory", id).then(() => {
+    deleteOne("Posts", id).then(() => {
       setIsOpen(false);
       router.refresh();
     });
     router.refresh();
   };
 
-  const HandleSubmit = (e: any, id: string) => {
-    e.preventDefault();
-    console.log(id, FormData);
-    updateOne("PostCategory", id, FormData).then(() => {
-      setIsOpen(false);
-      setIsOpenUpdateCategoryModal(false);
-      router.refresh();
-    });
-    router.refresh();
-  };
   return (
     <div className="flex flex-col gap-4 font-LexendDeca font-light">
       <div className="">
@@ -78,29 +71,18 @@ const Update = ({ Data, setIsOpen }: CategoryUpdateProps) => {
           open={isOpenUpdateCategoryModal}
           width={1000}
           onCancel={() => setIsOpenUpdateCategoryModal(false)}
+          destroyOnClose={true}
+          afterClose={() => setFormData({})}
         >
-          <form
-            onSubmit={(e) => HandleSubmit(e, Data.id)}
-            className="p-2 flex flex-col gap-2"
-          >
-            <>
-              {" "}
-              <InputForm
-                Label="Tiêu đề cho mục bài viết"
-                Type="Input"
-                field="level1"
-              />
-            </>
-
-            <div className="flex w-full justify-end">
-              <button
-                className="bg-blue-500 hover:bg-blue-700 duration-300 text-white p-2 rounded-md"
-                type="submit"
-              >
-                Cập nhật
-              </button>
-            </div>
-          </form>
+          <div>
+            <Create
+              Type="update"
+              setIsOpen={setIsOpenUpdateCategoryModal}
+              Data={Category}
+              pid={pid}
+              id={Data?.id}
+            />
+          </div>
         </Modal>
       </>
     </div>

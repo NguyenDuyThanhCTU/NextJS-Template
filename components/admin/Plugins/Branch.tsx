@@ -307,6 +307,8 @@ const Branch = () => {
           open={isOpenPartnerModel}
           width={700}
           onCancel={() => setIsOpenPartnerModel(false)}
+          destroyOnClose={true}
+          afterClose={() => setFormData({})}
         >
           <div className="border rounded-xl bg-slate-100">
             <div className="p-5 grid grid-cols-2  justify-center gap-3">
@@ -332,6 +334,7 @@ const Branch = () => {
           footer={null}
           open={isOpenUpdate}
           width={700}
+          destroyOnClose={true}
           afterClose={() => setFormData({})}
           onCancel={() => setIsOpenUpdate(false)}
         >
@@ -343,6 +346,7 @@ const Branch = () => {
           footer={null}
           open={isOpenAdd}
           width={700}
+          destroyOnClose={true}
           afterClose={() => setFormData({})}
           onCancel={() => setIsOpenAdd(false)}
         >

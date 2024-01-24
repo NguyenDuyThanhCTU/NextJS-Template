@@ -1,31 +1,29 @@
 "use client";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
+import { insertOne } from "@lib/api";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const Create = ({ setIsOpenContactModal }: any) => {
+const Create = ({ OpenCreate }: any) => {
   const { FormData } = useStateProvider();
   const router = useRouter();
   const HandleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(FormData);
-    // await UpdateDataProps("Config", "contact", FormData).then(() => {
-    //   setIsOpenContactModal(false);
-    //   router.refresh();
-    // });
-
-    router.refresh();
+    await insertOne("Partner", FormData).then(() => {
+      OpenCreate(false);
+      router.refresh();
+    });
   };
   return (
     <form onSubmit={(e) => HandleSubmit(e)}>
       {" "}
       <div className="border border-black rounded-lg">
         <div className="p-2 flex flex-col gap-2">
-          <InputForm Label="Tên đối tác" Type="Input" field={"PartnerName"} />
+          <InputForm Label="Tên đối tác" Type="Input" field={"title"} />
 
-          <InputForm Label="Đường dẫn" Type="Input" field={"PartnerUrl"} />
-          <InputForm Label="Logo" Type="Upload" field={"PartnerLogo"} />
+          <InputForm Label="Đường dẫn" Type="Input" field={"url"} />
+          <InputForm Label="Logo" Type="Upload" field={"image"} />
         </div>
       </div>
       <div className="flex w-full justify-end mt-5">

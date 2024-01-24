@@ -13,7 +13,9 @@ const PostIntroductory = ({ Data }: any) => {
   const { setFormData, FormData } = useStateProvider();
   const markup = { __html: Data?.content };
   const router = useRouter();
+
   const HandleSubmit = () => {
+    setFormData({ ...FormData, level0: "Introductory" });
     if (Data?.createdAt !== undefined) {
       updateOne("Posts", "introductory", FormData).then(() => {
         setIsOpenAddTypeModal(false);
@@ -27,9 +29,10 @@ const PostIntroductory = ({ Data }: any) => {
     }
     router.refresh();
   };
+
   return (
     <div className="w-full px-2 font-light gap-10 min-h-screen  bg-white py-10 ">
-      <div className="flex items-center gap-5 ml-5">
+      <div className="flex items-center gap-5 ml-5 d:flex-row p:flex-col">
         <div>
           <h3 className="text-[30px] font-bold">Chỉnh sửa bài giới thiệu</h3>
           <p className="font-light">
@@ -45,7 +48,7 @@ const PostIntroductory = ({ Data }: any) => {
           />
         </div>
       </div>
-      <div className="  grid grid-cols-4 gap-5 mt-10">
+      <div className="  grid p:grid-cols-1 d:grid-cols-4 gap-5 mt-10">
         <div className="col-span-3 border rounded-lg bg-slate-100 min-h-screen">
           <div className="p-5">
             <div

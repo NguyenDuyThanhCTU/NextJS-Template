@@ -1,8 +1,0 @@
-# https://www.robotstxt.org/robotstxt.html
-
-
-User-Agent: *
-Allow: /
-Disallow: /private/
-
-Sitemap: https://acme.com/sitemap.xml

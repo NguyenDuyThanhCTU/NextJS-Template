@@ -65,55 +65,30 @@ const PostCategory = ({ Data }: ProductCategoryProps) => {
   }, [Data]);
 
   return (
-    <div className="w-full  px-10 font-light gap-10 h-screen  bg-white py-10">
+    <div className="w-full  p:px-0 d:px-10 font-light h-screen  bg-white py-10">
       <div className="">
-        <div className="flex justify-between ">
-          <div className="flex items-center gap-5">
-            <div>
-              <h3 className="text-[30px] font-bold">Danh sách loại bài viết</h3>
-              {DataFilter.length > 0 && (
-                <p className="font-light">
-                  Danh mục bài viết loại:{" "}
-                  <strong> {DataFilter[0]?.title} </strong>
-                </p>
-              )}
-            </div>
-            <div>
-              <CRUDButton
-                Clicked={setIsOpenAddTypeModal}
-                Label="Thêm"
-                value="loại bài viết"
-                Style="hover:bg-orange-900 bg-orange-700"
-              />
-            </div>
+        <div className="flex items-center gap-5 d:flex-row p:flex-col">
+          <div>
+            <h3 className="text-[30px] font-bold">Danh sách loại bài viết</h3>
+            {DataFilter.length > 0 && (
+              <p className="font-light">
+                Danh mục bài viết loại:{" "}
+                <strong> {DataFilter[0]?.title} </strong>
+              </p>
+            )}
           </div>
-          <div className="flex items-center gap-4 text-[14px] mr-20">
-            <Search Data={Data} Select={HandleSelectProduct} />
-            <div className="flex items-center gap-1">
-              <PiCardsLight />
-              <p>{Data.length} loại bài viết</p>
-            </div>
-            <div className="flex items-center gap-1 text-blue-500">
-              <FaSort />
-              <select
-                className="outline-none pr-10 border-b py-1  bg-gray-100  border-blue-500   "
-                onChange={(e: any) => HandleFilter(e.target.value)}
-              >
-                {PostsTypeItems.map((item, idx) => (
-                  <option
-                    key={idx}
-                    className=" font-extralight "
-                    value={item.label}
-                  >
-                    {item.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div>
+            <CRUDButton
+              Clicked={setIsOpenAddTypeModal}
+              Label="Thêm"
+              value="loại bài viết"
+              Style="hover:bg-orange-900 bg-orange-700"
+            />
           </div>
         </div>
+
         <div>
-          <div className="grid grid-cols-5 gap-5 items-start mt-5">
+          <div className="grid p:grid-cols-1 d:grid-cols-5 gap-5 items-start mt-5">
             <div className="font-LexendDeca font-light col-span-3 overflow-y-auto ">
               {" "}
               <div className="mt-5 text-black">
@@ -165,7 +140,7 @@ const PostCategory = ({ Data }: ProductCategoryProps) => {
                 </div>
               </div>
             </div>
-            <div className="col-span-2 border  rounded-lg">
+            <div className="p:col-span-1 d:col-span-2 border  rounded-lg">
               <div className="p-2 ">
                 {LabelDataChart.length > 0 && ValueDataChart.length > 0 && (
                   <Barchart
@@ -186,6 +161,7 @@ const PostCategory = ({ Data }: ProductCategoryProps) => {
           open={isOpenAddTypeModal}
           width={1000}
           onCancel={() => setIsOpenAddTypeModal(false)}
+          destroyOnClose={true}
           afterClose={() => setFormData({})}
         >
           <CategoryCreate setIsOpen={setIsOpenAddTypeModal} />
@@ -198,11 +174,13 @@ const PostCategory = ({ Data }: ProductCategoryProps) => {
           open={isOpenCategoryModel}
           width={1000}
           onCancel={() => setIsOpenCategoryModel(false)}
+          destroyOnClose={true}
+          afterClose={() => setFormData({})}
         >
-          <CategoryUpdate
+          {/* <CategoryUpdate
             Data={SelectedProductData}
             setIsOpen={setIsOpenCategoryModel}
-          />
+          /> */}
         </Modal>
       </>
     </div>

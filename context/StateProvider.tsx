@@ -15,8 +15,6 @@ export type StateContextType = {
 
   FormData: any;
   setFormData: (formData: any) => void;
-  isRefetch: string;
-  setIsRefetch: (isRefetch: string) => void;
 };
 
 export const StateContext = createContext<StateContextType>({
@@ -30,22 +28,18 @@ export const StateContext = createContext<StateContextType>({
 
   FormData: {},
   setFormData: () => {},
-  isRefetch: "",
-  setIsRefetch: () => {},
 });
 
 export const StateProvider = ({ children }: Props) => {
   const [Search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(0);
   const [OpenCart, setOpenCart] = useState(false);
-  const [isRefetch, setIsRefetch] = useState("");
+
   //
   const [FormData, setFormData] = useState<any>({});
   return (
     <StateContext.Provider
       value={{
-        isRefetch,
-        setIsRefetch,
         FormData,
         setFormData,
         OpenCart,

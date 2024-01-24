@@ -193,6 +193,7 @@ const PostPolicy = ({ Data }: ProductCategoryProps) => {
           open={isOpenAddTypeModal}
           width={1000}
           onCancel={() => setIsOpenAddTypeModal(false)}
+          destroyOnClose={true}
           afterClose={() => setFormData({})}
         >
           <CategoryCreate setIsOpen={setIsOpenAddTypeModal} />
@@ -205,11 +206,13 @@ const PostPolicy = ({ Data }: ProductCategoryProps) => {
           open={isOpenCategoryModel}
           width={1000}
           onCancel={() => setIsOpenCategoryModel(false)}
+          destroyOnClose={true}
+          afterClose={() => setFormData({})}
         >
-          <CategoryUpdate
+          {/* <CategoryUpdate
             Data={SelectedProductData}
             setIsOpen={setIsOpenCategoryModel}
-          />
+          /> */}
         </Modal>
       </>
     </div>

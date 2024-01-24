@@ -62,7 +62,7 @@ export const insertAndCustomizeId = async (
   }
 };
 
-export const findById = async (Collection: string, Id: string) => {
+export const findById = async (Collection: string, Id: any) => {
   let firebaseEndpoint = `https://firestore.googleapis.com/v1/projects/${DB_URL}/databases/(default)/documents/${Collection}/${Id}`;
 
   try {
@@ -165,19 +165,20 @@ export const updateOne = async (
   id: string,
   newData: any
 ) => {
-  newData.createdAt = serverTimestamp();
-  await updateDoc(doc(db, collectionName, id), newData)
-    .then(() => {
-      notification.success({
-        message: "Cập nhật thành công",
-      });
-    })
-    .catch((error) => {
-      notification.error({
-        message: "Cập nhật thất bại",
-        description: `Mã lỗi: ${error}`,
-      });
+  try {
+    newData.createdAt = serverTimestamp();
+    await updateDoc(doc(db, collectionName, id), newData);
+    notification.success({
+      message: "Cập nhật thành công",
     });
+  } catch (error) {
+    console.error("Lỗi khi cập nhật:", error);
+    notification.error({
+      message: "Cập nhật thất bại",
+      description: `Mã lỗi: ${error}`,
+    });
+    throw error; // Re-throw lỗi để cho phép nó được xử lý bởi các khối catch ở nơi gọi hàm
+  }
 };
 
 export const deleteOne = async (CollectionName: string, id: string) => {

@@ -55,7 +55,7 @@ const InformationConfig = ({ Data }: any) => {
 
   return (
     <div className="pb-5 ">
-      <div className="w-full grid grid-cols-2 px-10 font-light">
+      <div className="w-full grid p:grid-cols-1 d:grid-cols-2 p:px-0 d:px-10 font-light gap-5">
         <div className="">
           <h1 className="text-[30px] font-semibold"> Cấu Hình Website </h1>
           <p className=" text-gray-500">
@@ -63,7 +63,7 @@ const InformationConfig = ({ Data }: any) => {
           </p>
         </div>
         <div className="grid grid-cols-1 gap-4 ">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid p:grid-cols-1 d:grid-cols-2 gap-3">
             <div className="border shadow-sm bg-white rounded-md border-gray-200 ">
               <div className="p-4 flex flex-col gap-1">
                 <div className="flex justify-between items-center">
@@ -158,6 +158,7 @@ const InformationConfig = ({ Data }: any) => {
           footer={null}
           open={isOpen404Modal}
           onCancel={() => setIsOpen404Modal(false)}
+          destroyOnClose={true}
           afterClose={() => setFormData({})}
         >
           <form
@@ -197,6 +198,7 @@ const InformationConfig = ({ Data }: any) => {
           footer={null}
           open={isHandleLogo}
           onCancel={() => setIsHandleLogo(false)}
+          destroyOnClose={true}
           afterClose={() => setFormData({})}
         >
           <form

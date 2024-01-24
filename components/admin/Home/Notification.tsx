@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import { IoIosMenu } from "react-icons/io";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper } from "swiper/react";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
+import { WebsiteUrl } from "@assets/item";
 
 const Notification = () => {
   return (
@@ -13,7 +13,6 @@ const Notification = () => {
         <div className="flex items-center justify-between border-b border-black cursor-pointer">
           <h2 className="border-b-2 py-2  border-blue-600 font-semibold text-[18px] text-mainorange hover:border-blue-800  duration-300 ">
             Thông tin website
-            
           </h2>
           <div className="flex items-center ">
             <div className=" p-2 hover:bg-adminOrange hover:text-white duration-300">
@@ -27,7 +26,7 @@ const Notification = () => {
       </div>
       <div className="w-full bg-gray-50">
         <div>
-          <div>Thông tin hosting: localhost:3000</div>
+          <div>Thông tin hosting: {WebsiteUrl}</div>
           <div>Ngày khởi tạo: 22-12-2023</div>
           <div>Ngày kết thúc: 22-12-2024</div>
         </div>

@@ -1,13 +1,13 @@
 import React from "react";
 import ListProductReport from "./ProductList/Report";
-import ListProductContent from "./ProductList/Content";
+import ListProduct from "./ProductList/List/List";
 
-const AdminProductList = () => {
+const AdminProductList = ({ Category }: any) => {
   return (
     <>
       <div className="flex flex-col">
-        <ListProductReport />
-        <ListProductContent />
+        {/* <ListProductReport /> */}
+        <ListProduct Category={Category} />
       </div>
     </>
   );

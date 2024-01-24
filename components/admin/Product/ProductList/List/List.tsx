@@ -10,75 +10,36 @@ import { MdDeleteForever, MdNumbers } from "react-icons/md";
 import { PiCardsLight } from "react-icons/pi";
 import UpdateIndex from "./Update/UpdateIndex";
 import { useStateProvider } from "@context/StateProvider";
-import CreateProduct from "./Create/Create";
 import { IoMdStar } from "react-icons/io";
+import CRUDButton from "@components/items/server-items/CRUDButton";
+import { useData } from "@context/DataProviders";
+import ProductHandle from "../ProductHandle";
+import { convertDate } from "@components/items/server-items/Handle";
+import { deleteOne } from "@lib/api";
+import { useRouter } from "next/navigation";
 
 interface ProductProps {
-  stt: number;
-  pid: string;
+  id: any;
   title: string;
   image: string;
   price: string;
   view: number;
-  time: string;
-}
-interface ButtonProps {
-  Label: string;
-  Style: string;
-  Clicked: any;
-}
-
-interface UpdateIndexProps {
-  pid: string;
-  price: number;
-  discount: number;
-  newprice: number;
-  sale: boolean;
+  level0: string;
+  level1: string;
+  createdAt: any;
+  description: string;
+  details: string;
 }
 
-export const Button = ({ Label, Style, Clicked }: ButtonProps) => {
-  return (
-    <div
-      className={`${Style} py-2 px-3  cursor-pointer duration-300  text-white rounded-full flex items-center gap-1`}
-      onClick={Clicked}
-    >
-      <div className="text-[20px]">
-        {Label === "Cập Nhật Sản phẩm" ? (
-          <>
-            {" "}
-            <CiEdit />
-          </>
-        ) : Label === "Thêm Sản Phẩm" ? (
-          <>
-            <FaPlus />
-          </>
-        ) : (
-          <MdDeleteForever />
-        )}
-      </div>
-      <p> {Label}</p>
-    </div>
-  );
-};
+const ListProduct = ({ Category }: any) => {
+  const [isOpenAddModal, setIsOpenAddModal] = useState(false);
+  const [isOpenHandleModel, setIsOpenHandleModel] = useState(false);
+  const [isOpenUpdateModel, setIsOpenUpdateModel] = useState(false);
+  const [SelectedProductData, setSelectedProductData] =
+    useState<ProductProps>();
 
-const ListProduct = () => {
-  const [isOpenProductModal, setIsOpenProductModal] = useState<boolean>(false);
-  const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false);
-  const [isOpenAdd, setIsOpenAdd] = useState<boolean>(false);
-  const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
-  const [isOpenChangeIndex, setIsOpenChangeIndex] = useState<boolean>(false);
-  const [SelectedProductData, setSelectedProductData] = useState<ProductProps>({
-    stt: 0,
-    pid: "",
-    title: "",
-    image: "",
-    price: "",
-    view: 0,
-    time: "",
-  });
-
-  const { FormData } = useStateProvider();
-
+  const { setFormData } = useStateProvider();
+  const { Products } = useData();
   const sortItem = [
     {
       label: "Mới nhất",
@@ -109,89 +70,39 @@ const ListProduct = () => {
       value: "bestseller",
     },
   ];
-  const productItem = [
-    {
-      stt: 1,
-      pid: "1215",
-      title: "Áo thun nam",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
-      price: "200.000",
-      view: 200,
-      time: "10/10/2021",
-    },
-    {
-      stt: 2,
-      pid: "1216",
-      title: "Áo thun nữ",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
-      price: "200.000",
-      view: 500,
-      time: "10/10/2021",
-    },
-    {
-      stt: 3,
-      pid: "1217",
-      title: "Áo thun trẻ em",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
-      price: "200.000",
-      view: 100,
-      time: "10/10/2021",
-    },
-    {
-      stt: 4,
-      pid: "1218",
-      title: "Áo thun nam",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
-      price: "200.000",
-      view: 200,
-      time: "10/10/2021",
-    },
-    {
-      stt: 5,
-      pid: "1219",
-      title: "Áo thun nam",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/lachmarket-34ace.appspot.com/o/products%2F48e1f92a03a2a0fdb3c771645c7714aa.jpg_720x720q80.jpg?alt=media&token=dc625438-4630-4617-b093-8136d3743716",
-      price: "200.000",
-      view: 200,
-      time: "10/10/2021",
-    },
-  ];
+  const router = useRouter();
 
   const HandleSelectProduct = (id: string) => {
-    const sort = productItem?.filter((item) => item.pid === id);
+    const sort = Products?.filter((item: any) => item.id === id);
+
     setSelectedProductData(sort[0]);
-    setIsOpenProductModal(true);
+    setIsOpenHandleModel(true);
   };
-
-  const HandleUpdateIndexForm = (e: any) => {
-    e.preventDefault();
-    //regex
-    console.log(FormData);
+  const HandleDelete = async (id: string) => {
+    deleteOne("Products", id).then(() => {
+      setIsOpenHandleModel(false);
+      router.refresh();
+    });
   };
-
   return (
     <div className="border rounded-lg bg-white">
       <div className="p-4 font-normal text-gray-700">
-        <div className="flex justify-between">
-          <div className="flex items-center gap-5">
+        <div className="flex justify-between d:flex-row p:flex-col gap-5">
+          <div className="flex items-center gap-5 d:flex-row p:flex-col">
             <div>
               <h3 className="text-[30px] font-bold">Danh sách sản phẩm</h3>
               <p className="font-light">Tóm tắc ngắn gọn tất cả sản phẩm</p>
             </div>
             <div>
-              <Button
+              <CRUDButton
+                Clicked={setIsOpenAddModal}
+                Label="Thêm"
+                value="sản phẩm"
                 Style="hover:bg-emerald-900 bg-emerald-700"
-                Label="Thêm Sản Phẩm"
-                Clicked={() => setIsOpenAdd(true)}
               />
             </div>
           </div>
-          <div className="flex items-center gap-4 text-[14px]">
+          <div className="flex items-center gap-4 text-[14px] d:flex-row p:flex-col">
             <div className="border rounded-lg ">
               <div className="py-2 px-4 flex items-center gap-2">
                 <div className="cursor-pointer">
@@ -204,31 +115,33 @@ const ListProduct = () => {
                 />
               </div>
             </div>
-            <div className="flex items-center gap-1">
-              <PiCardsLight />
-              <p>25 sản phẩm</p>
-            </div>
-            <div className="flex items-center gap-1 text-blue-500">
-              <FaSort />
-              <select
-                className="outline-none pr-10 border-b py-1  bg-gray-100  border-blue-500   "
-                // onChange={(e: any) => filter(e.target.value)}
-              >
-                {sortItem.map((item, idx) => (
-                  <option
-                    key={idx}
-                    className=" font-extralight "
-                    value={item.value}
-                  >
-                    {item.label}
-                  </option>
-                ))}
-              </select>
+            <div className="flex gap-5">
+              <div className="flex items-center gap-1">
+                <PiCardsLight />
+                <p>{Products?.length} sản phẩm</p>
+              </div>
+              <div className="flex items-center gap-1 text-blue-500">
+                <FaSort />
+                <select
+                  className="outline-none pr-10 border-b py-1  bg-gray-100  border-blue-500   "
+                  // onChange={(e: any) => filter(e.target.value)}
+                >
+                  {sortItem.map((item, idx) => (
+                    <option
+                      key={idx}
+                      className=" font-extralight "
+                      value={item.value}
+                    >
+                      {item.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
         </div>
-        <div className="mt-5 text-black">
-          <div className="grid grid-cols-8 border-b-2 border-black py-3">
+        <div className="mt-5 text-black d:block p:hidden ">
+          <div className="grid grid-cols-8 border-b-2 border-black py-3 ">
             {[
               "STT",
               "Sản phẩm",
@@ -252,44 +165,93 @@ const ListProduct = () => {
             ))}
           </div>
           <div>
-            {productItem.map((item, idx) => (
-              <div
-                className="grid grid-cols-8 border-b py-3 cursor-pointer hover:bg-slate-100"
-                key={idx}
-                onClick={() => HandleSelectProduct(item.pid)}
-              >
-                <div className="flex justify-center items-center">
-                  {item.stt}
-                </div>
-                <div className="col-span-3">
-                  <div className="text-[#16757c]">{item.title}</div>
-                  <div className="flex items-center gap-2 mt-2">
-                    <span>Mã SP:</span>
-                    <div className="rounded-md px-3 py-1 bg-gray-200">
-                      #{item.pid}
+            {Products?.map((item: any, idx: any) => {
+              const Date = convertDate(item.createdAt);
+              return (
+                <div
+                  className="grid grid-cols-8 border-b py-3 cursor-pointer hover:bg-slate-100"
+                  key={idx}
+                  onClick={() => HandleSelectProduct(item.id)}
+                >
+                  <div className="flex justify-center items-center">{idx}</div>
+                  <div className="col-span-3">
+                    <div className="text-[#16757c]">{item.title}</div>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span>Mã SP:</span>
+                      <div className="rounded-md px-3 py-1 bg-gray-200">
+                        #{item.id}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex justify-center items-center">
-                  <Image
-                    src={item.image}
-                    width={100}
-                    height={100}
-                    alt="product webp"
-                  />
-                </div>
-                <div className="flex justify-center items-center text-red-500">
-                  {item.view}
-                </div>
-                <div className="flex justify-center items-center">
-                  {item.price}
-                </div>
+                  <div className="flex justify-center items-center">
+                    <Image
+                      src={item.image}
+                      width={100}
+                      height={100}
+                      alt="product webp"
+                    />
+                  </div>
+                  <div className="flex justify-center items-center text-red-500">
+                    {item.view}
+                  </div>
+                  <div className="flex justify-center items-center">
+                    {item.price}
+                  </div>
 
-                <div className="flex justify-center items-center">
-                  {item.time}
+                  <div className="flex justify-center items-center">{Date}</div>
                 </div>
+              );
+            })}
+          </div>
+        </div>
+        <div className="mt-5 text-black p:block d:hidden">
+          <div className="grid grid-cols-4 border-b-2 border-black py-3 ">
+            {["Sản phẩm", "Hình Ảnh", "Thời gian"].map((item, idx) => (
+              <div
+                key={idx}
+                className={`${
+                  item === "Sản phẩm"
+                    ? "col-span-2 justify-start"
+                    : "justify-center col-span-1"
+                }
+                flex  w-full
+                `}
+              >
+                {item}
               </div>
             ))}
+          </div>
+          <div>
+            {Products?.map((item: any, idx: any) => {
+              const Date = convertDate(item.createdAt);
+              return (
+                <div
+                  className="grid grid-cols-4 border-b py-3 cursor-pointer hover:bg-slate-100 text-[14px] gap-3"
+                  key={idx}
+                  onClick={() => HandleSelectProduct(item.id)}
+                >
+                  <div className="col-span-2">
+                    <div className="text-[#16757c]">{item.title}</div>
+                    <div className="flex items-center gap-2 mt-2 ">
+                      <span>Mã SP:</span>
+                      <div className="rounded-md px-3 py-1 bg-gray-200">
+                        #{item.id}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex justify-center items-center">
+                    <Image
+                      src={item.image}
+                      width={100}
+                      height={100}
+                      alt="product webp"
+                    />
+                  </div>
+
+                  <div className="flex justify-center items-center">{Date}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -297,189 +259,71 @@ const ListProduct = () => {
       <>
         <Modal
           footer={null}
-          title={`Bạn muốn thay đổi sản phẩm ${SelectedProductData?.title} ?`}
-          open={isOpenProductModal}
+          title="Thêm sản phẩm"
+          open={isOpenAddModal}
           width={1000}
-          onCancel={() => setIsOpenProductModal(false)}
+          onCancel={() => setIsOpenAddModal(false)}
+          destroyOnClose={true}
+          afterClose={() => setFormData({})}
         >
-          <div className="flex flex-col gap-4 font-LexendDeca font-light">
-            <div className="p-4 grid grid-cols-6 gap-5 text-[20px]">
-              <div className="col-span-2">
-                <div className="p-3  bg-slate-100 ">
-                  <div className="flex flex-col items-center">
-                    <div className="flex flex-col items-center">
-                      <Image
-                        src={SelectedProductData?.image}
-                        alt="Product"
-                        width={100}
-                        height={100}
-                        className="rounded-full"
-                      />
-                      <p className="text-[20px] font-normal">
-                        {SelectedProductData.title}
-                      </p>
-                    </div>
-                    <div className="mt-5">
-                      <p className="text-center font-light ">123 Đánh giá</p>
-                      <div className="text-yellow-400 flex items-center text-[20px] gap-1">
-                        <IoMdStar />
-                        <IoMdStar />
-                        <IoMdStar />
-                        <IoMdStar />
-                        <IoMdStar />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-span-4 text-gray-600 flex flex-col gap-5">
-                <div className="">
-                  <h3 className="font-bold">Thông tin sản phẩm</h3>
-
-                  <div className="border rounded-xl border-black mt-3">
-                    <div className="text-[18px] ml-2 mt-3 grid grid-cols-2 w-full gap-2 p-2 overflow-y-auto">
-                      <li className="">
-                        Tên sản phẩm:{" "}
-                        <span className="underline">
-                          {SelectedProductData.title}
-                        </span>
-                      </li>
-
-                      <div className="flex items-center gap-2">
-                        <p> Mã sản phẩm:</p>
-                        <div className="rounded-md px-3 py-1 bg-gray-200">
-                          #{SelectedProductData.pid}
-                        </div>
-                      </div>
-                      <li>
-                        Giá sản phẩm:{" "}
-                        <strong className="text-red-500">
-                          {SelectedProductData.price} VNĐ
-                        </strong>
-                      </li>
-
-                      <li>
-                        Trạng thái:{" "}
-                        <span className="text-green-500">Còn Hàng</span>
-                      </li>
-                      <li>
-                        Ngày tạo: <strong> {SelectedProductData.time}</strong>
-                      </li>
-                      <li>
-                        Lượt xem: <strong> {SelectedProductData.view}</strong>
-                      </li>
-
-                      <div className="border rounded-md bg-slate-100">
-                        <div className="p-2">
-                          {" "}
-                          <li>Danh mục: abc</li>
-                          <li>Danh mục con: abc</li>
-                          <li>Topic: abc</li>
-                        </div>
-                      </div>
-                      <li>
-                        lượt đánh giá: <strong>123 Đánh giá</strong>
-                      </li>
-                    </div>
-                  </div>
-                </div>
-                <div className="">
-                  <h3 className="font-bold">Thông tin Sale</h3>
-                  <div>chuyển hướng đến sale</div>
-                </div>
-                <div className="">
-                  <h3 className="font-bold">Mô tả sản phẩm</h3>
-                  <div>abced</div>
-                </div>
-                <div className="">
-                  <h3 className="font-bold">Chi tiết sản phẩm</h3>
-                  <div>abced</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="border rounded-xl bg-slate-100">
-              <div className="p-5 grid grid-cols-2  justify-center gap-3">
-                <Button
-                  Style="hover:bg-blue-900 bg-blue-700"
-                  Label="Cập Nhật Sản phẩm"
-                  Clicked={() => setIsOpenChangeIndex(true)}
-                />
-
-                <Button
-                  Style="hover:bg-red-900 bg-red-700"
-                  Label="Xóa Sản Phẩm"
-                  Clicked={() => setIsOpenDelete(true)}
-                />
-              </div>
-            </div>
-          </div>
+          <ProductHandle
+            setIsOpen={setIsOpenAddModal}
+            Category={Category}
+            productLength={Products?.length}
+          />
         </Modal>
       </>
 
       <>
-        {/* Thay đổi thứ tự sản phẩm */}
-        <Drawer
-          title={`Thay đổi thứ tự, Cập nhật giá cho sản phẩm ${SelectedProductData?.title}`}
+        <Modal
           footer={null}
-          open={isOpenChangeIndex}
+          title={`Cập nhật ${SelectedProductData?.title} ?`}
+          open={isOpenHandleModel}
           width={700}
-          onClose={() => setIsOpenChangeIndex(false)}
-          style={{ backgroundColor: "white" }}
+          onCancel={() => setIsOpenHandleModel(false)}
+          destroyOnClose={true}
+          afterClose={() => setFormData({})}
         >
-          <UpdateIndex
+          <>
+            <div className="border rounded-xl bg-slate-100">
+              <div className="p-5 grid grid-cols-2  justify-center gap-3">
+                <CRUDButton
+                  Clicked={() => {
+                    setIsOpenUpdateModel(true);
+                    setIsOpenHandleModel(false);
+                  }}
+                  Label="Chỉnh Sửa"
+                  value="mục sản phẩm"
+                  Style="hover:bg-blue-900 bg-blue-700"
+                />
+                <CRUDButton
+                  Clicked={() => HandleDelete(SelectedProductData?.id)}
+                  Label="Xóa"
+                  value="mục sản phẩm"
+                  Style="hover:bg-red-900 bg-red-700"
+                />
+              </div>
+            </div>
+          </>
+        </Modal>
+      </>
+      <>
+        <Modal
+          title="Chỉnh sửa"
+          footer={null}
+          open={isOpenUpdateModel}
+          width={1000}
+          destroyOnClose={true}
+          afterClose={() => setFormData({})}
+          onCancel={() => setIsOpenUpdateModel(false)}
+        >
+          <ProductHandle
+            setIsOpen={setIsOpenUpdateModel}
+            Category={Category}
+            Type="update"
             Data={SelectedProductData}
-            HandleForm={HandleUpdateIndexForm}
           />
-        </Drawer>
-        {/* chỉnh sửa sản phẩm */}
-
-        <Drawer
-          footer={null}
-          open={isOpenEdit}
-          width={700}
-          onClose={() => setIsOpenEdit(false)}
-        >
-          <div className="p-2 flex flex-col gap-2">
-            {/* <InputForm Label="Tên sản phẩm" Type="Input" />
-            <InputForm Label="Giá sản phẩm" Type="Input" />
-            <InputForm Label="Số lượng sản phẩm" Type="Input" />
-            <InputForm Label="Mô tả sản phẩm" Type="TextArea" />
-            <InputForm Label="Ảnh sản phẩm" Type="Upload" />
-            <InputForm Label="Danh mục sản phẩm" Type="Select" />
-            <InputForm Label="Thương hiệu sản phẩm" Type="Select" />
-            <InputForm Label="Trạng thái sản phẩm" Type="Select" /> */}
-          </div>
-        </Drawer>
-
-        {/* thêm sản phẩm */}
-        <Drawer
-          title="Thêm mới sản phẩm"
-          footer={null}
-          open={isOpenAdd}
-          width={700}
-          onClose={() => setIsOpenAdd(false)}
-        >
-          <CreateProduct />
-        </Drawer>
-        {/* xóa sản phẩm */}
-        <Drawer
-          footer={null}
-          open={isOpenDelete}
-          width={700}
-          onClose={() => setIsOpenDelete(false)}
-        >
-          <div className="p-2 flex flex-col gap-2">
-            {/* <InputForm Label="Tên sản phẩm" Type="Input" />
-            <InputForm Label="Giá sản phẩm" Type="Input" />
-            <InputForm Label="Số lượng sản phẩm" Type="Input" />
-            <InputForm Label="Mô tả sản phẩm" Type="TextArea" />
-            <InputForm Label="Ảnh sản phẩm" Type="Upload" />
-            <InputForm Label="Danh mục sản phẩm" Type="Select" />
-            <InputForm Label="Thương hiệu sản phẩm" Type="Select" />
-            <InputForm Label="Trạng thái sản phẩm" Type="Select" /> */}
-          </div>
-        </Drawer>
+        </Modal>
       </>
     </div>
   );

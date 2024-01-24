@@ -21,7 +21,8 @@ interface InputFormProps {
     | "TimePicker"
     | "ColorPicker"
     | "InputNumber"
-    | "Editor";
+    | "Editor"
+    | "ColorPicker";
   setState?: any;
   setUpload?: any;
 
@@ -78,6 +79,9 @@ const InputForm = ({
               </div>
               <div className="px-4 py-1   bg-white rounded-lg w-full col-span-6">
                 <TextEditor
+                  initialValue={
+                    FormData[field] ? FormData[field] : "<p>Content...</p>"
+                  }
                   onChange={setFormData}
                   Form={FormData}
                   Field={field}
@@ -106,10 +110,24 @@ const InputForm = ({
                   }
                 >
                   <option>--- Chọn Danh Mục ---</option>
-                  {Option.map((item: any, idx: number) => (
-                    <option key={idx} value={item.value}>
-                      {item.label}
-                    </option>
+                  {Option?.map((item: any, idx: number) => (
+                    <>
+                      {item.value !== undefined ? (
+                        <>
+                          {" "}
+                          <option key={idx} value={item.value}>
+                            {item.label}
+                          </option>
+                        </>
+                      ) : (
+                        <>
+                          {" "}
+                          <option key={idx} value={item.url}>
+                            {item.title}
+                          </option>
+                        </>
+                      )}
+                    </>
                   ))}
                 </select>
               </div>
@@ -306,7 +324,25 @@ const InputForm = ({
         ) : Type === "TimePicker" ? (
           <></>
         ) : Type === "ColorPicker" ? (
-          <></>
+          <>
+            <div className="grid grid-cols-8 gap-3  items-center  w-full justify-between  ">
+              <div className="col-span-2">
+                {Label}:
+                {Tips && (
+                  <Tooltip title={Tips}>
+                    <FaRegCircleQuestion className="text-[18px] cursor-pointer" />
+                  </Tooltip>
+                )}
+              </div>
+              <div className="px-4 py-1 bg-white rounded-lg w-max col-span-6">
+                <input
+                  type="color"
+                  className="outline-none"
+                  onChange={(e) => console.log("Mã màu mới:", e.target.value)}
+                />
+              </div>
+            </div>
+          </>
         ) : null}
       </div>
     </>

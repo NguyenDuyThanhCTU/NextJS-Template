@@ -21,9 +21,9 @@ const ReportCard = ({ Label, Value }: ReportCardProps) => {
       }  text-white rounded-md`}
     >
       <div className="p-3 grid grid-cols-5 gap-2 items-center">
-        <div className="col-span-4 font-semibold">
-          <h3 className="text-[40px] ">{Value}</h3>
-          <p className="text-[20px]">{Label}</p>
+        <div className="p:col-span-3 d:col-span-4 font-semibold">
+          <p className="d:text-[20px] p:text-[16px]">{Label}</p>
+          <h3 className="d:text-[40px] p:text-[16px] ">{Value}</h3>
         </div>
         <div className="flex">
           <div

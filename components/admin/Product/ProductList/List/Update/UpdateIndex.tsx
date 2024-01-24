@@ -18,7 +18,6 @@ const UpdateIndex = ({ Data, HandleForm }: UpdateIndexProps) => {
 
   const HandleSaleForm = (e: any) => {
     e.preventDefault();
-    console.log(FormData);
     // const From: startpoint, endpoint
   };
 
@@ -106,20 +105,8 @@ const UpdateIndex = ({ Data, HandleForm }: UpdateIndexProps) => {
           <form className="bg-gray-100 mt-5" onSubmit={HandleForm}>
             <div className="p-4 flex flex-col ">
               <div className=" flex flex-col gap-2  pb-5 border-b border-gray-500">
-                <InputForm
-                  Label="Thứ tự"
-                  Type="InputNumber"
-                  FormData={FormData}
-                  setFormData={setFormData}
-                  field="pid"
-                />
-                <InputForm
-                  Label="Giá"
-                  Type="InputNumber"
-                  FormData={FormData}
-                  setFormData={setFormData}
-                  field="price"
-                />
+                <InputForm Label="Thứ tự" Type="InputNumber" field="pid" />
+                <InputForm Label="Giá" Type="InputNumber" field="price" />
                 {/* <InputForm
                   Label="Giảm giá"
                   Type="Checkbox"
@@ -129,8 +116,6 @@ const UpdateIndex = ({ Data, HandleForm }: UpdateIndexProps) => {
                   <InputForm
                     Label="Giảm giá (%)"
                     Type="InputNumber"
-                    FormData={FormData}
-                    setFormData={setFormData}
                     field="discount"
                   />
                 )}
@@ -138,13 +123,7 @@ const UpdateIndex = ({ Data, HandleForm }: UpdateIndexProps) => {
                 {FormData?.discount && (
                   <div className="text-red-500">Giá mới:</div>
                 )}
-                <InputForm
-                  Label="Sale"
-                  Type="Checkbox"
-                  FormData={FormData}
-                  setFormData={setFormData}
-                  field="sale"
-                />
+                <InputForm Label="Sale" Type="Checkbox" field="sale" />
               </div>{" "}
               <div className=" flex flex-col gap-2 pt-5 ">
                 <div className="flex justify-center mt-2">
@@ -176,15 +155,11 @@ const UpdateIndex = ({ Data, HandleForm }: UpdateIndexProps) => {
                   Label="Thời gian bắt đầu"
                   Type="DatePicker"
                   field="startpoint"
-                  FormData={FormData}
-                  setFormData={setFormData}
                 />
                 <InputForm
                   Label="Thời gian kết thúc"
                   Type="DatePicker"
                   field="endpoint"
-                  FormData={FormData}
-                  setFormData={setFormData}
                 />
               </div>
               <div className=" flex flex-col gap-2 pt-5 ">

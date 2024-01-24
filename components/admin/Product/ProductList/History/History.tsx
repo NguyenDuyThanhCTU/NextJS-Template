@@ -10,8 +10,6 @@ const ListProductHistory = () => {
       <InputForm
         Label="Mô tả sản phẩm"
         Type="Editor"
-        FormData={FormData}
-        setFormData={setFormData}
         field="price"
         Tips="
           Mã của sản phẩm là các con số hoặc một đoạn mã để xác định tính duy nhất của sản phẩm. Tối đa 20 ký tự

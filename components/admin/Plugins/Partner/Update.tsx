@@ -1,45 +1,34 @@
 "use client";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
+import { insertOne, updateOne } from "@lib/api";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const Update = ({ setIsOpenContactModal, Data }: any) => {
+const Update = ({ OpenUpdate }: any) => {
   const { FormData } = useStateProvider();
   const router = useRouter();
   const HandleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(FormData);
-    // await UpdateDataProps("Config", "contact", FormData).then(() => {
-    //   setIsOpenContactModal(false);
-    //   router.refresh();
-    // });
 
-    router.refresh();
+    await updateOne("Partner", FormData.id, FormData).then(() => {
+      OpenUpdate(false);
+      router.refresh();
+    });
   };
   return (
     <form onSubmit={(e) => HandleSubmit(e)}>
       {" "}
       <div className="border border-black rounded-lg">
         <div className="p-2 flex flex-col gap-2">
-          <InputForm
-            Label="Tên đối tác"
-            Type="Input"
-            field={"PartnerName"}
-            PlaceHolder={Data.title}
-          />
+          <InputForm Label="Tên đối tác" Type="Input" field={"title"} />
 
-          <InputForm
-            Label="Đường dẫn"
-            Type="Input"
-            field={"PartnerUrl"}
-            PlaceHolder={Data.url}
-          />
+          <InputForm Label="Đường dẫn" Type="Input" field={"url"} />
           <InputForm
             Label="Logo"
             Type="Upload"
-            field={"PartnerLogo"}
-            PlaceHolder={Data.image}
+            field={"image"}
+            PlaceHolder={FormData.image}
           />
         </div>
       </div>

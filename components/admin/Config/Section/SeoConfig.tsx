@@ -1,9 +1,10 @@
 "use client";
+import { WebsiteUrl } from "@assets/item";
 import EditButton from "@components/items/server-items/EditButton";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
 import { updateOne } from "@lib/api";
-import { Modal, Tooltip } from "antd";
+import { Form, Modal, Tooltip } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -16,7 +17,7 @@ const SeoConfig = ({ Data }: any) => {
   const [isOpenBasicSEO, setIsOpenBasicSEO] = useState(false);
   const [isOpenAdvanceSEO, setIsOpenAdvanceSEO] = useState(false);
   const { setFormData, FormData } = useStateProvider();
-  const [Keyword, setKeyword] = useState<any>([]);
+  const [Keyword, setKeyword] = useState<any>([""]);
   const BasicSEOItems = [
     {
       label: "Tiêu đề trang ",
@@ -55,14 +56,10 @@ const SeoConfig = ({ Data }: any) => {
     setFormData({ ...FormData, Keyword: newKeyword });
   };
 
-  useEffect(() => {
-    setFormData({ Keyword: Data?.Keyword });
-  }, [isOpenBasicSEO]);
-
   return (
     <>
       <div className="py-5 ">
-        <div className="w-full px-10 font-light">
+        <div className="w-full p:px-0 d:px-10 font-light">
           <div className="">
             <h1 className="text-[30px] font-semibold"> Cấu Hình SEO </h1>
             <p className=" text-gray-500">
@@ -70,11 +67,11 @@ const SeoConfig = ({ Data }: any) => {
               thấy trên các công cụ tìm kiếm
             </p>
           </div>
-          <Link href="https://www.google.com/search?q=congtyads.com">
+          <Link href={`https://www.google.com/search?q=${WebsiteUrl}`}>
             <div className="border rounded-md border-black hover:shadow-2xl duration-300 mt-3 cursor-pointer">
               <div className="flex p-5 gap-3 flex-col">
                 <div className="">Kết quả tìm kiếm:</div>
-                <div className=" flex flex-col ml-10">
+                <div className=" flex flex-col p:ml-0 d:ml-10">
                   <h2 className="text-[#1a0dab]  flex items-center gap-3">
                     <Image
                       src={Data?.Favicon}
@@ -85,7 +82,7 @@ const SeoConfig = ({ Data }: any) => {
                     />{" "}
                     <div>
                       <p className="text-[22px] font-normal">{Data?.Title}</p>
-                      <p className="text-[#006621] ">https://congtyads.com</p>
+                      <p className="text-[#006621] ">{WebsiteUrl}</p>
                     </div>
                   </h2>
 
@@ -97,7 +94,7 @@ const SeoConfig = ({ Data }: any) => {
         </div>
       </div>
       <div className="py-5 ">
-        <div className="w-full grid grid-cols-2 px-10 font-light gap-5">
+        <div className="w-full grid p:grid-cols-1 d:grid-cols-2 p:px-0 d:px-10 font-light gap-5">
           <div className=" mt-3 border border-black shadow-sm bg-white rounded-md  ">
             <div className="p-4 flex flex-col gap-1">
               <div className="flex justify-between items-center">
@@ -164,7 +161,7 @@ const SeoConfig = ({ Data }: any) => {
                   Từ khóa SEO:
                 </div>
                 <div className="col-span-6 pl-2 py-2 flex flex-wrap gap-2">
-                  {Data?.Keyword.map((item: any, idx: number) => (
+                  {Data?.Keyword?.map((item: any, idx: number) => (
                     <div key={idx} className="border bg-slate-200 rounded-full">
                       <div className="w-max py-1 px-3">{item}</div>
                     </div>
@@ -221,7 +218,7 @@ const SeoConfig = ({ Data }: any) => {
                     Nội dung file sitemap.xml:
                   </div>
                   <div className="col-span-5 pl-2 py-2 flex gap-2 border rounded-lg border-gray-500 mt-2 bg-slate-100">
-                    <div className="p-2">
+                    <div className="p-2 overflow-auto">
                       {`<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <url>
         <loc>https://acme.com</loc>
@@ -255,6 +252,7 @@ const SeoConfig = ({ Data }: any) => {
             footer={null}
             open={isOpenBasicSEO}
             onCancel={() => setIsOpenBasicSEO(false)}
+            destroyOnClose={true}
             afterClose={() => setFormData({})}
           >
             <form
@@ -326,11 +324,16 @@ const SeoConfig = ({ Data }: any) => {
                         <div
                           className="text-[20px]  cursor-pointer duration-300 hover:text-blue-500"
                           onClick={() => {
-                            setFormData({
-                              ...FormData,
-                              Keyword: [...FormData?.Keyword, Keyword],
-                            });
-                            setKeyword("");
+                            if (FormData.Keyword === undefined) {
+                              setFormData({ ...FormData, Keyword: [Keyword] });
+                              setKeyword("");
+                            } else {
+                              setFormData({
+                                ...FormData,
+                                Keyword: [...FormData?.Keyword, Keyword],
+                              });
+                              setKeyword("");
+                            }
                           }}
                         >
                           <MdUpload />

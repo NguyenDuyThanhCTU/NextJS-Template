@@ -6,7 +6,7 @@ import { updateOne } from "@lib/api";
 import { Modal, Tooltip } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 import { FaRegCircleQuestion } from "react-icons/fa6";
 
 const ContactConfig = ({ Data }: any) => {
@@ -56,10 +56,10 @@ const ContactConfig = ({ Data }: any) => {
       tooltip: "",
     },
   ];
-
   const router = useRouter();
   const HandleSubmit = async (e: any) => {
     e.preventDefault();
+
     await updateOne("Config", "contact", FormData).then(() => {
       setIsOpenContactModal(false);
       router.refresh();
@@ -70,7 +70,6 @@ const ContactConfig = ({ Data }: any) => {
 
   const extractSrc = (embedCode: string) => {
     // Kiểm tra xem embedCode có tồn tại không
-    console.log(embedCode);
     if (!embedCode) {
       return null;
     }
@@ -92,7 +91,7 @@ const ContactConfig = ({ Data }: any) => {
 
   return (
     <div className="py-5 border-t  bg-white">
-      <div className="w-full grid grid-cols-2 px-10 font-light gap-5">
+      <div className="w-full grid p:grid-cols-1 d:grid-cols-2 p:px-0 d:px-10 font-light gap-5">
         <div className="">
           <h1 className="text-[30px] font-semibold">
             Các Thông Tin Liên Hệ Website{" "}
@@ -165,7 +164,7 @@ const ContactConfig = ({ Data }: any) => {
 
         <div className="grid grid-cols-1 gap-4 ">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.8414543771264!2d105.76804037580216!3d10.029938972517273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a0895a51d60719%3A0x9d76b0035f6d53d0!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBD4bqnbiBUaMah!5e0!3m2!1svi!2s!4v1704446767565!5m2!1svi!2s"
+            src={Data?.GoogleMap}
             loading="lazy"
             className="w-full h-full outline-none"
           ></iframe>
@@ -178,6 +177,7 @@ const ContactConfig = ({ Data }: any) => {
           open={isOpenContactModal}
           width={1000}
           onCancel={() => setIsOpenContactModal(false)}
+          destroyOnClose={true}
           afterClose={() => setFormData({})}
         >
           <form

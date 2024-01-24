@@ -2,11 +2,12 @@
 import { PostsTypeItems, ProductTypeItems, WebsiteUrl } from "@assets/item";
 import InputForm from "@components/items/server-items/InputForm";
 import { useStateProvider } from "@context/StateProvider";
-import { insertOne } from "@lib/api";
-import { Tabs, notification } from "antd";
+import { insertAndCustomizeId, insertOne, updateOne } from "@lib/api";
+import { Form, Tabs, notification } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { stringify } from "querystring";
 import React, { useEffect, useState } from "react";
 import { MdUpload } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
@@ -17,20 +18,21 @@ interface CreateProps {
   setIsOpen: (isOpen: boolean) => void;
   Data: Array<any>;
   pid: number;
+  Type?: string;
+  id?: any;
 }
 
-const Create = ({ setIsOpen, Data, pid }: CreateProps) => {
+const Create = ({ setIsOpen, Data, pid, Type, id }: CreateProps) => {
   const [DataFilter, setDataFilter] = useState<any>([]);
-  const [level0Slug, setLevel0Slug] = useState<any>("");
   const { FormData, setFormData } = useStateProvider();
   const [Keyword, setKeyword] = useState<any>([]);
 
   useEffect(() => {
     let sortedData = Data.filter((item) => item.title === FormData?.level0);
 
-    let formattedArray = sortedData.map((item) => ({
+    let formattedArray = sortedData?.map((item) => ({
       label: item.level1,
-      value: slugify(item.level1, {
+      value: slugify(item?.level1 ? item?.level1 : "", {
         lower: true,
         locale: "vi",
       }),
@@ -40,42 +42,69 @@ const Create = ({ setIsOpen, Data, pid }: CreateProps) => {
   }, [FormData?.level0]);
 
   useEffect(() => {
-    //convert title to url with slugify
+    const randomText = Math.floor(Math.random() * 100000000000);
+    const headUrl = slugify(`${FormData?.title}-p${randomText}.html`, {
+      lower: true,
+      locale: "vi",
+    });
     setFormData({
       ...FormData,
-      url: slugify(`${FormData?.title}pid${1000 + pid}.html`, {
-        lower: true,
-        locale: "vi",
-      }),
+      url: `${headUrl}?poid=${100000000000 + pid}`,
     });
   }, [FormData?.title]);
 
-  useEffect(() => {
-    setLevel0Slug(
-      slugify(`${FormData?.level0}`, {
-        lower: true,
-        locale: "vi",
-      })
-    );
-  }, [FormData?.level0]);
-  console.log(FormData, level0Slug);
   const HandleChangeKeyword = (item: number) => {
     let newKeyword = FormData?.keyword?.filter((i: any) => i !== item);
     setFormData({ ...FormData, keyword: newKeyword });
   };
   const router = useRouter();
+
   const HandleSubmit = async () => {
-    setFormData({
-      ...FormData,
-      level0: level0Slug,
+    const level0 = slugify(`${FormData?.level0}`, {
+      lower: true,
+      locale: "vi",
     });
-    await insertOne("Posts", FormData).then(() => {
-      setIsOpen(false);
-      router.refresh();
-    });
+    let Data = { ...FormData, level0: level0 };
+
+    if (Type === "update") {
+      await updateOne("Posts", id, Data).then(() => {
+        setIsOpen(false);
+        router.refresh();
+      });
+    } else {
+      await insertAndCustomizeId("Posts", Data, `${100000000001 + pid}`).then(
+        () => {
+          setIsOpen(false);
+          router.refresh();
+        }
+      );
+    }
 
     router.refresh();
   };
+
+  const HandlePolicySubmit = async () => {
+    setFormData({ ...FormData, level0: "chinh-sach" });
+
+    try {
+      await updateOne("Posts", FormData.level1, FormData);
+      setIsOpen(false);
+      router.refresh();
+    } catch (updateError) {
+      console.error("Update failed:", updateError);
+
+      try {
+        await insertAndCustomizeId("Posts", FormData, FormData.level1);
+        setIsOpen(false);
+        router.refresh();
+      } catch (insertError) {
+        console.error("Insert failed:", insertError);
+      }
+    }
+
+    router.refresh();
+  };
+
   return (
     <div>
       <Tabs
@@ -94,11 +123,16 @@ const Create = ({ setIsOpen, Data, pid }: CreateProps) => {
                       Type="Input"
                       field="title"
                     />
-                    <InputForm
-                      Label="Ảnh đại diện"
-                      Type="Upload"
-                      field="image"
-                    />
+                    {FormData?.level0 !== "Chính sách" && (
+                      <>
+                        {" "}
+                        <InputForm
+                          Label="Ảnh đại diện"
+                          Type="Upload"
+                          field="image"
+                        />
+                      </>
+                    )}
                   </div>
                   <div className="flex flex-col gap-2">
                     <InputForm
@@ -107,17 +141,25 @@ const Create = ({ setIsOpen, Data, pid }: CreateProps) => {
                       field="level0"
                       Option={PostsTypeItems}
                     />
-                    <InputForm
-                      Label="Mục bài viết"
-                      Type="Select"
-                      field="level1"
-                      Option={DataFilter}
-                    />
+                    <>
+                      {" "}
+                      <InputForm
+                        Label="Mục bài viết"
+                        Type="Select"
+                        field="level1"
+                        Option={DataFilter}
+                      />
+                    </>
                   </div>
                 </div>
                 <InputForm Label="Chi Tiết" Type="Editor" field="content" />
-
-                <InputForm Label="Mô tả" Type="TextArea" field="description" />
+                {FormData?.level0 !== "Chính sách" && (
+                  <InputForm
+                    Label="Mô tả"
+                    Type="TextArea"
+                    field="description"
+                  />
+                )}
               </form>
             ),
           },
@@ -211,7 +253,7 @@ const Create = ({ setIsOpen, Data, pid }: CreateProps) => {
                             <div
                               className="text-[20px]  cursor-pointer duration-300 hover:text-blue-500"
                               onClick={() => {
-                                if (FormData.keyword === undefined) {
+                                if (FormData?.keyword === undefined) {
                                   setFormData({
                                     ...FormData,
                                     keyword: [Keyword],
@@ -239,14 +281,29 @@ const Create = ({ setIsOpen, Data, pid }: CreateProps) => {
           },
         ]}
       />
-      <div className="flex w-full justify-end mt-5 pt-3 border-t border-black">
-        <div
-          className="bg-blue-500 hover:bg-blue-700 duration-300 cursor-pointer text-white p-2 rounded-md"
-          onClick={() => HandleSubmit()}
-        >
-          Cập nhật
-        </div>
-      </div>
+      {FormData?.level0 === "Chính sách" ? (
+        <>
+          <div className="flex w-full justify-end mt-5 pt-3 border-t border-black">
+            <div
+              className="bg-red-500 hover:bg-red-700 duration-300 cursor-pointer text-white p-2 rounded-md"
+              onClick={() => HandlePolicySubmit()}
+            >
+              Cập nhật
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="flex w-full justify-end mt-5 pt-3 border-t border-black">
+            <div
+              className="bg-blue-500 hover:bg-blue-700 duration-300 cursor-pointer text-white p-2 rounded-md"
+              onClick={() => HandleSubmit()}
+            >
+              Cập nhật
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
